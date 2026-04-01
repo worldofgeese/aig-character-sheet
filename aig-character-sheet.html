@@ -237,6 +237,26 @@ button.primary:hover { background: #333; }
   align-items: center;
 }
 
+.inline-add-row {
+  display: flex;
+  gap: 8px;
+  margin: 8px 0;
+  align-items: center;
+}
+
+.inline-add-row input {
+  padding: 10px;
+  font-size: 1em;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+  min-height: 44px;
+}
+
+.inline-add-row button {
+  min-height: 44px;
+  padding: 10px 16px;
+}
+
 /* Autocomplete */
 .autocomplete-container {
   position: relative;
@@ -1309,6 +1329,11 @@ App.renderStep6 = function() {
     
     <h3>Additional Passions</h3>
     <button onclick="App.addCustomPassion()">+ Add Custom Passion</button>
+    <div id="custom-passion-input" class="inline-add-row" style="display: none;">
+      <input type="text" placeholder="e.g. Loyalty to Clan, Hate (Lunars)..." style="flex: 1; min-width: 0;"
+        onkeydown="if(event.key==='Enter'){App.confirmCustomPassion()}">
+      <button onclick="App.confirmCustomPassion()" class="primary" style="white-space: nowrap;">Add</button>
+    </div>
     <div id="custom-passions-list"></div>
   `;
   
@@ -1342,7 +1367,19 @@ App.renderStep6 = function() {
 };
 
 App.addCustomPassion = function() {
-  const name = prompt('Passion name:');
+  const container = document.getElementById('custom-passion-input');
+  if (container) {
+    container.style.display = container.style.display === 'none' ? 'flex' : 'none';
+    if (container.style.display === 'flex') {
+      container.querySelector('input').focus();
+    }
+    return;
+  }
+};
+
+App.confirmCustomPassion = function() {
+  const input = document.querySelector('#custom-passion-input input');
+  const name = input ? input.value.trim() : '';
   if (name) {
     CharacterData.passions.push({name, value: 30, custom: true});
     this.saveToLocalStorage();
@@ -1524,6 +1561,11 @@ App.renderStep9 = function() {
     <h3>Career Skills (any skills from cultural lists)</h3>
     <div id="career-skills-list"></div>
     <button onclick="App.addCareerSkill()">+ Add Skill</button>
+    <div id="add-career-skill-input" class="inline-add-row" style="display: none;">
+      <input type="text" placeholder="e.g. Acrobatics, Commerce, Lore (any)..." style="flex: 1; min-width: 0;"
+        onkeydown="if(event.key==='Enter'){App.confirmCareerSkill()}">
+      <button onclick="App.confirmCareerSkill()" class="primary" style="white-space: nowrap;">Add</button>
+    </div>
     
     <h3>Additional Folk Magic (select 2 more)</h3>
     <div id="career-folk-magic-list"></div>
@@ -1561,7 +1603,19 @@ App.renderStep9 = function() {
 };
 
 App.addCareerSkill = function() {
-  const skillName = prompt('Skill name:');
+  const container = document.getElementById('add-career-skill-input');
+  if (container) {
+    container.style.display = container.style.display === 'none' ? 'flex' : 'none';
+    if (container.style.display === 'flex') {
+      container.querySelector('input').focus();
+    }
+    return;
+  }
+};
+
+App.confirmCareerSkill = function() {
+  const input = document.querySelector('#add-career-skill-input input');
+  const skillName = input ? input.value.trim() : '';
   if (skillName && !CharacterData.careerSkills[skillName]) {
     CharacterData.careerSkills[skillName] = 0;
     this.saveToLocalStorage();
@@ -1637,6 +1691,11 @@ App.renderStep10 = function() {
     <h3>Distribute Bonus Points</h3>
     <div id="bonus-skills-list"></div>
     <button onclick="App.addBonusSkill()">+ Add Hobby Skill (Professional Skill or Combat Style)</button>
+    <div id="add-bonus-skill-input" class="inline-add-row" style="display: none;">
+      <input type="text" placeholder="e.g. Acrobatics, Commerce, Lore (any)..." style="flex: 1; min-width: 0;"
+        onkeydown="if(event.key==='Enter'){App.confirmBonusSkill()}">
+      <button onclick="App.confirmBonusSkill()" class="primary" style="white-space: nowrap;">Add</button>
+    </div>
   `;
 
   const skillsList = div.querySelector('#bonus-skills-list');
@@ -1659,7 +1718,19 @@ App.renderStep10 = function() {
 };
 
 App.addBonusSkill = function() {
-  const skillName = prompt('Skill name:');
+  const container = document.getElementById('add-bonus-skill-input');
+  if (container) {
+    container.style.display = container.style.display === 'none' ? 'flex' : 'none';
+    if (container.style.display === 'flex') {
+      container.querySelector('input').focus();
+    }
+    return;
+  }
+};
+
+App.confirmBonusSkill = function() {
+  const input = document.querySelector('#add-bonus-skill-input input');
+  const skillName = input ? input.value.trim() : '';
   if (skillName && !CharacterData.bonusSkills[skillName]) {
     CharacterData.bonusSkills[skillName] = 0;
     this.saveToLocalStorage();
