@@ -447,6 +447,26 @@ button.primary:hover { background: #333; }
   .skill-row { grid-template-columns: 1fr; }
   .skill-row button { width: 100%; }
   .attributes-grid { grid-template-columns: 1fr; }
+
+  /* Bug 1: Stack hit location diagram and table vertically on mobile */
+  .wizard-step > div[style*="grid-template-columns: 200px 1fr"] {
+    display: block !important;
+  }
+  .body-diagram {
+    margin: 10px auto;
+  }
+
+  /* Bug 4: Fix skill tooltips on mobile - position below and full width */
+  .skill-tooltip .tooltip-text {
+    position: fixed;
+    left: 10px;
+    right: 10px;
+    bottom: auto;
+    top: auto;
+    width: auto;
+    transform: none;
+    z-index: 9999;
+  }
 }
 
 /* Toast notifications */
@@ -578,7 +598,7 @@ button.primary:hover { background: #333; }
 
 <div id="app">
   <!-- Mode toggle -->
-  <div class="no-print" style="text-align: right; margin-bottom: 10px;">
+  <div class="no-print" style="display: flex; flex-wrap: wrap; gap: 5px; justify-content: flex-end; margin-bottom: 10px;">
     <button onclick="App.switchMode('wizard')" id="btn-wizard">Wizard Mode</button>
     <button onclick="App.switchMode('play')" id="btn-play">Play Mode</button>
     <button onclick="App.printSheet()" id="btn-print" disabled title="Complete character creation first">Print (A4)</button>
@@ -1101,6 +1121,11 @@ const App = {
         this.showToast('Please select a career', 'error');
         return false;
       }
+      const selected = (CharacterData.selectedProfessionalSkills || []).length;
+      if (selected !== 3) {
+        this.showToast('You must select exactly 3 professional skills', 'error');
+        return false;
+      }
     }
     
     if (step === 9) {
@@ -1159,128 +1184,121 @@ const App = {
       return;
     }
 
-    const char = this.character;
-
     // Panel 1: Cover
     document.getElementById('pf-panel-1').innerHTML = `
       <h1>Adventures in Glorantha</h1>
-      <h2>${char.name || 'Character'}</h2>
+      <h2>${CharacterData.name || 'Character'}</h2>
       <div style="margin-top: 3mm; font-size: 8pt;">
-        <div>${char.culture || ''} ${char.career || ''}</div>
-        <div>Age ${char.age || ''}</div>
+        <div>${CharacterData.culture || ''} ${CharacterData.career || ''}</div>
+        <div>Age ${CharacterData.age || ''}</div>
       </div>
     `;
 
     // Panel 2: Characteristics + Attributes
+    const attrs = CharacterData.attributes;
     document.getElementById('pf-panel-2').innerHTML = `
       <h3>Characteristics</h3>
       <div style="font-size: 6.5pt;">
-        STR ${char.characteristics.STR || 0} | CON ${char.characteristics.CON || 0} | SIZ ${char.characteristics.SIZ || 0}<br>
-        DEX ${char.characteristics.DEX || 0} | INT ${char.characteristics.INT || 0} | POW ${char.characteristics.POW || 0} | CHA ${char.characteristics.CHA || 0}
+        STR ${CharacterData.characteristics.STR || 0} | CON ${CharacterData.characteristics.CON || 0} | SIZ ${CharacterData.characteristics.SIZ || 0}<br>
+        DEX ${CharacterData.characteristics.DEX || 0} | INT ${CharacterData.characteristics.INT || 0} | POW ${CharacterData.characteristics.POW || 0} | CHA ${CharacterData.characteristics.CHA || 0}
       </div>
       <h3 style="margin-top: 2mm;">Attributes</h3>
       <div style="font-size: 6.5pt; line-height: 1.4;">
-        Action Points: ${char.attributes.actionPoints || 0}<br>
-        Damage Mod: ${char.attributes.damageModifier || ''}<br>
-        Hit Points: ${char.attributes.hitPoints || 0}<br>
-        Healing Rate: ${char.attributes.healingRate || 0}<br>
-        Luck Points: ${char.attributes.luckPoints || 0}<br>
-        Spirit Combat: ${char.attributes.spiritCombatDamage || ''}<br>
-        Experience Mod: ${char.attributes.experienceModifier || 0}<br>
-        Initiative: ${char.attributes.initiative || 0}
+        Action Points: ${attrs.actionPoints || 0}<br>
+        Damage Mod: ${attrs.damageModifier || ''}<br>
+        Hit Points: ${attrs.hitPoints ? Object.values(attrs.hitPoints).reduce((a,b)=>a+b,0) : 0}<br>
+        Healing Rate: ${attrs.healingRate || 0}<br>
+        Luck Points: ${attrs.luckPoints || 0}<br>
+        Spirit Combat: ${attrs.spiritCombatDamage || ''}<br>
+        Experience Mod: ${attrs.experienceModifier || 0}<br>
+        Initiative: ${attrs.initiativeBonus || 0}
       </div>
     `;
 
     // Panel 3: Hit Locations
-    const locations = char.hitLocations || [];
-    let hitLocsHtml = '<h3>Hit Locations</h3><table><tr><th>Location</th><th>HP</th><th>AP</th></tr>';
-    locations.forEach(loc => {
-      hitLocsHtml += `<tr><td>${loc.location}</td><td>${loc.hp}</td><td>${loc.armor}</td></tr>`;
+    const hitPoints = CharacterData.attributes.hitPoints || {};
+    let hitLocsHtml = '<h3>Hit Locations</h3><table style="font-size: 6.5pt;"><tr><th>Location</th><th>HP</th><th>AP</th></tr>';
+    HIT_LOCATIONS.forEach(loc => {
+      hitLocsHtml += `<tr><td>${loc.name}</td><td>${hitPoints[loc.name] || 0}</td><td>0</td></tr>`;
     });
     hitLocsHtml += '</table>';
     document.getElementById('pf-panel-3').innerHTML = hitLocsHtml;
 
     // Panels 4 & 5: Skills (only modified skills)
-    const skills = char.skills || {};
-    const modifiedSkills = [];
-    for (let [name, skill] of Object.entries(skills)) {
-      if (skill.base !== undefined && skill.total !== undefined) {
-        const allocated = skill.total - skill.base;
-        if (allocated > 0) {
-          modifiedSkills.push({ name, total: skill.total });
-        }
-      }
-    }
+    const allSkills = this.compileAllSkills();
+    const modifiedSkills = allSkills.filter(skill => {
+      const allocated = skill.cultural + skill.career + skill.bonus;
+      return allocated > 0;
+    }).map(skill => ({
+      name: skill.name,
+      total: skill.base + skill.cultural + skill.career + skill.bonus
+    }));
     modifiedSkills.sort((a, b) => a.name.localeCompare(b.name));
 
     const half = Math.ceil(modifiedSkills.length / 2);
     const skills1 = modifiedSkills.slice(0, half);
     const skills2 = modifiedSkills.slice(half);
 
-    let skillsHtml1 = '<h3>Skills</h3>';
+    let skillsHtml1 = '<h3>Skills</h3><div style="font-size: 6.5pt; line-height: 1.3;">';
     skills1.forEach(s => {
-      const dots = '.'.repeat(Math.max(1, 30 - s.name.length - String(s.total).length));
-      skillsHtml1 += `<div class="skill-line"><span>${s.name}</span><span>${dots} ${s.total}%</span></div>`;
+      skillsHtml1 += `<div>${s.name}: ${s.total}%</div>`;
     });
+    skillsHtml1 += '</div>';
     document.getElementById('pf-panel-4').innerHTML = skillsHtml1;
 
-    let skillsHtml2 = '<h3>Skills (cont.)</h3>';
+    let skillsHtml2 = '<h3>Skills (cont.)</h3><div style="font-size: 6.5pt; line-height: 1.3;">';
     skills2.forEach(s => {
-      const dots = '.'.repeat(Math.max(1, 30 - s.name.length - String(s.total).length));
-      skillsHtml2 += `<div class="skill-line"><span>${s.name}</span><span>${dots} ${s.total}%</span></div>`;
+      skillsHtml2 += `<div>${s.name}: ${s.total}%</div>`;
     });
+    skillsHtml2 += '</div>';
     document.getElementById('pf-panel-5').innerHTML = skillsHtml2;
 
     // Panel 6: Combat
-    const weapons = char.weapons || [];
-    let weaponsHtml = '<h3>Combat</h3><div style="font-size: 6.5pt;">';
-    weapons.forEach(w => {
-      weaponsHtml += `<div><b>${w.name}</b>: ${w.skill}% | ${w.damage} | ${w.range || '-'}</div>`;
+    let weaponsHtml = '<h3>Combat</h3><div style="font-size: 6.5pt; line-height: 1.3;">';
+    CharacterData.weapons.forEach(w => {
+      weaponsHtml += `<div><b>${w.name}</b>: ${w.damage}, AP:${w.ap || 0} HP:${w.hp || 0}</div>`;
     });
     weaponsHtml += '</div>';
     weaponsHtml += '<div style="margin-top: 2mm; font-size: 6pt;"><b>Special Effects:</b> Trip, Disarm, Maximize Damage, Impale, Bleed, Stun Location, Bypass Armor</div>';
     document.getElementById('pf-panel-6').innerHTML = weaponsHtml;
 
     // Panel 7: Magic
-    const runes = char.runes || {};
-    const folkMagic = char.folkMagic || [];
+    const runeAff = CharacterData.runeAffinities;
     let magicHtml = '<h3>Magic</h3>';
 
     // Rune Affinities
     magicHtml += '<div style="font-size: 6.5pt;"><b>Rune Affinities:</b><br>';
-    for (let [name, value] of Object.entries(runes)) {
-      if (value > 0) {
-        magicHtml += `${name}: ${value}%<br>`;
-      }
-    }
+    if (runeAff.primary) magicHtml += `${runeAff.primary}<br>`;
+    if (runeAff.secondary) magicHtml += `${runeAff.secondary}<br>`;
+    if (runeAff.tertiary) magicHtml += `${runeAff.tertiary}<br>`;
     magicHtml += '</div>';
 
     // Folk Magic
-    if (folkMagic.length > 0) {
+    const allFolkMagic = [...CharacterData.folkMagicSpells, ...CharacterData.careerFolkMagic];
+    if (allFolkMagic.length > 0) {
       magicHtml += '<div style="margin-top: 2mm; font-size: 6.5pt;"><b>Folk Magic:</b><br>';
-      folkMagic.forEach(spell => {
+      allFolkMagic.forEach(spell => {
         magicHtml += `${spell}<br>`;
       });
       magicHtml += '</div>';
     }
 
-    // Devotion Pool
-    magicHtml += `<div style="margin-top: 2mm; font-size: 6.5pt;"><b>Devotion Pool:</b> ${char.devotionPool || 0}</div>`;
+    // Magic Points
+    magicHtml += `<div style="margin-top: 2mm; font-size: 6.5pt;"><b>Magic Points:</b> ${CharacterData.attributes.magicPoints || 0}</div>`;
     document.getElementById('pf-panel-7').innerHTML = magicHtml;
 
     // Panel 8: Equipment + Fold Instructions
-    const equipment = char.equipment || [];
-    const money = char.money || {};
-    let equipHtml = '<h3>Equipment & Notes</h3><div class="equipment-list">';
-    equipment.forEach(item => {
-      equipHtml += `• ${item}<br>`;
+    let equipHtml = '<h3>Equipment & Notes</h3><div style="font-size: 6.5pt; line-height: 1.3;">';
+    CharacterData.equipment.forEach(item => {
+      equipHtml += `• ${item.name}${item.enc ? ' (ENC:' + item.enc + ')' : ''}<br>`;
+    });
+    CharacterData.armor.forEach(item => {
+      equipHtml += `• ${item.name} (AP:${item.ap || 0})<br>`;
     });
     equipHtml += `</div><div style="margin-top: 2mm; font-size: 6.5pt;">`;
-    if (money.silver || money.copper) {
-      equipHtml += `<b>Money:</b> ${money.silver || 0}s ${money.copper || 0}c<br>`;
-    }
-    equipHtml += `<b>Notes:</b> ${char.notes || ''}</div>`;
-    equipHtml += `<div class="fold-instructions">
+    equipHtml += `<b>Money:</b> ${CharacterData.startingMoney || 0}<br>`;
+    equipHtml += `<b>Notes:</b> ${CharacterData.notes || ''}</div>`;
+    equipHtml += `<div class="fold-instructions" style="margin-top: 3mm; font-size: 5.5pt; line-height: 1.3;">
       <b>HOW TO FOLD:</b><br>
       This uses the Pocketfold format.<br>
       No cutting required — just fold!<br><br>
@@ -1796,20 +1814,16 @@ App.renderCultureBuilds = function(cultureName) {
   if (!builds || builds.length === 0) return '';
 
   return `
-    <div class="collapsible" style="margin-top: 15px;">
-      <div class="collapsible-header" onclick="App.toggleCollapsible(this)">
-        💡 Suggested Character Builds for ${cultureName}
-      </div>
-      <div class="collapsible-content hidden">
-        <p style="margin-bottom: 10px; font-size: 0.9em;">These are suggestions to help new players. Feel free to create your own unique character!</p>
-        ${builds.map(build => `
-          <div class="build-card">
-            <div class="build-name">${build.name}</div>
-            <div class="build-detail">Stats: ${build.stats} | Career: ${build.career} | Style: ${build.style}</div>
-            <div class="build-tip">${build.tip}</div>
-          </div>
-        `).join('')}
-      </div>
+    <div style="margin-top: 15px;">
+      <h3>💡 Suggested Character Builds for ${cultureName}</h3>
+      <p style="margin-bottom: 10px; font-size: 0.9em;">These are suggestions to help new players. Feel free to create your own unique character!</p>
+      ${builds.map(build => `
+        <div class="build-card">
+          <div class="build-name">${build.name}</div>
+          <div class="build-detail">Stats: ${build.stats} | Career: ${build.career} | Style: ${build.style}</div>
+          <div class="build-tip">${build.tip}</div>
+        </div>
+      `).join('')}
     </div>
   `;
 };
@@ -2418,7 +2432,7 @@ App.renderStep11 = function() {
     const row = document.createElement('div');
     row.className = 'skill-row';
     row.innerHTML = `
-      <span>${w.name} (${w.damage || 'N/A'}, AP:${w.armour_points || 0} HP:${w.hit_points || 0})</span>
+      <span>${w.name} (${w.damage || 'N/A'}, AP:${w.ap || 0} HP:${w.hp || 0})</span>
       <span>Cost: <input type="number" style="width: 60px; padding: 2px;" value="${w.cost || 0}"
         oninput="CharacterData.weapons[${i}].cost = parseInt(this.value) || 0; App.saveToLocalStorage(); App.renderCurrentStep()"></span>
       <button onclick="CharacterData.weapons.splice(${i},1); App.saveToLocalStorage(); App.renderCurrentStep()">Remove</button>
@@ -2432,7 +2446,7 @@ App.renderStep11 = function() {
     const row = document.createElement('div');
     row.className = 'skill-row';
     row.innerHTML = `
-      <span>${a.name} (AP:${a.armour_points || 0} HP:${a.hit_points || 0})</span>
+      <span>${a.name} (AP:${a.ap || 0}${a.hp ? ' HP:' + a.hp : ''})</span>
       <span>Cost: <input type="number" style="width: 60px; padding: 2px;" value="${a.cost || 0}"
         oninput="CharacterData.armor[${i}].cost = parseInt(this.value) || 0; App.saveToLocalStorage(); App.renderCurrentStep()"></span>
       <button onclick="CharacterData.armor.splice(${i},1); App.saveToLocalStorage(); App.renderCurrentStep()">Remove</button>
@@ -2506,11 +2520,13 @@ App.createAutocomplete = function(containerId, dataSource, placeholder, onSelect
     results.innerHTML = matches.map(item => {
       let detail = '';
       if (item.damage) {
-        // Weapon: show damage and AP/HP
+        // Weapon: show damage, AP/HP, and Size
         detail = `${item.damage}, AP:${item.armour_points || 0} HP:${item.hit_points || 0}`;
+        if (item.size) detail += `, Size:${item.size}`;
       } else if (item.armour_points && !item.damage) {
-        // Armor/shield: show AP/HP
+        // Armor/shield: show AP/HP and Size
         detail = `AP:${item.armour_points || 0} HP:${item.hit_points || 0}`;
+        if (item.size) detail += `, Size:${item.size}`;
       } else if (item.encumbrance && item.encumbrance > 0) {
         // Equipment: show ENC
         detail = `ENC:${item.encumbrance}`;
