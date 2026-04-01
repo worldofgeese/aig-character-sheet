@@ -1016,7 +1016,7 @@ App.changeCharMethod = function(method) {
 };
 
 App.updateCharacteristic = function(stat, value) {
-  value = Math.max(3, Math.min(21, value));
+  value = Math.max(3, Math.min(21, parseInt(value) || 10));
   CharacterData.characteristics[stat] = value;
   CharacterData.attributes = Calc.calculateAllAttributes(CharacterData.characteristics);
   this.saveToLocalStorage();
@@ -1273,7 +1273,7 @@ App.renderStep5 = function() {
 };
 
 App.updateSkillPoints = function(category, skillName, points) {
-  points = Math.max(0, points);
+  points = Math.max(0, parseInt(points) || 0);
   if (category === 'cultural') {
     CharacterData.culturalSkills[skillName] = points;
   } else if (category === 'career') {
