@@ -384,6 +384,109 @@ button.primary:hover { background: #333; }
 
 .toast.success { background: #155724; }
 .toast.error { background: #721c24; }
+
+/* Pocketfold print layout */
+#pocketfold-view {
+  display: none;
+}
+
+#pocketfold-view.printing {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  width: 297mm;
+  height: 210mm;
+  font-size: 7pt;
+  line-height: 1.2;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#pocketfold-view .panel {
+  border: 0.5pt dashed #999;
+  padding: 3mm;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-family: 'Courier New', monospace;
+}
+
+#pocketfold-view .panel.flipped {
+  transform: rotate(180deg);
+}
+
+#pocketfold-view .panel h3 {
+  font-size: 8pt;
+  font-weight: bold;
+  margin-bottom: 2mm;
+  border-bottom: 0.5pt solid #000;
+  padding-bottom: 1mm;
+}
+
+#pocketfold-view .panel.cover {
+  text-align: center;
+  font-family: system-ui, sans-serif;
+}
+
+#pocketfold-view .panel.cover h1 {
+  font-size: 12pt;
+  margin: 5mm 0 3mm;
+  font-weight: bold;
+}
+
+#pocketfold-view .panel.cover h2 {
+  font-size: 9pt;
+  margin: 2mm 0;
+  font-weight: normal;
+}
+
+#pocketfold-view .skill-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 6.5pt;
+  line-height: 1.3;
+}
+
+#pocketfold-view table {
+  width: 100%;
+  font-size: 6.5pt;
+  border-collapse: collapse;
+}
+
+#pocketfold-view table td, #pocketfold-view table th {
+  padding: 0.5mm;
+  border: 0.25pt solid #666;
+}
+
+#pocketfold-view .equipment-list {
+  font-size: 6.5pt;
+  line-height: 1.3;
+}
+
+#pocketfold-view .fold-instructions {
+  font-size: 6pt;
+  line-height: 1.4;
+  margin-top: 2mm;
+  padding-top: 2mm;
+  border-top: 0.5pt solid #999;
+}
+
+@media print {
+  #pocketfold-view.printing {
+    display: grid !important;
+  }
+
+  body.printing-pocketfold #wizard-mode,
+  body.printing-pocketfold #play-mode,
+  body.printing-pocketfold .no-print {
+    display: none !important;
+  }
+
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+}
 </style>
 </head>
 <body>
@@ -394,6 +497,7 @@ button.primary:hover { background: #333; }
     <button onclick="App.switchMode('wizard')" id="btn-wizard">Wizard Mode</button>
     <button onclick="App.switchMode('play')" id="btn-play">Play Mode</button>
     <button onclick="App.printSheet()" id="btn-print" disabled title="Complete character creation first">Print (A4)</button>
+    <button onclick="App.printPocketfold()" id="btn-print-pocketfold" disabled title="Complete character creation first">Print Pocketfold 📖</button>
     <button onclick="App.saveCharacter()">Save (Ctrl+S)</button>
     <button onclick="App.loadCharacter()">Load</button>
   </div>
@@ -473,10 +577,10 @@ button.primary:hover { background: #333; }
         <h2>Combat <span class="page-ref">(Mythras p.74-106)</span></h2>
         <div id="play-combat"></div>
 
-        <h2>Rune Affinities <span class="page-ref">(AiG p.24)</span></h2>
+        <h2>Rune Affinities <span class="page-ref">(Adventures in Glorantha p.24)</span></h2>
         <div id="play-runes"></div>
 
-        <h2>Magic <span class="page-ref">(AiG p.178-220)</span></h2>
+        <h2>Magic <span class="page-ref">(Adventures in Glorantha p.178-220)</span></h2>
         <div id="play-magic"></div>
 
         <h2>Equipment <span class="page-ref">(Mythras p.107-128)</span></h2>
@@ -495,6 +599,26 @@ button.primary:hover { background: #333; }
       </div>
     </div>
   </div>
+</div>
+
+<!-- POCKETFOLD PRINT VIEW -->
+<div id="pocketfold-view">
+  <!-- Panel 7 (upside down) -->
+  <div class="panel flipped" id="pf-panel-7"></div>
+  <!-- Panel 6 (upside down) -->
+  <div class="panel flipped" id="pf-panel-6"></div>
+  <!-- Panel 5 (upside down) -->
+  <div class="panel flipped" id="pf-panel-5"></div>
+  <!-- Panel 4 (upside down) -->
+  <div class="panel flipped" id="pf-panel-4"></div>
+  <!-- Panel 3 (normal) -->
+  <div class="panel" id="pf-panel-3"></div>
+  <!-- Panel 8 (normal) - Back cover -->
+  <div class="panel" id="pf-panel-8"></div>
+  <!-- Panel 1 (normal) - Front cover -->
+  <div class="panel cover" id="pf-panel-1"></div>
+  <!-- Panel 2 (normal) -->
+  <div class="panel" id="pf-panel-2"></div>
 </div>
 
 <script>
@@ -739,6 +863,12 @@ const App = {
       printBtn.disabled = mode !== 'play';
       printBtn.title = mode !== 'play' ? 'Complete character creation first' : 'Print character sheet';
     }
+
+    const pocketfoldBtn = document.getElementById('btn-print-pocketfold');
+    if (pocketfoldBtn) {
+      pocketfoldBtn.disabled = mode !== 'play';
+      pocketfoldBtn.title = mode !== 'play' ? 'Complete character creation first' : 'Print pocketfold booklet';
+    }
     
     if (mode === 'play') {
       this.renderPlayMode();
@@ -869,7 +999,158 @@ const App = {
     }
     window.print();
   },
-  
+
+  printPocketfold() {
+    if (this.mode !== 'play') {
+      this.showToast('Complete character creation first, then switch to Play Mode to print', 'error');
+      return;
+    }
+
+    const char = this.character;
+
+    // Panel 1: Cover
+    document.getElementById('pf-panel-1').innerHTML = `
+      <h1>Adventures in Glorantha</h1>
+      <h2>${char.name || 'Character'}</h2>
+      <div style="margin-top: 3mm; font-size: 8pt;">
+        <div>${char.culture || ''} ${char.career || ''}</div>
+        <div>Age ${char.age || ''}</div>
+      </div>
+    `;
+
+    // Panel 2: Characteristics + Attributes
+    document.getElementById('pf-panel-2').innerHTML = `
+      <h3>Characteristics</h3>
+      <div style="font-size: 6.5pt;">
+        STR ${char.characteristics.STR || 0} | CON ${char.characteristics.CON || 0} | SIZ ${char.characteristics.SIZ || 0}<br>
+        DEX ${char.characteristics.DEX || 0} | INT ${char.characteristics.INT || 0} | POW ${char.characteristics.POW || 0} | CHA ${char.characteristics.CHA || 0}
+      </div>
+      <h3 style="margin-top: 2mm;">Attributes</h3>
+      <div style="font-size: 6.5pt; line-height: 1.4;">
+        Action Points: ${char.attributes.actionPoints || 0}<br>
+        Damage Mod: ${char.attributes.damageModifier || ''}<br>
+        Hit Points: ${char.attributes.hitPoints || 0}<br>
+        Healing Rate: ${char.attributes.healingRate || 0}<br>
+        Luck Points: ${char.attributes.luckPoints || 0}<br>
+        Spirit Combat: ${char.attributes.spiritCombatDamage || ''}<br>
+        Experience Mod: ${char.attributes.experienceModifier || 0}<br>
+        Initiative: ${char.attributes.initiative || 0}
+      </div>
+    `;
+
+    // Panel 3: Hit Locations
+    const locations = char.hitLocations || [];
+    let hitLocsHtml = '<h3>Hit Locations</h3><table><tr><th>Location</th><th>HP</th><th>AP</th></tr>';
+    locations.forEach(loc => {
+      hitLocsHtml += `<tr><td>${loc.location}</td><td>${loc.hp}</td><td>${loc.armor}</td></tr>`;
+    });
+    hitLocsHtml += '</table>';
+    document.getElementById('pf-panel-3').innerHTML = hitLocsHtml;
+
+    // Panels 4 & 5: Skills (only modified skills)
+    const skills = char.skills || {};
+    const modifiedSkills = [];
+    for (let [name, skill] of Object.entries(skills)) {
+      if (skill.base !== undefined && skill.total !== undefined) {
+        const allocated = skill.total - skill.base;
+        if (allocated > 0) {
+          modifiedSkills.push({ name, total: skill.total });
+        }
+      }
+    }
+    modifiedSkills.sort((a, b) => a.name.localeCompare(b.name));
+
+    const half = Math.ceil(modifiedSkills.length / 2);
+    const skills1 = modifiedSkills.slice(0, half);
+    const skills2 = modifiedSkills.slice(half);
+
+    let skillsHtml1 = '<h3>Skills</h3>';
+    skills1.forEach(s => {
+      const dots = '.'.repeat(Math.max(1, 30 - s.name.length - String(s.total).length));
+      skillsHtml1 += `<div class="skill-line"><span>${s.name}</span><span>${dots} ${s.total}%</span></div>`;
+    });
+    document.getElementById('pf-panel-4').innerHTML = skillsHtml1;
+
+    let skillsHtml2 = '<h3>Skills (cont.)</h3>';
+    skills2.forEach(s => {
+      const dots = '.'.repeat(Math.max(1, 30 - s.name.length - String(s.total).length));
+      skillsHtml2 += `<div class="skill-line"><span>${s.name}</span><span>${dots} ${s.total}%</span></div>`;
+    });
+    document.getElementById('pf-panel-5').innerHTML = skillsHtml2;
+
+    // Panel 6: Combat
+    const weapons = char.weapons || [];
+    let weaponsHtml = '<h3>Combat</h3><div style="font-size: 6.5pt;">';
+    weapons.forEach(w => {
+      weaponsHtml += `<div><b>${w.name}</b>: ${w.skill}% | ${w.damage} | ${w.range || '-'}</div>`;
+    });
+    weaponsHtml += '</div>';
+    weaponsHtml += '<div style="margin-top: 2mm; font-size: 6pt;"><b>Special Effects:</b> Trip, Disarm, Maximize Damage, Impale, Bleed, Stun Location, Bypass Armor</div>';
+    document.getElementById('pf-panel-6').innerHTML = weaponsHtml;
+
+    // Panel 7: Magic
+    const runes = char.runes || {};
+    const folkMagic = char.folkMagic || [];
+    let magicHtml = '<h3>Magic</h3>';
+
+    // Rune Affinities
+    magicHtml += '<div style="font-size: 6.5pt;"><b>Rune Affinities:</b><br>';
+    for (let [name, value] of Object.entries(runes)) {
+      if (value > 0) {
+        magicHtml += `${name}: ${value}%<br>`;
+      }
+    }
+    magicHtml += '</div>';
+
+    // Folk Magic
+    if (folkMagic.length > 0) {
+      magicHtml += '<div style="margin-top: 2mm; font-size: 6.5pt;"><b>Folk Magic:</b><br>';
+      folkMagic.forEach(spell => {
+        magicHtml += `${spell}<br>`;
+      });
+      magicHtml += '</div>';
+    }
+
+    // Devotion Pool
+    magicHtml += `<div style="margin-top: 2mm; font-size: 6.5pt;"><b>Devotion Pool:</b> ${char.devotionPool || 0}</div>`;
+    document.getElementById('pf-panel-7').innerHTML = magicHtml;
+
+    // Panel 8: Equipment + Fold Instructions
+    const equipment = char.equipment || [];
+    const money = char.money || {};
+    let equipHtml = '<h3>Equipment & Notes</h3><div class="equipment-list">';
+    equipment.forEach(item => {
+      equipHtml += `• ${item}<br>`;
+    });
+    equipHtml += `</div><div style="margin-top: 2mm; font-size: 6.5pt;">`;
+    if (money.silver || money.copper) {
+      equipHtml += `<b>Money:</b> ${money.silver || 0}s ${money.copper || 0}c<br>`;
+    }
+    equipHtml += `<b>Notes:</b> ${char.notes || ''}</div>`;
+    equipHtml += `<div class="fold-instructions">
+      <b>HOW TO FOLD:</b><br>
+      1. Cut along horizontal center<br>
+      2. Fold top strip behind bottom<br>
+      3. Fold left-to-right accordion-style<br>
+      <br>
+      Tutorial: search "pocketmod fold" on YouTube
+    </div>`;
+    document.getElementById('pf-panel-8').innerHTML = equipHtml;
+
+    // Show pocketfold view and print
+    const pocketfoldView = document.getElementById('pocketfold-view');
+    pocketfoldView.classList.add('printing');
+    document.body.classList.add('printing-pocketfold');
+
+    window.print();
+
+    // Restore normal view after print dialog closes
+    setTimeout(() => {
+      pocketfoldView.classList.remove('printing');
+      document.body.classList.remove('printing-pocketfold');
+    }, 100);
+  },
+
   showToast(message, type = 'success') {
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
@@ -963,7 +1244,7 @@ App.renderStep1 = function() {
   const div = document.createElement('div');
   div.className = 'wizard-step';
   div.innerHTML = `
-    <div class="step-header">Step 1: Character Concept <span class="page-ref">(AiG p.23)</span></div>
+    <div class="step-header">Step 1: Character Concept <span class="page-ref">(Adventures in Glorantha p.23)</span></div>
     <p>Begin by imagining your character. Who are they? What drives them?</p>
     
     <div class="field">
@@ -991,7 +1272,7 @@ App.renderStep2 = function() {
   const remaining = 75 - total;
   
   div.innerHTML = `
-    <div class="step-header">Step 2: Characteristics <span class="page-ref">(AiG p.23, Mythras p.9-11)</span></div>
+    <div class="step-header">Step 2: Characteristics <span class="page-ref">(Adventures in Glorantha p.23, Mythras p.9-11)</span></div>
     <p>Determine your character's seven core characteristics. Human range: 3-21.</p>
     
     <div style="margin: 15px 0;">
@@ -1139,7 +1420,7 @@ App.renderStep4 = function() {
   const div = document.createElement('div');
   div.className = 'wizard-step';
   div.innerHTML = `
-    <div class="step-header">Step 4: Culture & Homeland <span class="page-ref">(AiG p.23, p.25-41)</span></div>
+    <div class="step-header">Step 4: Culture & Homeland <span class="page-ref">(Adventures in Glorantha p.23, p.25-41)</span></div>
     <p>Choose your character's culture. This determines starting skills, combat styles, and cultural passions.</p>
     
     <div class="field">
@@ -1220,7 +1501,7 @@ App.renderStep5 = function() {
   const div = document.createElement('div');
   div.className = 'wizard-step';
   div.innerHTML = `
-    <div class="step-header">Step 5: Cultural Skills & Magic <span class="page-ref">(AiG p.24)</span></div>
+    <div class="step-header">Step 5: Cultural Skills & Magic <span class="page-ref">(Adventures in Glorantha p.24)</span></div>
     <p>Distribute 100 points among your cultural skills. Select 3 Folk Magic spells and 3 Rune Affinities.</p>
     
     <div class="budget-tracker ${remaining < 0 ? 'overspent' : remaining === 0 ? 'complete' : ''}">
@@ -1230,7 +1511,7 @@ App.renderStep5 = function() {
     <h3>Cultural Skills</h3>
     <div id="cultural-skills-list"></div>
     
-    <h3>Rune Affinities <span class="page-ref">(AiG p.24)</span></h3>
+    <h3>Rune Affinities <span class="page-ref">(Adventures in Glorantha p.24)</span></h3>
     <p>Select three runes. Primary: POW×2+30, Secondary: POW×2+20, Tertiary: POW×2+10</p>
     <div class="grid-3">
       <div class="field">
@@ -1413,7 +1694,7 @@ App.renderStep7 = function() {
   const div = document.createElement('div');
   div.className = 'wizard-step';
   div.innerHTML = `
-    <div class="step-header">Step 7: Background Details <span class="page-ref">(AiG p.24)</span></div>
+    <div class="step-header">Step 7: Background Details <span class="page-ref">(Adventures in Glorantha p.24)</span></div>
     <p>Optional details to flesh out your character's history.</p>
     
     <div class="grid-2">
@@ -1435,7 +1716,7 @@ App.renderStep7 = function() {
     </div>
     
     <div class="field">
-      <label>Background Events (see AiG p.24 for tables)</label>
+      <label>Background Events (see Adventures in Glorantha p.24 for tables)</label>
       <textarea oninput="CharacterData.backgroundEvents = this.value; App.saveToLocalStorage()">${CharacterData.backgroundEvents}</textarea>
     </div>
   `;
@@ -1457,7 +1738,7 @@ App.renderStep8 = function() {
   const div = document.createElement('div');
   div.className = 'wizard-step';
   div.innerHTML = `
-    <div class="step-header">Step 8: Career <span class="page-ref">(AiG p.24)</span></div>
+    <div class="step-header">Step 8: Career <span class="page-ref">(Adventures in Glorantha p.24)</span></div>
     <p>Choose your character's career, which provides additional skills and abilities.</p>
     
     <div class="field">
@@ -1573,7 +1854,7 @@ App.renderStep9 = function() {
   const div = document.createElement('div');
   div.className = 'wizard-step';
   div.innerHTML = `
-    <div class="step-header">Step 9: Career Skills & Magic <span class="page-ref">(AiG p.24)</span></div>
+    <div class="step-header">Step 9: Career Skills & Magic <span class="page-ref">(Adventures in Glorantha p.24)</span></div>
     <p>Distribute 100 points among career skills. Select 2 additional Folk Magic spells.</p>
     
     <div class="budget-tracker ${remaining < 0 ? 'overspent' : remaining === 0 ? 'complete' : ''}">
@@ -1691,7 +1972,7 @@ App.renderStep10 = function() {
   const div = document.createElement('div');
   div.className = 'wizard-step';
   div.innerHTML = `
-    <div class="step-header">Step 10: Age & Bonus Points <span class="page-ref">(AiG p.24)</span></div>
+    <div class="step-header">Step 10: Age & Bonus Points <span class="page-ref">(Adventures in Glorantha p.24)</span></div>
     <p>Your age determines how many bonus skill points you receive. Distribute them among your existing skills or add a new Professional Skill or Combat Style as a hobby.</p>
 
     <div class="grid-2">
@@ -2005,7 +2286,7 @@ App.renderStep12 = function() {
   const div = document.createElement('div');
   div.className = 'wizard-step';
   div.innerHTML = `
-    <div class="step-header">Step 12: Review & Play <span class="page-ref">(AiG p.23-24)</span></div>
+    <div class="step-header">Step 12: Review & Play <span class="page-ref">(Adventures in Glorantha p.23-24)</span></div>
     <h2>Character Complete!</h2>
     
     <div style="background: #f5f5f5; padding: 20px; border: 1px solid #000;">
