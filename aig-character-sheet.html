@@ -1319,6 +1319,16 @@ const App = {
     const pocketfoldView = document.getElementById('pocketfold-view');
     pocketfoldView.classList.add('printing');
     document.body.classList.add('printing-pocketfold');
+    
+    // Inject landscape @page rule (can't be conditional on body class in CSS)
+    const landscapeStyle = document.createElement('style');
+    landscapeStyle.id = 'pocketfold-page-style';
+    landscapeStyle.textContent = '@page { size: A4 landscape !important; margin: 0 !important; }';
+    document.head.appendChild(landscapeStyle);
+    
+    // Hide everything except pocketfold for printing
+    document.getElementById('play-mode').style.display = 'none';
+    document.querySelectorAll('.no-print').forEach(el => el.style.display = 'none');
 
     window.print();
 
@@ -1326,7 +1336,11 @@ const App = {
     setTimeout(() => {
       pocketfoldView.classList.remove('printing');
       document.body.classList.remove('printing-pocketfold');
-    }, 100);
+      document.getElementById('play-mode').style.display = '';
+      document.querySelectorAll('.no-print').forEach(el => el.style.display = '');
+      const ls = document.getElementById('pocketfold-page-style');
+      if (ls) ls.remove();
+    }, 500);
   },
 
   showToast(message, type = 'success') {
