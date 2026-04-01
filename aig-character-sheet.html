@@ -456,16 +456,19 @@ button.primary:hover { background: #333; }
     margin: 10px auto;
   }
 
-  /* Bug 4: Fix skill tooltips on mobile - position below and full width */
+  /* Bug 4: Fix skill tooltips on mobile - show at bottom of screen */
   .skill-tooltip .tooltip-text {
     position: fixed;
     left: 10px;
     right: 10px;
-    bottom: auto;
+    bottom: 20px;
     top: auto;
     width: auto;
     transform: none;
     z-index: 9999;
+    font-size: 14px;
+    padding: 12px 16px;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
   }
 }
 
@@ -1924,6 +1927,16 @@ App.renderStep5 = function() {
 
 App.updateSkillPoints = function(category, skillName, points) {
   points = Math.max(0, parseInt(points) || 0);
+  
+  // Enforce max per skill for bonus points
+  if (category === 'bonus') {
+    const ageCategory = Calc.getAgeCategory(CharacterData.age);
+    if (ageCategory && points > ageCategory.maxPerSkill) {
+      points = ageCategory.maxPerSkill;
+      this.showToast(`Maximum ${ageCategory.maxPerSkill} points per skill for ${ageCategory.category} characters`, 'error');
+    }
+  }
+  
   if (category === 'cultural') {
     CharacterData.culturalSkills[skillName] = points;
   } else if (category === 'career') {
