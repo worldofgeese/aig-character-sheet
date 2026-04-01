@@ -6,6 +6,10 @@
 <title>Adventures in Glorantha Character Sheet</title>
 <style>
 /* System fonts only */
+:root {
+  --accent: #0066cc;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -337,6 +341,87 @@ button.primary:hover { background: #333; }
   font-size: 18px;
   font-weight: 600;
   margin-top: 8px;
+}
+
+/* New player friendly features */
+.help-box {
+  background: #f0f4ff;
+  border-left: 3px solid var(--accent);
+  padding: 10px 15px;
+  margin: 10px 0;
+  font-size: 0.9em;
+  line-height: 1.5;
+  border-radius: 0 4px 4px 0;
+}
+.help-box ul { margin: 5px 0; padding-left: 20px; }
+.help-box li { margin: 3px 0; }
+
+.skill-tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+  margin-left: 4px;
+  font-size: 0.8em;
+  color: var(--accent);
+}
+.skill-tooltip .tooltip-text {
+  visibility: hidden;
+  background: #333;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 1000;
+  width: 250px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 125%;
+  font-size: 12px;
+  line-height: 1.4;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.skill-tooltip:hover .tooltip-text,
+.skill-tooltip:focus .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+.attribute-card {
+  background: #f8f9fa;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin: 4px 0;
+}
+.attribute-name { font-weight: bold; font-size: 0.85em; color: #666; }
+.attribute-value { font-size: 1.4em; font-weight: bold; }
+.attribute-help { font-size: 0.8em; color: #888; margin-top: 2px; }
+
+.build-card {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 4px;
+}
+.build-name { font-weight: 600; font-size: 1em; margin-bottom: 4px; }
+.build-detail { font-size: 0.85em; color: #555; margin: 2px 0; }
+.build-tip { font-size: 0.9em; font-style: italic; margin-top: 4px; }
+
+.character-summary {
+  background: #f8f4e8;
+  border: 1px solid #d4c9a8;
+  padding: 15px 20px;
+  border-radius: 6px;
+  font-style: italic;
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.body-diagram {
+  margin: 15px auto;
+  display: block;
 }
 
 /* Print styles */
@@ -674,6 +759,74 @@ const HIT_LOCATIONS = [
   {name: 'Right Arm', range: '16-18', hpMod: -1},
   {name: 'Left Arm', range: '19-20', hpMod: -1}
 ];
+
+const SKILL_DESCRIPTIONS = {
+  "Athletics": "Running, jumping, climbing, throwing. Used for physical feats of agility and endurance.",
+  "Brawn": "Raw physical power. Lifting, breaking, pushing, holding doors shut.",
+  "Conceal": "Hiding objects on your person or in the environment.",
+  "Customs": "Knowledge of your own culture's laws, traditions, and social norms.",
+  "Dance": "Formal and ritual dancing. Also used for balance and grace.",
+  "Deceit": "Lying, misdirection, and fast-talking. Opposed by Insight.",
+  "Drive": "Handling carts, chariots, and wagons.",
+  "Endurance": "Resisting fatigue, poison, disease, and harsh conditions.",
+  "Evade": "Dodging attacks and diving for cover. You end up prone afterward.",
+  "First Aid": "Emergency wound treatment. Stops bleeding and restores 1d3 hit points.",
+  "Influence": "Persuasion, negotiation, and charm. Getting people to agree with you.",
+  "Insight": "Reading people — detecting lies, sensing motives, understanding emotions.",
+  "Locale": "Knowledge of local geography, landmarks, and navigation in familiar areas.",
+  "Perception": "Spotting hidden things, noticing ambushes, finding clues, and general awareness.",
+  "Ride": "Staying mounted, controlling a horse or other mount in difficult situations.",
+  "Sing": "Vocal performance. Also used for storytelling and oral tradition.",
+  "Stealth": "Moving quietly, hiding in shadows, and avoiding detection.",
+  "Swim": "Swimming and diving. Failing can mean drowning.",
+  "Unarmed": "Fighting without weapons. Punching, kicking, grappling.",
+  "Willpower": "Mental resilience. Resisting fear, magic, intimidation, and temptation.",
+  "Boating": "Rowing, sailing small boats, and river navigation.",
+  "Acrobatics": "Tumbling, backflips, tightrope walking. Flashy physical stunts.",
+  "Acting": "Pretending to be someone else. Different from Deceit — this is theatrical.",
+  "Commerce": "Buying, selling, and evaluating the worth of goods and services.",
+  "Courtesy": "Court etiquette, formal address, and navigating noble society.",
+  "Healing": "Long-term medical care, surgery, treating disease. Slower but more thorough than First Aid.",
+  "Lore": "Academic knowledge of a specific subject (History, Mythology, etc.).",
+  "Musicianship": "Playing musical instruments. Used for entertainment and ritual.",
+  "Navigate": "Finding your way across unfamiliar terrain using stars, landmarks, and maps.",
+  "Seduction": "Romantic or sexual persuasion.",
+  "Streetwise": "Knowing the criminal underworld — finding black markets, fences, and underground contacts.",
+  "Survival": "Living off the land — finding food, water, shelter in the wilderness.",
+  "Track": "Following footprints, trails, and signs left by creatures or people.",
+  "Folk Magic": "Simple, common magic available to everyone. Spells like Bladesharp, Heal, and Protection."
+};
+
+const CULTURE_BUILDS = {
+  "Praxian": [
+    { name: "Beast Rider Warrior", stats: "High STR, CON", career: "Warrior", style: "Beast Rider Warrior", tip: "Mounted combat specialist. Lance charges and archery from the saddle." },
+    { name: "Desert Shaman", stats: "High POW, INT", career: "Shaman", style: "Desert Skirmisher", tip: "Spirit talker who survives the wastes through cunning and magic." },
+    { name: "Tribal Hunter", stats: "High DEX, CON", career: "Hunter", style: "Desert Skirmisher", tip: "Patient tracker and skirmisher. Javelin and sling from a distance." }
+  ],
+  "Sartarite/Heortling": [
+    { name: "Orlanthi Thane", stats: "High STR, CHA", career: "Warrior", style: "Orlanthi Warrior", tip: "Sword-and-shield fighter who leads from the front." },
+    { name: "Wind Lord Aspirant", stats: "High POW, STR", career: "Priest", style: "Thane's Guard", tip: "Devotee of Orlanth who combines martial prowess with divine magic." },
+    { name: "Clan Skald", stats: "High CHA, INT", career: "Entertainer", style: "Orlanthi Warrior", tip: "Storyteller and musician who inspires the warband with tales of glory." }
+  ],
+  "Lunar Heartland": [
+    { name: "Lunar Legionary", stats: "High STR, CON", career: "Warrior", style: "Lunar Legionary", tip: "Disciplined soldier in the Emperor's armies. Shield wall and scimitar." },
+    { name: "Seven Mothers Priestess", stats: "High POW, CHA", career: "Priest", style: "Palace Guard", tip: "Devoted to the Red Goddess. Combines faith with political cunning." },
+    { name: "Heartland Spy", stats: "High DEX, CHA", career: "Agent", style: "Noble Cavalry", tip: "Works in the shadows for the Lunar Empire. Charm and a hidden blade." }
+  ],
+  "Esrolian": [
+    { name: "Earth Priestess", stats: "High POW, CHA", career: "Priest", style: "Clan Protector", tip: "Devoted to the Earth goddesses. Political power through the temples." },
+    { name: "Citizen Soldier", stats: "High STR, CON", career: "Warrior", style: "Citizen Legionary", tip: "Formation fighter defending the city-states. Spear, shield, and discipline." },
+    { name: "Temple Scholar", stats: "High INT, CHA", career: "Scholar", style: "City-State Phalangite", tip: "Esrolian intellectual. Knows more about Glorantha than most." }
+  ],
+  "Balazaring": [
+    { name: "Hawk Hunter", stats: "High DEX, CON", career: "Hunter", style: "Hawk Slayer", tip: "Hunts with trained hawks in the wild hills. Expert with longspear." },
+    { name: "Clan Raider", stats: "High STR, DEX", career: "Warrior", style: "Hunter Raider", tip: "Fast and vicious. Raids neighbouring clans for cattle and glory." }
+  ],
+  "Telmori Hsunchen": [
+    { name: "Wolf Pack Alpha", stats: "High STR, POW", career: "Warrior", style: "Wolf Pack Hunter", tip: "Fights alongside wolves. Can shapeshift during the full moon." },
+    { name: "Wolfbrother Shaman", stats: "High POW, INT", career: "Shaman", style: "Wolfbrother", tip: "Speaks to wolf spirits and the spirit of Telmor." }
+  ]
+};
 
 // =============================================================================
 // CALCULATION FUNCTIONS (ported from Python)
@@ -1239,6 +1392,124 @@ const App = {
 
 
 // =============================================================================
+// UTILITY FUNCTIONS FOR NEW PLAYER FEATURES
+// =============================================================================
+
+App.skillWithTooltip = function(name) {
+  const desc = SKILL_DESCRIPTIONS[name] || SKILL_DESCRIPTIONS[name.split('(')[0].trim()];
+  if (desc) {
+    return `${name} <span class="skill-tooltip" tabindex="0">ℹ️<span class="tooltip-text">${desc}</span></span>`;
+  }
+  return name;
+};
+
+App.renderBodyDiagram = function(hitPoints, includeArmor = false) {
+  const head = hitPoints['Head'] || 0;
+  const chest = hitPoints['Chest'] || 0;
+  const abdomen = hitPoints['Abdomen'] || 0;
+  const rightArm = hitPoints['Right Arm'] || 0;
+  const leftArm = hitPoints['Left Arm'] || 0;
+  const rightLeg = hitPoints['Right Leg'] || 0;
+  const leftLeg = hitPoints['Left Leg'] || 0;
+
+  return `
+    <svg viewBox="0 0 200 400" width="150" class="body-diagram">
+      <!-- Head -->
+      <circle cx="100" cy="40" r="25" fill="#f0f0f0" stroke="#333"/>
+      <text x="100" y="45" text-anchor="middle" font-size="11">${head} HP</text>
+
+      <!-- Chest -->
+      <rect x="65" y="70" width="70" height="60" rx="5" fill="#f0f0f0" stroke="#333"/>
+      <text x="100" y="105" text-anchor="middle" font-size="11">${chest} HP</text>
+
+      <!-- Abdomen -->
+      <rect x="70" y="135" width="60" height="40" rx="3" fill="#f0f0f0" stroke="#333"/>
+      <text x="100" y="160" text-anchor="middle" font-size="11">${abdomen} HP</text>
+
+      <!-- Left Arm (viewer's left = character's right) -->
+      <rect x="30" y="75" width="30" height="70" rx="5" fill="#f0f0f0" stroke="#333"/>
+      <text x="45" y="115" text-anchor="middle" font-size="10">${rightArm} HP</text>
+
+      <!-- Right Arm (viewer's right = character's left) -->
+      <rect x="140" y="75" width="30" height="70" rx="5" fill="#f0f0f0" stroke="#333"/>
+      <text x="155" y="115" text-anchor="middle" font-size="10">${leftArm} HP</text>
+
+      <!-- Left Leg -->
+      <rect x="70" y="180" width="25" height="90" rx="5" fill="#f0f0f0" stroke="#333"/>
+      <text x="82" y="230" text-anchor="middle" font-size="10">${rightLeg} HP</text>
+
+      <!-- Right Leg -->
+      <rect x="105" y="180" width="25" height="90" rx="5" fill="#f0f0f0" stroke="#333"/>
+      <text x="117" y="230" text-anchor="middle" font-size="10">${leftLeg} HP</text>
+    </svg>
+  `;
+};
+
+App.generateCharacterSummary = function() {
+  const char = CharacterData;
+  if (!char.name || !char.culture || !char.career) {
+    return "Complete your character to see a summary.";
+  }
+
+  // Get top 5 non-combat skills
+  const allSkills = {...char.culturalSkills, ...char.careerSkills, ...char.bonusSkills};
+  const skillsList = Object.entries(allSkills)
+    .filter(([name]) => !char.combatStyles.some(cs => cs.name === name))
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
+
+  // Get combat styles
+  const combatStyles = char.combatStyles.map(cs => cs.name).join(', ');
+
+  // Get highest characteristic
+  const charEntries = Object.entries(char.characteristics);
+  const highestChar = charEntries.reduce((a, b) => a[1] > b[1] ? a : b);
+  const charName = highestChar[0];
+
+  // Build summary
+  let summary = `${char.name} is a`;
+  const culture = char.culture.toLowerCase();
+  summary += ` ${culture} ${char.career.toLowerCase()}, aged ${char.age || 21}. `;
+
+  // Add personality trait based on highest characteristic
+  const charTraits = {
+    'STR': 'physically powerful',
+    'CON': 'resilient and tough',
+    'SIZ': 'imposing',
+    'DEX': 'quick and agile',
+    'INT': 'intelligent',
+    'POW': 'spiritually strong',
+    'CHA': 'charming'
+  };
+  summary += `${char.name.split(' ')[0]} is ${charTraits[charName] || 'capable'}`;
+
+  // Add top skills
+  if (skillsList.length > 0) {
+    summary += ` and excels at `;
+    const skillDescriptions = skillsList.slice(0, 3).map(([name, val]) => `${name} (${val}%)`);
+    summary += skillDescriptions.join(', ');
+  }
+  summary += '. ';
+
+  // Add combat info
+  if (combatStyles) {
+    summary += `In combat, ${char.name.split(' ')[0]} fights with ${combatStyles}. `;
+  }
+
+  // Add passions if any
+  if (char.passions && char.passions.length > 0) {
+    const mainPassions = char.passions.filter(p => p.name).slice(0, 2);
+    if (mainPassions.length > 0) {
+      summary += `${char.name.split(' ')[0]} is driven by `;
+      summary += mainPassions.map(p => p.name).join(' and ');
+      summary += '.';
+    }
+  }
+
+  return summary;
+};
+
+// =============================================================================
 // WIZARD STEP RENDERERS
 // =============================================================================
 
@@ -1276,7 +1547,20 @@ App.renderStep2 = function() {
   div.innerHTML = `
     <div class="step-header">Step 2: Characteristics <span class="page-ref">(Adventures in Glorantha p.23, Mythras p.9-11)</span></div>
     <p>Determine your character's seven core characteristics. Human range: 3-21.</p>
-    
+
+    <div class="help-box">
+      <b>What do these mean?</b>
+      <ul>
+        <li><b>STR</b> (Strength) — How strong you are. Affects damage in melee and how much you can carry.</li>
+        <li><b>CON</b> (Constitution) — Your health and stamina. Determines hit points and healing speed.</li>
+        <li><b>SIZ</b> (Size) — Your physical size. Affects hit points, damage, and how hard you are to knock down.</li>
+        <li><b>DEX</b> (Dexterity) — Agility and reflexes. Affects action points, initiative, and many skills.</li>
+        <li><b>INT</b> (Intelligence) — Reasoning and memory. Affects action points, initiative, and knowledge skills.</li>
+        <li><b>POW</b> (Power) — Spiritual strength and willpower. Determines magic points and luck points.</li>
+        <li><b>CHA</b> (Charisma) — Force of personality. Affects social skills and experience advancement.</li>
+      </ul>
+    </div>
+
     <div style="margin: 15px 0;">
       <label><input type="radio" name="char-method" value="point-buy" ${pointBuy ? 'checked' : ''} onchange="App.changeCharMethod('point-buy')"> 
         Point Buy (75 points, default)</label>
@@ -1360,51 +1644,64 @@ App.renderStep3 = function() {
   div.innerHTML = `
     <div class="step-header">Step 3: Attributes <span class="page-ref">(Mythras p.11-12)</span></div>
     <p>These values are calculated automatically from your characteristics.</p>
-    
+
     <div class="attributes-grid">
-      <div class="attr-box">
-        <label>Action Points</label>
-        <div class="value">${CharacterData.attributes.actionPoints}</div>
+      <div class="attribute-card">
+        <div class="attribute-name">Action Points</div>
+        <div class="attribute-value">${CharacterData.attributes.actionPoints}</div>
+        <div class="attribute-help">How many actions you get per combat round — attack, parry, cast a spell, or move.</div>
       </div>
-      <div class="attr-box">
-        <label>Damage Modifier</label>
-        <div class="value">${CharacterData.attributes.damageModifier}</div>
+      <div class="attribute-card">
+        <div class="attribute-name">Damage Modifier</div>
+        <div class="attribute-value">${CharacterData.attributes.damageModifier}</div>
+        <div class="attribute-help">Extra damage (or penalty) added to your melee attacks based on your size and strength.</div>
       </div>
-      <div class="attr-box">
-        <label>Experience Modifier</label>
-        <div class="value">${CharacterData.attributes.experienceModifier}</div>
+      <div class="attribute-card">
+        <div class="attribute-name">Experience Modifier</div>
+        <div class="attribute-value">${CharacterData.attributes.experienceModifier}</div>
+        <div class="attribute-help">Bonus (or penalty) to improvement rolls between adventures.</div>
       </div>
-      <div class="attr-box">
-        <label>Healing Rate</label>
-        <div class="value">${CharacterData.attributes.healingRate}</div>
+      <div class="attribute-card">
+        <div class="attribute-name">Healing Rate</div>
+        <div class="attribute-value">${CharacterData.attributes.healingRate}</div>
+        <div class="attribute-help">How many hit points you naturally recover per day of rest.</div>
       </div>
-      <div class="attr-box">
-        <label>Initiative Bonus</label>
-        <div class="value">+${CharacterData.attributes.initiativeBonus}</div>
+      <div class="attribute-card">
+        <div class="attribute-name">Initiative Bonus</div>
+        <div class="attribute-value">+${CharacterData.attributes.initiativeBonus}</div>
+        <div class="attribute-help">Added to your initiative roll to determine who acts first in combat.</div>
       </div>
-      <div class="attr-box">
-        <label>Luck Points</label>
-        <div class="value">${CharacterData.attributes.luckPoints}</div>
+      <div class="attribute-card">
+        <div class="attribute-name">Luck Points</div>
+        <div class="attribute-value">${CharacterData.attributes.luckPoints}</div>
+        <div class="attribute-help">Spend these to re-roll a failed skill check or reduce damage. Very precious!</div>
       </div>
-      <div class="attr-box">
-        <label>Magic Points</label>
-        <div class="value">${CharacterData.attributes.magicPoints}</div>
+      <div class="attribute-card">
+        <div class="attribute-name">Magic Points (MP)</div>
+        <div class="attribute-value">${CharacterData.attributes.magicPoints}</div>
+        <div class="attribute-help">Fuel for casting spells. Equal to your POW. Regenerate daily.</div>
       </div>
-      <div class="attr-box">
-        <label>Movement Rate</label>
-        <div class="value">6m</div>
+      <div class="attribute-card">
+        <div class="attribute-name">Movement Rate</div>
+        <div class="attribute-value">6m</div>
+        <div class="attribute-help">How far you can move in a combat round (in metres).</div>
       </div>
     </div>
     
     <h3>Hit Points by Location</h3>
-    <div class="hit-locations">
-      ${HIT_LOCATIONS.map(loc => `
-        <div style="display: grid; grid-template-columns: 120px 80px 80px; gap: 10px; margin: 4px 0;">
-          <div>${loc.name}</div>
-          <div>${loc.range}</div>
-          <div style="font-weight: 600;">${CharacterData.attributes.hitPoints[loc.name]} HP</div>
-        </div>
-      `).join('')}
+    <div style="display: grid; grid-template-columns: 200px 1fr; gap: 20px; align-items: start;">
+      <div>
+        ${this.renderBodyDiagram(CharacterData.attributes.hitPoints)}
+      </div>
+      <div class="hit-locations">
+        ${HIT_LOCATIONS.map(loc => `
+          <div style="display: grid; grid-template-columns: 120px 80px 80px; gap: 10px; margin: 4px 0;">
+            <div>${loc.name}</div>
+            <div>${loc.range}</div>
+            <div style="font-weight: 600;">${CharacterData.attributes.hitPoints[loc.name]} HP</div>
+          </div>
+        `).join('')}
+      </div>
     </div>
     
     <h3>Encumbrance</h3>
@@ -1423,7 +1720,7 @@ App.renderStep4 = function() {
   div.className = 'wizard-step';
   div.innerHTML = `
     <div class="step-header">Step 4: Culture & Homeland <span class="page-ref">(Adventures in Glorantha p.23, p.25-41)</span></div>
-    <p>Choose your character's culture. This determines starting skills, combat styles, and cultural passions.</p>
+    <p>Your culture shapes who you are — the skills you learned growing up, the fighting styles your people use, and what you believe in. Pick the culture that fits your character concept.</p>
     
     <div class="field">
       <label>Culture</label>
@@ -1487,6 +1784,31 @@ App.renderCultureDetails = function() {
       <h4>Folk Magic Options</h4>
       <p>${culture.folkMagic.join(', ')}</p>
     </div>
+
+    ${this.renderCultureBuilds(culture.name)}
+  `;
+};
+
+App.renderCultureBuilds = function(cultureName) {
+  const builds = CULTURE_BUILDS[cultureName];
+  if (!builds || builds.length === 0) return '';
+
+  return `
+    <div class="collapsible" style="margin-top: 15px;">
+      <div class="collapsible-header" onclick="App.toggleCollapsible(this)">
+        💡 Suggested Character Builds for ${cultureName}
+      </div>
+      <div class="collapsible-content hidden">
+        <p style="margin-bottom: 10px; font-size: 0.9em;">These are suggestions to help new players. Feel free to create your own unique character!</p>
+        ${builds.map(build => `
+          <div class="build-card">
+            <div class="build-name">${build.name}</div>
+            <div class="build-detail">Stats: ${build.stats} | Career: ${build.career} | Style: ${build.style}</div>
+            <div class="build-tip">${build.tip}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
   `;
 };
 
@@ -1504,7 +1826,7 @@ App.renderStep5 = function() {
   div.className = 'wizard-step';
   div.innerHTML = `
     <div class="step-header">Step 5: Cultural Skills & Magic <span class="page-ref">(Adventures in Glorantha p.24)</span></div>
-    <p>Distribute 100 points among your cultural skills. Select 3 Folk Magic spells and 3 Rune Affinities.</p>
+    <p>These are the skills your character learned growing up in their culture. You have 100 points to distribute among them. Put more points in skills you want your character to be good at.</p>
     
     <div class="budget-tracker ${remaining < 0 ? 'overspent' : remaining === 0 ? 'complete' : ''}">
       Points Remaining: ${remaining} / 100
@@ -1555,8 +1877,8 @@ App.renderStep5 = function() {
     const row = document.createElement('div');
     row.style.cssText = 'display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin: 4px 0;';
     row.innerHTML = `
-      <label>${skillName}</label>
-      <input type="number" min="0" max="100" value="${currentValue}" 
+      <label>${this.skillWithTooltip(skillName)}</label>
+      <input type="number" min="0" max="100" value="${currentValue}"
         onchange="App.updateSkillPoints('cultural', '${skillName}', parseInt(this.value))">
     `;
     skillsList.appendChild(row);
@@ -1741,7 +2063,7 @@ App.renderStep8 = function() {
   div.className = 'wizard-step';
   div.innerHTML = `
     <div class="step-header">Step 8: Career <span class="page-ref">(Adventures in Glorantha p.24)</span></div>
-    <p>Choose your character's career, which provides additional skills and abilities.</p>
+    <p>Your career is what your character does for a living. It determines which professional skills you can learn. A Warrior fights, a Merchant trades, a Shaman speaks to spirits.</p>
     
     <div class="field">
       <label>Career</label>
@@ -1975,7 +2297,7 @@ App.renderStep10 = function() {
   div.className = 'wizard-step';
   div.innerHTML = `
     <div class="step-header">Step 10: Age & Bonus Points <span class="page-ref">(Adventures in Glorantha p.24)</span></div>
-    <p>Your age determines how many bonus skill points you receive. Distribute them among your existing skills or add a new Professional Skill or Combat Style as a hobby.</p>
+    <p>These are extra skill points from life experience. Older characters get more points but may have physical penalties. Spend these on any skills you want to improve — or pick up a new hobby!</p>
 
     <div class="grid-2">
       <div>
@@ -2011,7 +2333,10 @@ App.renderStep10 = function() {
     const row = document.createElement('div');
     row.className = 'skill-row';
     row.innerHTML = `
-      <input type="text" value="${skillName}" readonly>
+      <div style="display: flex; align-items: center;">
+        <input type="text" value="${skillName}" readonly style="flex: 1;">
+        ${this.skillWithTooltip(skillName)}
+      </div>
       <input type="number" min="0" max="${ageCategory ? ageCategory.maxPerSkill : 100}" value="${points}"
         onchange="App.updateSkillPoints('bonus', '${skillName}', parseInt(this.value))">
       <button onclick="App.removeBonusSkill('${skillName}')">Remove</button>
@@ -2056,6 +2381,7 @@ App.renderStep11 = function() {
   div.className = 'wizard-step';
   div.innerHTML = `
     <div class="step-header">Step 11: Equipment & Money <span class="page-ref">(Mythras p.107-128)</span></div>
+    <p>Buy weapons, armor, and gear with your starting money. Your culture determines how much money you start with.</p>
     <p>Starting money formula: <strong>${culture ? culture.startingMoney : '0'}</strong></p>
     <button onclick="App.rollStartingMoney()">🎲 Roll Starting Money</button>
 
@@ -2290,7 +2616,11 @@ App.renderStep12 = function() {
   div.innerHTML = `
     <div class="step-header">Step 12: Review & Play <span class="page-ref">(Adventures in Glorantha p.23-24)</span></div>
     <h2>Character Complete!</h2>
-    
+
+    <div class="character-summary">
+      ${this.generateCharacterSummary()}
+    </div>
+
     <div style="background: #f5f5f5; padding: 20px; border: 1px solid #000;">
       <h3>${CharacterData.name || 'Unnamed Character'}</h3>
       <p><strong>Culture:</strong> ${CharacterData.culture}</p>
