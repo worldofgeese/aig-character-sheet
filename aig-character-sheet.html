@@ -2224,11 +2224,6 @@ App.renderStep9 = function() {
     <h3>Career Skills (any skills from cultural lists)</h3>
     <div id="career-skills-list"></div>
     <button onclick="App.addCareerSkill()">+ Add Skill</button>
-    <div id="add-career-skill-input" class="inline-add-row" style="display: none;">
-      <input type="text" placeholder="e.g. Acrobatics, Commerce, Lore (any)..." style="flex: 1; min-width: 0;"
-        onkeydown="if(event.key==='Enter'){App.confirmCareerSkill()}">
-      <button onclick="App.confirmCareerSkill()" class="primary" style="white-space: nowrap;">Add</button>
-    </div>
     
     <h3>Additional Folk Magic (select 2 more)</h3>
     <div id="career-folk-magic-list"></div>
@@ -2266,24 +2261,23 @@ App.renderStep9 = function() {
 };
 
 App.addCareerSkill = function() {
-  const container = document.getElementById('add-career-skill-input');
-  if (container) {
-    container.style.display = container.style.display === 'none' ? 'flex' : 'none';
-    if (container.style.display === 'flex') {
-      container.querySelector('input').focus();
+  const allProfSkills = [
+    'Acrobatics', 'Acting', 'Art (any)', 'Binding', 'Bureaucracy', 'Commerce', 'Courtesy',
+    'Craft (any)', 'Culture (any)', 'Devotion', 'Disguise', 'Engineering', 'Exhort',
+    'Folk Magic', 'Gambling', 'Healing', 'Invocation', 'Language (any)', 'Literacy',
+    'Lockpicking', 'Lore (any)', 'Mechanisms', 'Meditation', 'Musicianship', 'Mysticism',
+    'Navigation', 'Oratory', 'Seamanship', 'Seduction', 'Shaping', 'Sleight',
+    'Streetwise', 'Survival', 'Teach', 'Track', 'Trance',
+    'Combat Style (Cultural Style)', 'Combat Style (Speciality Style)'
+  ].map(name => ({ name }));
+  
+  this.createAutocomplete('career-skills-list', allProfSkills, 'Start typing skill name...', (skill) => {
+    if (!CharacterData.careerSkills[skill.name]) {
+      CharacterData.careerSkills[skill.name] = 0;
+      this.saveToLocalStorage();
+      this.renderCurrentStep();
     }
-    return;
-  }
-};
-
-App.confirmCareerSkill = function() {
-  const input = document.querySelector('#add-career-skill-input input');
-  const skillName = input ? input.value.trim() : '';
-  if (skillName && !CharacterData.careerSkills[skillName]) {
-    CharacterData.careerSkills[skillName] = 0;
-    this.saveToLocalStorage();
-    this.renderCurrentStep();
-  }
+  });
 };
 
 App.removeCareerSkill = function(skillName) {
@@ -2354,11 +2348,6 @@ App.renderStep10 = function() {
     <h3>Distribute Bonus Points</h3>
     <div id="bonus-skills-list"></div>
     <button onclick="App.addBonusSkill()">+ Add Hobby Skill (Professional Skill or Combat Style)</button>
-    <div id="add-bonus-skill-input" class="inline-add-row" style="display: none;">
-      <input type="text" placeholder="e.g. Acrobatics, Commerce, Lore (any)..." style="flex: 1; min-width: 0;"
-        onkeydown="if(event.key==='Enter'){App.confirmBonusSkill()}">
-      <button onclick="App.confirmBonusSkill()" class="primary" style="white-space: nowrap;">Add</button>
-    </div>
   `;
 
   const skillsList = div.querySelector('#bonus-skills-list');
@@ -2369,9 +2358,9 @@ App.renderStep10 = function() {
     const row = document.createElement('div');
     row.className = 'skill-row';
     row.innerHTML = `
-      <div style="display: flex; align-items: center;">
+      <div style="display: flex; align-items: center; gap: 4px;">
         <input type="text" value="${skillName}" readonly style="flex: 1;">
-        ${this.skillWithTooltip(skillName)}
+        <span class="skill-tooltip" tabindex="0">ℹ️<span class="tooltip-text">${(SKILL_DESCRIPTIONS[skillName] || SKILL_DESCRIPTIONS[(skillName || '').split('(')[0].trim()] || '')}</span></span>
       </div>
       <input type="number" min="0" max="${ageCategory ? ageCategory.maxPerSkill : 100}" value="${points}"
         onchange="App.updateSkillPoints('bonus', '${skillName}', parseInt(this.value))">
@@ -2384,24 +2373,28 @@ App.renderStep10 = function() {
 };
 
 App.addBonusSkill = function() {
-  const container = document.getElementById('add-bonus-skill-input');
-  if (container) {
-    container.style.display = container.style.display === 'none' ? 'flex' : 'none';
-    if (container.style.display === 'flex') {
-      container.querySelector('input').focus();
+  // Use autocomplete instead of plain text input
+  const container = document.getElementById('bonus-skills-list');
+  if (!container) return;
+  
+  // Build list of available professional skills + combat styles
+  const allProfSkills = [
+    'Acrobatics', 'Acting', 'Art (any)', 'Binding', 'Bureaucracy', 'Commerce', 'Courtesy',
+    'Craft (any)', 'Culture (any)', 'Devotion', 'Disguise', 'Engineering', 'Exhort',
+    'Folk Magic', 'Gambling', 'Healing', 'Invocation', 'Language (any)', 'Literacy',
+    'Lockpicking', 'Lore (any)', 'Mechanisms', 'Meditation', 'Musicianship', 'Mysticism',
+    'Navigation', 'Oratory', 'Seamanship', 'Seduction', 'Shaping', 'Sleight',
+    'Streetwise', 'Survival', 'Teach', 'Track', 'Trance',
+    'Combat Style (Cultural Style)', 'Combat Style (Speciality Style)'
+  ].map(name => ({ name }));
+  
+  this.createAutocomplete('bonus-skills-list', allProfSkills, 'Start typing skill name...', (skill) => {
+    if (!CharacterData.bonusSkills[skill.name]) {
+      CharacterData.bonusSkills[skill.name] = 0;
+      this.saveToLocalStorage();
+      this.renderCurrentStep();
     }
-    return;
-  }
-};
-
-App.confirmBonusSkill = function() {
-  const input = document.querySelector('#add-bonus-skill-input input');
-  const skillName = input ? input.value.trim() : '';
-  if (skillName && !CharacterData.bonusSkills[skillName]) {
-    CharacterData.bonusSkills[skillName] = 0;
-    this.saveToLocalStorage();
-    this.renderCurrentStep();
-  }
+  });
 };
 
 App.removeBonusSkill = function(skillName) {
