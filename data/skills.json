@@ -1,0 +1,1178 @@
+[
+  {
+    "name": "A\\xa0concept or ideal",
+    "base_stats": [
+      "POW",
+      "INT"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "A person in a platonic context (a friendship or loyalty, for example)",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "A person in an averse context",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "A person, in a romantic or familial context (Loved one's pow+cha)",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "A place",
+    "base_stats": [
+      "POW",
+      "INT"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "A race or species",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "Acrobatics",
+    "base_stats": [
+      "STR",
+      "DEX"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Acting",
+    "base_stats": [
+      "CHA",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "An object or substance",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "An organisation or group of people",
+    "base_stats": [
+      "POW",
+      "INT"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "Art (any)",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Athletics",
+    "base_stats": [
+      "STR",
+      "DEX"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Binding",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Binding (Cult Totem or Tradition)",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Boating",
+    "base_stats": [
+      "STR",
+      "CON"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Boating/Ride",
+    "base_stats": [
+      "+++",
+      "+++"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Brawn",
+    "base_stats": [
+      "STR",
+      "SIZ"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Bureaucracy",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Combat Style (Concealable Weapons Style)",
+    "base_stats": [
+      "STR",
+      "DEX"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Combat Style (Cultural Style)",
+    "base_stats": [
+      "STR",
+      "DEX"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Combat Style (Speciality Style)",
+    "base_stats": [
+      "STR",
+      "DEX"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Combat Style (Specific Hunting or Cultural Style)",
+    "base_stats": [
+      "STR",
+      "DEX"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Combat Style (Specific Shipboard or Cultural Style)",
+    "base_stats": [
+      "STR",
+      "DEX"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Commerce",
+    "base_stats": [
+      "INT",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Conceal",
+    "base_stats": [
+      "DEX",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Courtesy",
+    "base_stats": [
+      "INT",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Craft (Alchemy)",
+    "base_stats": [
+      "DEX",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Craft (Animal Husbandry)",
+    "base_stats": [
+      "DEX",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Craft (any)",
+    "base_stats": [
+      "DEX",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Craft (Hunting Related)",
+    "base_stats": [
+      "DEX",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Craft (Mining)",
+    "base_stats": [
+      "DEX",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Craft (Primary)",
+    "base_stats": [
+      "DEX",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Craft (Secondary)",
+    "base_stats": [
+      "DEX",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Craft (Specific Physiological Speciality)",
+    "base_stats": [
+      "DEX",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Craft (Specific Shipboard Speciality)",
+    "base_stats": [
+      "DEX",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Culture (any)",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Customs()",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 40
+  },
+  {
+    "name": "Dance",
+    "base_stats": [
+      "DEX",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Deceit",
+    "base_stats": [
+      "INT",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Devotion",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Devotion (Pantheon Cult or God)",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Disguise",
+    "base_stats": [
+      "INT",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Drive",
+    "base_stats": [
+      "DEX",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Endurance",
+    "base_stats": [
+      "CON",
+      "CON"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Engineering",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Evade",
+    "base_stats": [
+      "DEX",
+      "DEX"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Exhort",
+    "base_stats": [
+      "INT",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "First Aid",
+    "base_stats": [
+      "INT",
+      "DEX"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Folk Magic",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "Gambling",
+    "base_stats": [
+      "INT",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Glorantha Folk Magic",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "Hate (creature, rival or clan)",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "Hate (creature, rival or tribe)",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "Hate (rival, gang, district or city)",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "Hate (something that scares or intimidates you)",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "Healing",
+    "base_stats": [
+      "INT",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Healing (Specific Species)",
+    "base_stats": [
+      "INT",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Influence",
+    "base_stats": [
+      "CHA",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Insight",
+    "base_stats": [
+      "INT",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Language (any)",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Literacy",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Locale",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Lockpicking",
+    "base_stats": [
+      "DEX",
+      "DEX"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Lore (Agriculture)",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Lore (Animal Husbandry)",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Lore (any)",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Lore (Military History)",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Lore (Minerals)",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Lore (Primary Catch)",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Lore (Primary)",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Lore (Regional or Specific Species)",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Lore (Secondary Catch)",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Lore (Secondary)",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Lore (Specific Alchemical Speciality)",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Lore (Specific Species)",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Lore (Strategy and Tactics)",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Love (friend, sibling or romantic lover)",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "Loyalty to Chief/Headman",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "Loyalty to Clan Chieftain",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "Loyalty to Town/City",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "Loyalty to Tribal Chieftain/Khan",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "Mechanisms",
+    "base_stats": [
+      "DEX",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Meditation",
+    "base_stats": [
+      "INT",
+      "CON"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Musicianship",
+    "base_stats": [
+      "DEX",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Mysticism",
+    "base_stats": [
+      "POW",
+      "CON"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Native Tongue",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 40
+  },
+  {
+    "name": "Navigation",
+    "base_stats": [
+      "INT",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Navigation (Underground)",
+    "base_stats": [
+      "INT",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Oratory",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Perception",
+    "base_stats": [
+      "INT",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Ride",
+    "base_stats": [
+      "DEX",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Seamanship",
+    "base_stats": [
+      "INT",
+      "CON"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Seduction",
+    "base_stats": [
+      "INT",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Shaping",
+    "base_stats": [
+      "INT",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Sing",
+    "base_stats": [
+      "CHA",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Sleight",
+    "base_stats": [
+      "DEX",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Stealth",
+    "base_stats": [
+      "DEX",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Streetwise",
+    "base_stats": [
+      "POW",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Survival",
+    "base_stats": [
+      "CON",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Swim",
+    "base_stats": [
+      "STR",
+      "CON"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Teach",
+    "base_stats": [
+      "INT",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Teach (Specific Species)",
+    "base_stats": [
+      "INT",
+      "CHA"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Track",
+    "base_stats": [
+      "INT",
+      "CON"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Tradetalk",
+    "base_stats": [
+      "INT",
+      "CHA"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "Trance",
+    "base_stats": [
+      "POW",
+      "CON"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Unarmed",
+    "base_stats": [
+      "STR",
+      "DEX"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Willpower",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Invocation",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Invocation (First Cult, School or Grimoire)",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Invocation (Second Cult, School or Grimoire)",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Invocation (Third Cult, School or Grimoire)",
+    "base_stats": [
+      "INT",
+      "INT"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Beast",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Chaos",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Cold",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Darkness",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Death",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Disorder",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Dragon",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Dragonewt",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Earth",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Eternal Battle",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Fate",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Fertility",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Fire/Sky",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Harmony",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Illusion",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Infinity",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Law",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Light",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Luck",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Magic",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Man",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Mastery",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Moon",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Movement",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Plant",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Power",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Spirit",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Stasis",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Storm",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Trade",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Truth",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Unlife",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune:Water",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 0
+  },
+  {
+    "name": "Rune Affinity Primary",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 30
+  },
+  {
+    "name": "Rune Affinity Secondary",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 20
+  },
+  {
+    "name": "Rune Affinity Tertiary",
+    "base_stats": [
+      "POW",
+      "POW"
+    ],
+    "starting_bonus": 10
+  }
+]

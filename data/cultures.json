@@ -1,0 +1,477 @@
+[
+  {
+    "name": "Balazaring",
+    "type": "Primitive",
+    "standardSkills": [
+      "Athletics",
+      "Brawn",
+      "Endurance",
+      "Evade",
+      "Locale",
+      "Perception",
+      "Stealth",
+      {"choice": ["Boating", "Swim"]}
+    ],
+    "professionalSkills": [
+      {"choice": "Craft (any)"},
+      "Healing",
+      {"choice": "Lore (any)"},
+      "Musicianship",
+      "Navigate",
+      "Survival",
+      "Track"
+    ],
+    "combatStyles": [
+      {
+        "name": "Hunter Raider",
+        "weapons": ["Spear", "Bow", "Sling"],
+        "traits": ["Skirmisher"]
+      },
+      {
+        "name": "Pony Cavalry",
+        "weapons": ["Spear", "Bow"],
+        "traits": ["Mounted"]
+      },
+      {
+        "name": "Hawk Slayer",
+        "weapons": ["Longspear"],
+        "traits": ["Mounted"]
+      }
+    ],
+    "folkMagic": [
+      "Beastcall (Dog, Pig or Giant Hawk)",
+      "Bladesharp",
+      "Cleanse",
+      "Coordination",
+      "Deflect",
+      "Dry",
+      "Find Game",
+      "Ignite",
+      "Mobility",
+      "Speedart"
+    ],
+    "passions": [
+      "Loyalty to Clan",
+      "Loyalty to City",
+      {"choice": ["Love", "Hate"]}
+    ],
+    "startingMoney": "4d6×2 Lunars",
+    "careers": "All Primitive"
+  },
+  {
+    "name": "Esrolian",
+    "type": "Civilised",
+    "standardSkills": [
+      "Conceal",
+      "Deceit",
+      "Drive",
+      "Influence",
+      "Insight",
+      "Locale",
+      "Perception",
+      "Willpower"
+    ],
+    "professionalSkills": [
+      {"choice": "Art (any)"},
+      "Commerce",
+      {"choice": "Craft (any)"},
+      "Courtesy",
+      {"choice": "Language (any)"},
+      {"choice": "Lore (any)"},
+      "Musicianship",
+      "Streetwise"
+    ],
+    "combatStyles": [
+      {
+        "name": "Citizen Legionary",
+        "weapons": ["Shortsword", "Shield", "Javelin", "Sling"],
+        "traits": ["Formation Fighting"]
+      },
+      {
+        "name": "City-State Phalangite",
+        "weapons": ["Longspear/Sarissa", "Bow"],
+        "traits": ["Formation Fighting"]
+      },
+      {
+        "name": "Clan Protector",
+        "weapons": ["Shortsword", "Shield", "Shortspear"],
+        "traits": ["Daredevil"]
+      }
+    ],
+    "folkMagic": [
+      "Alarm",
+      "Appraise",
+      "Bladesharp",
+      "Calculate",
+      "Calm",
+      "Glamour",
+      "Heal",
+      "Lock",
+      "Perfume",
+      "Repair"
+    ],
+    "passions": [
+      {"name": "Loyalty to Clan", "formula": "POW+CHA+30"},
+      {"name": "Loyalty to Grandmother", "formula": "POW+CHA+50"},
+      {"name": "Loyalty to Queen", "formula": "POW+CHA+25"}
+    ],
+    "startingMoney": "4d6×15 Lunars",
+    "careers": "All Civilised"
+  },
+  {
+    "name": "God Forgot",
+    "type": "Civilised",
+    "standardSkills": [
+      "Conceal",
+      "Deceit",
+      "Drive",
+      "Influence",
+      "Insight",
+      "Locale",
+      "Perception",
+      "Willpower"
+    ],
+    "professionalSkills": [
+      {"choice": "Craft (any)"},
+      "Commerce",
+      "Courtesy",
+      {"choice": "Language (any)"},
+      {"choice": "Lore (any)"},
+      "Mechanisms",
+      "Streetwise"
+    ],
+    "combatStyles": [
+      {
+        "name": "Horali Guard",
+        "weapons": ["Shortsword", "Shield", "Spear", "Crossbow"],
+        "traits": ["Formation Fighting"]
+      },
+      {
+        "name": "Zzistori Sorcerer",
+        "weapons": ["Staff", "Dagger"],
+        "traits": []
+      },
+      {
+        "name": "Dronar Militia",
+        "weapons": ["Shortspear", "Shield", "Sling"],
+        "traits": []
+      }
+    ],
+    "folkMagic": [
+      "Calculate",
+      "Cleanse",
+      "Coordination",
+      "Deflect",
+      "Detect Magic",
+      "Extinguish",
+      "Heal",
+      "Lock",
+      "Repair",
+      "Witchsight"
+    ],
+    "passions": [
+      {"name": "Loyalty to Caste", "formula": "POW+CHA+40"},
+      {"name": "Loyalty to The Talar", "formula": "POW+CHA+30"},
+      {"name": "Devotion to Rationality", "formula": "POW+CHA+30"}
+    ],
+    "startingMoney": "4d6×15 Lunars",
+    "careers": "All Civilised"
+  },
+  {
+    "name": "Lunar Heartland",
+    "type": "Civilised",
+    "standardSkills": [
+      "Conceal",
+      "Deceit",
+      "Drive",
+      "Influence",
+      "Insight",
+      "Locale",
+      "Perception",
+      "Willpower"
+    ],
+    "professionalSkills": [
+      {"choice": "Art (any)"},
+      "Commerce",
+      {"choice": "Craft (any)"},
+      "Courtesy",
+      {"choice": "Language (any)"},
+      {"choice": "Lore (any)"},
+      "Musicianship",
+      "Streetwise"
+    ],
+    "combatStyles": [
+      {
+        "name": "Lunar Legionary",
+        "weapons": ["Scimitar", "Shield", "Javelin", "Bow"],
+        "traits": ["Formation Fighting"]
+      },
+      {
+        "name": "Noble Cavalry",
+        "weapons": ["Lance", "Scimitar", "Bow"],
+        "traits": ["Mounted"]
+      },
+      {
+        "name": "Palace Guard",
+        "weapons": ["Scimitar", "Shield", "Spear"],
+        "traits": ["Formation Fighting", "Daredevil"]
+      }
+    ],
+    "folkMagic": [
+      "Alarm",
+      "Babel",
+      "Befuddle",
+      "Bladesharp",
+      "Calm",
+      "Glamour",
+      "Heal",
+      "Mindspeech",
+      "Mobility",
+      "Vigour"
+    ],
+    "passions": [
+      {"name": "Loyalty to Red Emperor", "formula": "POW+CHA+40"},
+      {"name": "Devotion to Red Goddess", "formula": "POW+CHA+30"},
+      {"name": "Love (Family)", "formula": "POW+CHA+30"}
+    ],
+    "startingMoney": "4d6×10 Lunars",
+    "careers": "All Civilised"
+  },
+  {
+    "name": "Praxian",
+    "type": "Nomad",
+    "standardSkills": [
+      "Athletics",
+      "Endurance",
+      "First Aid",
+      "Locale",
+      "Perception",
+      {"choice": ["Ride", "Swim"]},
+      "Stealth",
+      "Willpower"
+    ],
+    "professionalSkills": [
+      {"choice": "Craft (any)"},
+      "Healing",
+      {"choice": "Lore (any)"},
+      "Musicianship",
+      "Navigate",
+      "Survival",
+      "Track"
+    ],
+    "combatStyles": [
+      {
+        "name": "Beast Rider Warrior",
+        "weapons": ["Lance", "Shortspear", "Javelin", "Bow", "Sling"],
+        "traits": ["Mounted"]
+      },
+      {
+        "name": "Desert Skirmisher",
+        "weapons": ["Shortspear", "Javelin", "Sling", "Target Shield"],
+        "traits": ["Skirmisher"]
+      },
+      {
+        "name": "Tribal Champion",
+        "weapons": ["Great Axe", "Shortspear", "Target Shield"],
+        "traits": ["Daredevil"]
+      }
+    ],
+    "folkMagic": [
+      "Beastcall",
+      "Bludgeon",
+      "Coordination",
+      "Endurance",
+      "Fanaticism",
+      "Heal",
+      "Pierce",
+      "Slow",
+      "Speedart",
+      "Vigour"
+    ],
+    "passions": [
+      {"name": "Loyalty to Tribe", "formula": "POW+CHA+40"},
+      {"name": "Loyalty to Clan", "formula": "POW+CHA+30"},
+      {"name": "Hate (Lunars)", "formula": "POW+CHA+30"}
+    ],
+    "startingMoney": "4d6×15 Lunars",
+    "careers": "All Nomad"
+  },
+  {
+    "name": "Provincial Lunar/Tarsh",
+    "type": "Civilised",
+    "standardSkills": [
+      "Conceal",
+      "Deceit",
+      "Drive",
+      "Influence",
+      "Insight",
+      "Locale",
+      "Perception",
+      "Willpower"
+    ],
+    "professionalSkills": [
+      {"choice": "Art (any)"},
+      "Commerce",
+      {"choice": "Craft (any)"},
+      "Courtesy",
+      {"choice": "Language (any)"},
+      {"choice": "Lore (any)"},
+      "Musicianship",
+      "Streetwise"
+    ],
+    "combatStyles": [
+      {
+        "name": "Provincial Militia",
+        "weapons": ["Shortsword", "Scimitar", "Shield", "Javelin", "Sling"],
+        "traits": ["Formation Fighting"]
+      },
+      {
+        "name": "Tarshite Cavalry",
+        "weapons": ["Lance", "Sword", "Bow"],
+        "traits": ["Mounted"]
+      },
+      {
+        "name": "City Watch",
+        "weapons": ["Shortsword", "Shield", "Club"],
+        "traits": []
+      }
+    ],
+    "folkMagic": [
+      "Alarm",
+      "Babel",
+      "Bladesharp",
+      "Calm",
+      "Coordination",
+      "Glamour",
+      "Heal",
+      "Mobility",
+      "Protection",
+      "Vigour"
+    ],
+    "passions": [
+      {"name": "Loyalty to Governor/King", "formula": "POW+CHA+30"},
+      {"name": "Devotion to Red Goddess", "formula": "POW+CHA+30"},
+      {"name": "Love (Family)", "formula": "POW+CHA+30"}
+    ],
+    "startingMoney": "4d6×5 Lunars",
+    "careers": "All Civilised"
+  },
+  {
+    "name": "Sartarite/Heortling",
+    "type": "Barbarian",
+    "standardSkills": [
+      "Athletics",
+      "Brawn",
+      "Endurance",
+      "Evade",
+      "Locale",
+      "Perception",
+      {"choice": ["Ride", "Swim"]},
+      "Willpower"
+    ],
+    "professionalSkills": [
+      {"choice": "Craft (any)"},
+      "Commerce",
+      "Courtesy",
+      "Healing",
+      {"choice": "Lore (any)"},
+      "Musicianship",
+      "Survival"
+    ],
+    "combatStyles": [
+      {
+        "name": "Orlanthi Warrior",
+        "weapons": ["Broadsword", "Shortspear", "Javelin", "Target Shield"],
+        "traits": ["Skirmisher"]
+      },
+      {
+        "name": "Thane's Guard",
+        "weapons": ["Broadsword", "Longspear", "Large Shield"],
+        "traits": ["Formation Fighting"]
+      },
+      {
+        "name": "Rider",
+        "weapons": ["Lance", "Broadsword", "Javelin"],
+        "traits": ["Mounted"]
+      }
+    ],
+    "folkMagic": [
+      "Bladesharp",
+      "Bludgeon",
+      "Coordination",
+      "Endurance",
+      "Fanaticism",
+      "Heal",
+      "Mobility",
+      "Pierce",
+      "Speedart",
+      "Vigour"
+    ],
+    "passions": [
+      {"name": "Loyalty to Clan", "formula": "POW+CHA+40"},
+      {"name": "Loyalty to Tribe", "formula": "POW+CHA+30"},
+      {"name": "Hate (Lunars)", "formula": "POW+CHA+30"}
+    ],
+    "startingMoney": "4d6×10 Lunars",
+    "careers": "All Barbarian"
+  },
+  {
+    "name": "Telmori Hsunchen",
+    "type": "Primitive",
+    "standardSkills": [
+      "Athletics",
+      "Brawn",
+      "Endurance",
+      "Evade",
+      "Locale",
+      "Perception",
+      "Stealth",
+      "Willpower"
+    ],
+    "professionalSkills": [
+      {"choice": "Craft (any)"},
+      "Healing",
+      {"choice": "Lore (any)"},
+      "Musicianship",
+      "Navigate",
+      "Survival",
+      "Track"
+    ],
+    "combatStyles": [
+      {
+        "name": "Wolf Pack Hunter",
+        "weapons": ["Shortspear", "Javelin", "Sling", "Bite", "Claw"],
+        "traits": ["Skirmisher"]
+      },
+      {
+        "name": "Two-Legged Warrior",
+        "weapons": ["Broadsword", "Shortspear", "Target Shield"],
+        "traits": ["Daredevil"]
+      },
+      {
+        "name": "Wolfbrother",
+        "weapons": ["Bite", "Claw"],
+        "traits": ["Skirmisher"]
+      }
+    ],
+    "folkMagic": [
+      "Beastcall (Wolf)",
+      "Bladesharp",
+      "Coordination",
+      "Endurance",
+      "Fanaticism",
+      "Heal",
+      "Mobility",
+      "Protection",
+      "Speedart",
+      "Vigour"
+    ],
+    "passions": [
+      {"name": "Loyalty to Pack", "formula": "POW+CHA+50"},
+      {"name": "Devotion to Telmor", "formula": "POW+CHA+30"},
+      {"name": "Hate (Chaos)", "formula": "POW+CHA+30"}
+    ],
+    "startingMoney": "4d6×2 Lunars",
+    "careers": "All Primitive"
+  }
+]

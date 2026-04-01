@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Agent",
+    "type": "civilised",
+    "description": "Spy, informant, undercover operative"
+  },
+  {
+    "name": "Alchemist",
+    "type": "civilised",
+    "description": "Creator of potions, elixirs, and magical compounds"
+  },
+  {
+    "name": "Beast Handler",
+    "type": "primitive",
+    "description": "Trainer and keeper of animals"
+  },
+  {
+    "name": "Courtesan",
+    "type": "civilised",
+    "description": "Entertainer, companion, socialite"
+  },
+  {
+    "name": "Courtier",
+    "type": "civilised",
+    "description": "Noble's advisor, diplomat, politician"
+  },
+  {
+    "name": "Crafter",
+    "type": "all",
+    "description": "Artisan, smith, carpenter, potter"
+  },
+  {
+    "name": "Entertainer",
+    "type": "all",
+    "description": "Musician, actor, storyteller, performer"
+  },
+  {
+    "name": "Farmer",
+    "type": "all",
+    "description": "Agricultural worker, cultivator"
+  },
+  {
+    "name": "Fisher",
+    "type": "all",
+    "description": "Fisherman, net maker, sailor"
+  },
+  {
+    "name": "Herder",
+    "type": "nomad",
+    "description": "Pastoral nomad, livestock keeper"
+  },
+  {
+    "name": "Hunter",
+    "type": "primitive",
+    "description": "Tracker, game hunter, forager"
+  },
+  {
+    "name": "Merchant",
+    "type": "civilised",
+    "description": "Trader, caravan master, shopkeeper"
+  },
+  {
+    "name": "Miner",
+    "type": "civilised",
+    "description": "Underground worker, prospector"
+  },
+  {
+    "name": "Mystic",
+    "type": "all",
+    "description": "Spiritual seeker, contemplative"
+  },
+  {
+    "name": "Official",
+    "type": "civilised",
+    "description": "Bureaucrat, administrator, tax collector"
+  },
+  {
+    "name": "Physician",
+    "type": "civilised",
+    "description": "Healer, surgeon, herbalist"
+  },
+  {
+    "name": "Priest",
+    "type": "all",
+    "description": "Religious leader, temple guardian"
+  },
+  {
+    "name": "Sailor",
+    "type": "all",
+    "description": "Seaman, navigator, pirate"
+  },
+  {
+    "name": "Scholar",
+    "type": "civilised",
+    "description": "Researcher, librarian, sage"
+  },
+  {
+    "name": "Scout",
+    "type": "barbarian",
+    "description": "Explorer, pathfinder, ranger"
+  },
+  {
+    "name": "Shaman",
+    "type": "primitive",
+    "description": "Spirit talker, tribal magic user"
+  },
+  {
+    "name": "Sorcerer",
+    "type": "civilised",
+    "description": "Manipulator of magical laws"
+  },
+  {
+    "name": "Thief",
+    "type": "civilised",
+    "description": "Burglar, pickpocket, rogue"
+  },
+  {
+    "name": "Warrior",
+    "type": "all",
+    "description": "Fighter, soldier, mercenary"
+  }
+]

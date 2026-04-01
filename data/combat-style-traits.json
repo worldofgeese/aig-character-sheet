@@ -1,0 +1,426 @@
+[
+  {
+    "name": "Antelope Lancer",
+    "explanation": "Performing a mounted charge with this combat style does not incur the one step difficulty penalty to hit. Allows rider to ignore the skill cap placed upon combat rolls by the Ride skill. When using a ranged weapon, shift a random Hit Location roll to an adjoining body location"
+  },
+  {
+    "name": "Assassination",
+    "explanation": "Allows the user access to the normally restricted 'Kill Silently' special effect."
+  },
+  {
+    "name": "Batter Aside",
+    "explanation": "If the fighter\u2019s Damage Modifier is two or more steps greater than his opponent\u2019s, his weapon is considered one size larger for the purposes of bypassing parries"
+  },
+  {
+    "name": "Batter Down",
+    "explanation": "If the fighter\u2019s Damage Modifier is one or more steps greater than his opponent\u2019s, his Damage Modifier roll is counted as double solely for the purposes of calculating Knockback."
+  },
+  {
+    "name": "Beast-back Lancer",
+    "explanation": "Performing a mounted charge with this combat style does not incur the one step difficulty penalty to hit."
+  },
+  {
+    "name": "Berserker",
+    "explanation": "The style emphasises entering into a violent frenzy where personal safety and pain are disregarded. At the beginning of a fight, or upon taking an injury, a berserker may attempt to roll his POW x5 to enter a frenzy. When in a frenzy:\\n- Damage modifier is increased by one step.\\n- Parrying or Evading attacks are one step more difficult.\\n- Endurance rolls for resisting the effects of injury are one step easier.\\n- Effects of Fatigue are ignored.\\nAfter the fight any deferred Fatigue levels plus one additional level are applied."
+  },
+  {
+    "name": "Bison Tribe Combat Style",
+    "explanation": "Performing a mounted charge with this combat style does not incur the one step difficulty penalty to hit. Allows rider to ignore the skill cap placed upon combat rolls by the Ride skill. Permits clubs and axes to roll the weapon\u2019s damage twice and pick the best result, but only when using the Damage Weapon special effect against shields."
+  },
+  {
+    "name": "Blind Fighting",
+    "explanation": "Allows user to reduce any penalties imposed due to poor lighting or temporary blinding to be reduced by one difficulty grade."
+  },
+  {
+    "name": "Blind Fighting (Weird of Hali)",
+    "explanation": "Allows user to ignore any penalties imposed due to poor lighting or temporary blinding."
+  },
+  {
+    "name": "Block and catch",
+    "explanation": "allows for the use of the Grip special effect as a defensive special effect."
+  },
+  {
+    "name": "Body Slam",
+    "explanation": "After taking a turn of movement, you can engage an opponent with a crashing blow with your arm or shoulder. Make an opposed Athletics roll versus the defender\u2019s Brawn or Evade. If you win, then the defender is automatically knocked down with you astride them. He suffers his own Damage Modifier (if any) in damage to a random location from the fall. If your Athletics fails, the defender has weathered or sidestepped the impact. If you win one or more levels of success you may select suitable Special Effects as per normal combat (Bash and Flurry are both popular).\u00b4"
+  },
+  {
+    "name": "Cautious Fighter",
+    "explanation": "Can use the Change Range action to automatically withdraw from engagement with no need to roll"
+  },
+  {
+    "name": "Chariot Fighting",
+    "explanation": "Style allows those riding in a chariot to ignore the skill cap placed upon their combat rolls by the driver\u2019s Drive skill."
+  },
+  {
+    "name": "Chi Push (requires Push Hands)",
+    "explanation": "The character may add his POW/5 to the distance pushed on a Bash special effect with unarmed attacks. Alternatively, for a more wuxia game, use Mysticism/10."
+  },
+  {
+    "name": "Chokehold",
+    "explanation": "If you have established a grapple against an opponent's head, you may choose to apply 1d2 levels of fatigue instead of damage. These levels of fatigue recover very quickly (healing rate per round) once the grapple is broken. Does not generally work on Undead."
+  },
+  {
+    "name": "Claymore",
+    "explanation": "Use a longsword with two hands (add 1 to damage and one level to weapon Force). This weapon and technique were only used by Scotsmen at the time"
+  },
+  {
+    "name": "Cloak Defense",
+    "explanation": "Your cloak provides one point of armor as long as you are not engaged in melee"
+  },
+  {
+    "name": "Crack Shot",
+    "explanation": "Attacks with crossbows or firearms at a target within 50 yards are one difficulty grade easier."
+  },
+  {
+    "name": "Create opening",
+    "explanation": "This technique for wielders of two weapons involves pushing aside an enemy\u2019s defenses with one weapon and following up with the other. The Style allows usage of the \u2018Flurry\u2019 Special Effect for dual-wielders; the follow-\\nup attack must be with a different weapon. Two weapons Only."
+  },
+  {
+    "name": "Cross Parry",
+    "explanation": "\\nA wielder of two weapons can choose to attempt a cross-parry. This increases the difficulty of a parry by one grade, but increases the size of the parry to one size larger than the larger of the parrying weapons.\\nTwo Size M or smaller weapons Only."
+  },
+  {
+    "name": "Crossbow handling",
+    "explanation": "Despite their many disadvantages, given the right training crossbows are simple to use. Any shot taken without penalty (Standard difficulty) instead\\nbecomes Easy difficulty. Crossbows Only."
+  },
+  {
+    "name": "Dagger Prowess",
+    "explanation": "Permits the user to treat his knfie and dagger blocks and parries as \u2018Medium\u2019 sized, enabling him to better defend himself from armed opponents."
+  },
+  {
+    "name": "Daredevil",
+    "explanation": "May use Evade to dodge blows in hand to hand combat without ending up prone."
+  },
+  {
+    "name": "Daredevil Matador",
+    "explanation": "May use Evade to dodge blows in hand to hand combat without ending up prone."
+  },
+  {
+    "name": "Defensive Minded",
+    "explanation": "Increases the Size of your weapon when parrying by one step, provided no offensive action is taken that round."
+  },
+  {
+    "name": "Diadochi Pike*",
+    "explanation": "Allows a group of three or more shield users to overlap their protection, adding one to the number of locations which can be protected with passive blocking, and resisting Knockback, Leaping attacks and Bash as if using the Brace action.  All of the characters need to have this. Negates auto Combat Effect for missiles if a hard combat Style roll is made."
+  },
+  {
+    "name": "Do or Die",
+    "explanation": "Allows dual weapon combinations to use the Flurry special effect, provided that each subsequent attack utilises the alternating weapon."
+  },
+  {
+    "name": "Dodge",
+    "explanation": "Dodge. This Combat Style can be used to dodge incoming blows with the effectiveness of a parry (Size S), without going prone as when Evading."
+  },
+  {
+    "name": "Eight Jab Doom",
+    "explanation": "Unarmed, fingertip Needles  MI pg 21. Permits the user to treat his Unarmed blocks and parries as \u2018Medium\u2019 sized, enabling him to better defend himself from armed opponents."
+  },
+  {
+    "name": "Excellent Footwork",
+    "explanation": "When fighting on slippery, wobbling surfaces the user can ignore the skill cap placed on combat rolls by the Acrobatics skill."
+  },
+  {
+    "name": "Flamboyance",
+    "explanation": "Any uses of the combat style to pose impressively and beautifully are one difficulty grade easier than normal. This trait is often found in societ- ies where actual combat is rare and the intent is to use the combat style more as a highly stylised dance than as an actual fighting technique.\\xa0"
+  },
+  {
+    "name": "Flurry",
+    "explanation": "Any active shield parry can immediately be followed up by a sword blow at the cost of a further Action Point"
+  },
+  {
+    "name": "Formation Fighting*",
+    "explanation": "Permits a group of three or more warriors to draw into close formation, placing more open or disordered opponents at a disadvantage (provided the \u2018unit\u2019 cannot be outflanked) and thus reducing each foe\u2019s Action Points by one if they engage. All of the group need to have this."
+  },
+  {
+    "name": "Grappler",
+    "explanation": "The style grants its user an advantage when entangling or immobilising opponents, making a foe\u2019s opposed rolls to evade or break free one difficulty grade harder. Rq6 pg 135."
+  },
+  {
+    "name": "Grappling transition",
+    "explanation": "when grappling, if you succeed on a grapple check to do damage, you may instead shift the location of your grapple to an adjacent location."
+  },
+  {
+    "name": "Ground fighter",
+    "explanation": "while prone and fighting against another prone opponent, you suffer a Hard penalty instead of a Formidable one."
+  },
+  {
+    "name": "Hawkeye",
+    "explanation": "Hawkeye. Penalties for shooting smaller than man-size targets are reduced by one grade."
+  },
+  {
+    "name": "Hidden Weapons",
+    "explanation": "Allows the user to utilise seemingly innocuous objects noted as part of the style as deadly weapons, with no chance of accidental breakage despite apparent delicacy (fans or musical instruments for example)."
+  },
+  {
+    "name": "Hooker",
+    "explanation": "allows use of Pin Weapon special effect on a normal success"
+  },
+  {
+    "name": "Horse Archery",
+    "explanation": "Shooting arrows from galloping horseback. Applies only to bow. Style allows rider to ignore the skill cap placed upon combat rolls by the Ride skill. The style permits launching ranged attacks whilst galloping"
+  },
+  {
+    "name": "Immobilise",
+    "explanation": "When you have someone grappled or entangled, in lieu of damage you may use your action to try to immobilise the hit location you are grappling. Roll your Combat Style opposed by your target\u2019s Endurance; if successful, adjudicate like the Stun Location Special Effect (Mythras page 99), but this does not need a level of success to employ and only lasts for as long as you maintain the grapple.Mythic Constantinople"
+  },
+  {
+    "name": "Impromptu Weapons",
+    "explanation": "Treat any objects as club MI pg 41"
+  },
+  {
+    "name": "Improved Surrender",
+    "explanation": "You can use the Compel Surrender effect defensively against any opponent of the same religion even when he or she is not at a disadantage. If you win your foe does not surrender but rather feels that you are too holy to harm and most stop attacking you (but not your friends). If you later attack the enemy the effect is negaged"
+  },
+  {
+    "name": "Intimidating Scream",
+    "explanation": "Style encourages frequent yells and bellows in combat to intimidate foes, making any psychological resistance rolls inflicted on an opponent one grade harder."
+  },
+  {
+    "name": "Intimidating Scream (Formation)",
+    "explanation": "Style encourages frequent yells and bellows in combat to intimidate foes, making any psychological resistance rolls inflicted on an opponent one grade harder. This trait allows the formation to utilise the Intimidate creature ability but only before combat starts or when they have their opponents at a severe disadvantage. Opponents must make an unopposed Willpower roll to hold their ground; a success allows a character to stand his ground, whereas a failure indicates that they must spend the next round instinctively placing distance between themselves and the creature. If he fumbles the Willpower roll, then the character flees at maximum speed. A critical success allows the character to ignore any further intimida- tion attempts by the creature or its brethren during that encounter."
+  },
+  {
+    "name": "Iron holds",
+    "explanation": "This unarmed style teaches techniques to maintain holds on an opponent. Any opposed rolls to escape from the Grip Special Effect or Grappling are one step harder. Unarmed Only."
+  },
+  {
+    "name": "Joint lock",
+    "explanation": "if you have established a grapple against an opponent\u2019s limb (as determined by the GM), step up your damage mod one step when applying grappling damage. Does not work on things without bones."
+  },
+  {
+    "name": "Joint Locks",
+    "explanation": "Style includes joint locks that permit immobilizing or throwing an opponent after a successful grip effect."
+  },
+  {
+    "name": "Kick training",
+    "explanation": "you can make kick attacks. For your attack, your unarmed damage and reach increases by one step. If a defender uses the trip special effect against you for this attack, your roll to resist is Hard."
+  },
+  {
+    "name": "Knockout",
+    "explanation": "This unarmed style emphasises powerful blows to the head to knock the opponent unconscious. When using the Stun Location special effect on the enemy\u2019s head, the roll to resist is one grade more difficult. Unarmed Only. Human (or human-like) opponents only."
+  },
+  {
+    "name": "Knockout Blow",
+    "explanation": "When attacking with surprise treat any Stun Location as lasting minutes instead of turns."
+  },
+  {
+    "name": "Kuschile Archery",
+    "explanation": "Permits upto three arrows to be held in the drawing hand so that they maybe released sequentially with no delay for reloading between each shot. Priming the hand requires an entire round during which no other aggressive action may be performed"
+  },
+  {
+    "name": "Lancer",
+    "explanation": "This Combat Style emphasizes devastating charges with Lances or other weapons. Performing a mounted charge with this combat style does not\\nincur the one step difficulty penalty."
+  },
+  {
+    "name": "Longbow",
+    "explanation": "+1 to Longbow damage (this represents both the real superiority of the longbow as a field weapon and the fact that it required a dedicate training)"
+  },
+  {
+    "name": "Longshot",
+    "explanation": "The style emphasises accurate fire at extreme ranges. When firing ranged weapons, use the row one step above the correct row for Distance. (ie. when shooting at 125m., use the 101 \u2013 120m. row)."
+  },
+  {
+    "name": "Lunge",
+    "explanation": "Mastery of the rapier allows for lightning-fast strikes. This style allows usage of the \u2018Flurry\u2019 Special Effect. Rapier Only."
+  },
+  {
+    "name": "Mancatcher",
+    "explanation": "The style grants its user an advantage when entangling or immobilising opponents, making a foe\u2019s opposed rolls to evade or break free one difficulty grade harder."
+  },
+  {
+    "name": "Marksmanship",
+    "explanation": "This style focuses on accurate ranged fire and striking small targets. When rolling a random Hit Location, the location struck may be shifted to an\\nadjoining Hit location. Ranged Weapons Only."
+  },
+  {
+    "name": "Morokanth Fu",
+    "explanation": "On a successful unarmed attack may immediately apply defensive special effect in addition to any offensive special effect. Defensive is ALWAYS applied if morokanth does not use a made weapon n GB pg 31 BaB pg 52"
+  },
+  {
+    "name": "Mounted Combat",
+    "explanation": "Style allows rider to ignore the skill cap placed upon combat rolls by the Ride skill."
+  },
+  {
+    "name": "Mounted Lancer",
+    "explanation": "Performing a mounted charge with this combat style does not incur the one step difficulty penalty to hit."
+  },
+  {
+    "name": "Mounted Skirmisher",
+    "explanation": "The style permits launching ranged attacks whilst moving fast (but not whilst galloping)."
+  },
+  {
+    "name": "On the Fly",
+    "explanation": "On the Fly. Reduce ranged attack penalties for a fast moving target by one grade"
+  },
+  {
+    "name": "Pavisier",
+    "explanation": "This combat style includes training in carrying a pavise that can be deployed for protection. When carrying a pavise on the back it is considered to be \u2018worn\u2019 (one-half ENC). Wearing a pavise on the back allows for passive blocking for attacks coming from the rear."
+  },
+  {
+    "name": "Pelorian Cavalry",
+    "explanation": "Performing a mounted charge with this combat style does not incur the one step difficulty penalty to hit. Allows rider to ignore the skill cap placed upon combat rolls by the Ride skill. Permits launching ranged attacks whilst moving fast (but not whilst galloping)"
+  },
+  {
+    "name": "Phalanx",
+    "explanation": "In phalanx formation the unit\u2019s hedged spears and/or shields combine to provide some protection for the group against missiles. The unit\u2019s average Lore (Tactics and Drill) is used to oppose incoming missile fire, which prevents the automatic award of a Special Effect if ranged attacks are not actively parried."
+  },
+  {
+    "name": "Pike Phalanx*",
+    "explanation": "Permits a group of three or more warriors to draw into close formation, placing more open or disordered opponents at a disadvantage (provided the \u2018unit\u2019 cannot be outflanked) and thus reducing each foe\u2019s Action Points by one if they engage. All of the group need to have this. \\n\\uf0b7 Any enemies engaged with the first rank of pike phalangites at range L or shorter can be engaged by\\nthe second rank of phalangites with their pikes.\\n\\uf0b7 Any enemies engaged with the first rank of pike phalangites at range S or shorter can be engaged by\\nthe second and third rank of phalangites with their pikes.\\n\\uf0b7 Every pike phalangite is considered to have Passive Blocking of size L on one random hit location\\n(determine the protected location randomly each time a pikeman is struck by missile fire). This is in addition to any passive protection from a pikeman\u2019s shield."
+  },
+  {
+    "name": "Pike-and-Shield",
+    "explanation": "Permits a group of three or more warriors to draw into close formation, placing more open or disordered opponents at a disadvantage (provided the \u2018unit\u2019 cannot be outflanked) and thus reducing each foe\u2019s Action Points by one if they engage. All of the group need to have this.  This style allows a fighter in formation to use the shield\u2019s Passive Blocking ability on 2 locations against ranged attacks even though he is carrying a two- handed weapon.Pike and Buckler Only."
+  },
+  {
+    "name": "Poisoner",
+    "explanation": "The style includes training in using poison on weapons and delivering it effectively to the target. The user of this Combat Style may use a Special Effect to \u2018Inject Poison\u2019, in order to deliver an Injected poison to the target on an unprotected area, ignoring any armour, but forfeiting a damage roll. Inject Poison follows the same rules as Choose Location with regards to usage with ranged weapons. The GM may rule that a sufficiently armoured target has no unprotected areas and is therefore immune to Inject Poison."
+  },
+  {
+    "name": "Prancing",
+    "explanation": "May use the springing leaps of his mount to evade ranged attacks without going prone by rolling against Ride skill. In addition may fire at the top of a jump ignoring passive cover from shields"
+  },
+  {
+    "name": "Press Home*",
+    "explanation": "Allows the formation to engage and keep an enemy unit at Short reach, penalising foes using longer weapons."
+  },
+  {
+    "name": "Pressure Points",
+    "explanation": "Any successful hit has the stun location effect due to the character\u2019s knowledge of vulnerable points."
+  },
+  {
+    "name": "Pull Blows",
+    "explanation": "\u201cPull\u2019 blows as a Special Effect, choosing the extent of the damage he wishes to inflict up to the weapon\u2019s maximum, with a minimum of 1. Using this manoeuvre automatically negates the duellist\u2019s Damage Bonus.\\xa0"
+  },
+  {
+    "name": "Push",
+    "explanation": "the attacker may use the Bash special effect with his Unarmed attacks. They are treated as a weapon for determining distance pushed."
+  },
+  {
+    "name": "Push Hands (requires Push)",
+    "explanation": "if the attacker can use the Bash special effect with his unarmed attacks, treat them as a shield for the purposes of the knockback on this special effect."
+  },
+  {
+    "name": "Ranged Marksman",
+    "explanation": "When using a ranged weapon, shift a random Hit Location roll to an adjoining body location."
+  },
+  {
+    "name": "Rapid Fire",
+    "explanation": "The archer can reload and fire prepared ammunition as a single Action up to three times, how- ever, each shot is at one grade of difficulty higher than the last (Hard, Formidable, Herculean)"
+  },
+  {
+    "name": "Reload Drill",
+    "explanation": "This style includes heavily drilled actions for improving the reload times of ranged weapons. Reduce Reload time of one weapon by one action. Rapid Reload is no longer available as a Special Effect for that weapon."
+  },
+  {
+    "name": "Sacrifice throw",
+    "explanation": "when performing a Trip special effect, the character attempting may impose a Formidable penalty to his opponents attempt to resist. If the resistance roll fails, both end up prone."
+  },
+  {
+    "name": "Sagittan Peltast",
+    "explanation": "When using a ranged weapon, shift a random Hit Location roll to an adjoining body location.The style permits launching ranged attacks whilst at a run (but not whilst sprinting)."
+  },
+  {
+    "name": "Sea Legs",
+    "explanation": "Practitioners of this Combat Style are used to fighting on the unstable surface of a sea-faring ship. They may ignore the penalty for \u2018Fighting while on unstable ground\u2019 in this situation."
+  },
+  {
+    "name": "Shield Splitter",
+    "explanation": "Permits clubs and axes to roll the weapon\u2019s damage twice and pick the best result, but only when using the Damage Weapon special effect against shields."
+  },
+  {
+    "name": "Shield Wall*",
+    "explanation": "Allows a group of three or more shield users to overlap their protection, adding one to the number of locations which can be protected with passive blocking, and resisting Knockback, Leaping attacks and Bash as if using the Brace action.  All of the characters need to have this."
+  },
+  {
+    "name": "Showmanship",
+    "explanation": "This style emphasises exaggerated moves and flourishes intended to impress an audience or taunt an opponent. Using this style in combat allows a combatant to spend an available Special Effect to \u2018put on a show\u2019 for all onlookers as a demonstration of prowess, humour or disdain. Roll an appropriate skill (Combat Style, Perform, Dance, other) to determine the effect. If used to impress an audience, a successful roll may sway the audience to the fighter\u2019s favour. If used to enrage or intimidate an opponent, the opponent may resist with a Willpower roll, with a failure leading to a penalty to actions at the GM\u2019s discretion."
+  },
+  {
+    "name": "Siege Warfare",
+    "explanation": "The style permits its user to ignore the skill cap placed upon combat rolls by the Athletics skill when making assaults whilst scaling walls or crawling through tunnels."
+  },
+  {
+    "name": "Skirmisher",
+    "explanation": "The style permits launching ranged attacks whilst at a run (but not whilst sprinting)."
+  },
+  {
+    "name": "Small but Vicious",
+    "explanation": "This allows the character to disregard penalties to\\ndamage due to his small size and modest strength, granting him a\\ndamage bonus of 0."
+  },
+  {
+    "name": "Solid Stance",
+    "explanation": "Resist Knockback, Leaping Attacks and Bash as if using the brace action"
+  },
+  {
+    "name": "Spear Phalanx*",
+    "explanation": "\\uf0b7 Permits a group of three or more warriors to draw into close formation, placing more open or disordered opponents at a disadvantage (provided the \u2018unit\u2019 cannot be outflanked) and thus reducing each foe\u2019s Action Points by one if they engage. Allows a group of three or more shield users to overlap their protection, adding one to the number of locations which can be protected with passive blocking, and resisting Knockback, Leaping attacks and Bash as if using the Brace action.  All of the characters need to have this.\\n\\uf0b7 Any enemies engaged with the first rank of spear phalangites at range S or shorter can be engaged\\nby the second rank of phalangites with their spears."
+  },
+  {
+    "name": "Street Fighter",
+    "explanation": "When opponent tries to change range to get out of your closed range,they may do so at a Hard Difficulty Modifier"
+  },
+  {
+    "name": "Street Mob*",
+    "explanation": "Permits a group of three or more fellow citizens to utilise the Intimidate creature ability but only before combat starts or when they have their opponents at a severe disadvantage.The mob may intimidate opponents as a prelude to combat or to avoid it altogether: growls, snarls,roars, surges and so forth. Opponents must make an unopposed Willpower roll to hold their ground; a success allows a character to stand his ground, whereas a failure indicates that they must spend the next round instinctively placing distance between themselves and the creature. If he fumbles the Willpower roll, then the character flees at maximum speed. A critical success allows the character to ignore any further intimida- tion attempts by the creature or its brethren during that encounter. The effect continues for as long as the creature continues to act in a threatening manner, which includes it making an attack."
+  },
+  {
+    "name": "Strong Pull",
+    "explanation": "This Combat Style emphasises strength training and techniques to maximise a bow\u2019s pull. Increase the Damage Modifier when firing the bow by one step."
+  },
+  {
+    "name": "Sucker Punch",
+    "explanation": "The style includes trick attacks, and on a Critical Success these gain the benefits of surprise (see Surprise, p. 59)."
+  },
+  {
+    "name": "Sure-footed",
+    "explanation": "No penalties for fighting on a heaving deck, and marines are even taught to hurl a javelin from a seated position without penalty."
+  },
+  {
+    "name": "Swashbuckling",
+    "explanation": "Style allows the user to engage in attacks and evades made whilst jumping or swinging into (or disengaging from) combat, ignoring any skill cap placed on it by the Athletics skill."
+  },
+  {
+    "name": "Take Down",
+    "explanation": "Unarmed Combat - Using leg sweeps or throws that use the opponent\u2019s weight against him, rolls to resist your Trip Special Effect are made at one difficulty grade harder. Mythic Constantinople"
+  },
+  {
+    "name": "Testudo",
+    "explanation": "Permits a group of three or more warriors to draw into close formation, placing more open or disordered opponents at a disadvantage (provided the \u2018unit\u2019 cannot be outflanked) and thus reducing each foe\u2019s Action Points by one if they engage. Allows a group of three or more shield users to overlap their protection, adding one to the number of locations which can be protected with passive blocking, and resisting Knockback, Leaping attacks and Bash as if using the Brace action.  All of the characters need to have this..The unit may form a testudo with heavy shields granting Passive Blocking to all locations for all\\nmembers of the unit except those at the flanks and rear. A unit in testudo formation may not move faster than a walk."
+  },
+  {
+    "name": "Throw Weapons",
+    "explanation": "Any nominal melee weapon in the style can also be thrown at no penalty to skill, but when used in this way a weapon\u2019s damage roll is halved."
+  },
+  {
+    "name": "Toxic Touch",
+    "explanation": "May wield small venomous creatures as part of the Unarmed skill, inflicting the creature's damage instead of their own MI pg 41"
+  },
+  {
+    "name": "Trained Beast",
+    "explanation": "Intended for styles which emphasise fighting in close coordination with an animal companion (such as trained birds of prey, pet wolves, and so on), the user may utilise any of his Action Points to defend against attacks launched at his beast."
+  },
+  {
+    "name": "Unarmed Prowess",
+    "explanation": "Permits the user to treat his Unarmed blocks and parries as \u2018Medium\u2019 sized, enabling him to better defend himself from armed opponents."
+  },
+  {
+    "name": "Unarmed throws",
+    "explanation": "This unarmed style teaches techniques to use an opponent\u2019s weight against him and drop him prone. When using the Trip Opponent Special Effect the Brawn, Evade or Acrobatics roll to avoid falling prone is one step harder.\\nUnarmed Only."
+  },
+  {
+    "name": "Versatile",
+    "explanation": "Any ENC 1 single handed weapon can be used with only one grade of difficulty harder"
+  },
+  {
+    "name": "Volley Fire",
+    "explanation": "Requires three or more combatants with the same Combat Style Trait to all be attacking with missile weapons at the same target or targets. As long as at least one of the combatants succeeds in an attack roll, the enemy is affected by the Pin Down Special Effect in addition to any other Special Effects earned from levels of success. This tactic can be used against a group of enemy soldiers of equal or lesser frontage than the archers. Mythic Constantinople"
+  },
+  {
+    "name": "Water Combat",
+    "explanation": "The style allows its user to ignore the skill cap placed on combat rolls by the Swim skill."
+  },
+  {
+    "name": "Windage",
+    "explanation": "Reduce the difficulty imposed by wind strength by one grade"
+  }
+]

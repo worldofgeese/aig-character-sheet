@@ -1,0 +1,298 @@
+[
+  {
+    "name": "Accidental Injury",
+    "offensive": false,
+    "defensive": true,
+    "stackable": false,
+    "specific_roll": "Attacker Fumbles"
+  },
+  {
+    "name": "Arise",
+    "offensive": false,
+    "defensive": true,
+    "stackable": false
+  },
+  {
+    "name": "Bash",
+    "offensive": true,
+    "defensive": false,
+    "stackable": false,
+    "specific_weapon_type": "Shields or Bludgeoning"
+  },
+  {
+    "name": "Bleed",
+    "offensive": true,
+    "defensive": false,
+    "stackable": false,
+    "specific_weapon_type": "Cutting Weapons"
+  },
+  {
+    "name": "Blind Opponent",
+    "offensive": false,
+    "defensive": true,
+    "stackable": false,
+    "specific_roll": "Defender Criticals"
+  },
+  {
+    "name": "Bypass Armour",
+    "offensive": true,
+    "defensive": false,
+    "stackable": true,
+    "specific_roll": "Attacker Criticals"
+  },
+  {
+    "name": "Choose Location",
+    "offensive": true,
+    "defensive": false,
+    "stackable": false,
+    "specific_roll": "See Description"
+  },
+  {
+    "name": "Circumvent Cover",
+    "offensive": true,
+    "defensive": false,
+    "stackable": false,
+    "specific_weapon_type": "Ranged Weapons"
+  },
+  {
+    "name": "Circumvent Parry",
+    "offensive": true,
+    "defensive": false,
+    "stackable": false,
+    "specific_roll": "Attacker Criticals"
+  },
+  {
+    "name": "Close Range",
+    "offensive": true,
+    "defensive": true,
+    "stackable": false
+  },
+  {
+    "name": "Compel Surrender",
+    "offensive": true,
+    "defensive": true,
+    "stackable": false
+  },
+  {
+    "name": "Damage Weapon",
+    "offensive": true,
+    "defensive": true,
+    "stackable": false
+  },
+  {
+    "name": "Disarm Opponent",
+    "offensive": true,
+    "defensive": true,
+    "stackable": false
+  },
+  {
+    "name": "Drop Foe",
+    "offensive": true,
+    "defensive": false,
+    "stackable": false,
+    "specific_weapon_type": "Siege Weapons, Firearms"
+  },
+  {
+    "name": "Duck Back",
+    "offensive": true,
+    "defensive": false,
+    "stackable": false,
+    "specific_weapon_type": "Ranged Weapons"
+  },
+  {
+    "name": "Enhance Parry",
+    "offensive": false,
+    "defensive": true,
+    "stackable": false,
+    "specific_roll": "Defender Criticals"
+  },
+  {
+    "name": "Entangle",
+    "offensive": true,
+    "defensive": true,
+    "stackable": false,
+    "specific_weapon_type": "Entangling Weapons"
+  },
+  {
+    "name": "Flurry",
+    "offensive": true,
+    "defensive": false,
+    "stackable": true,
+    "specific_weapon_type": "Unarmed"
+  },
+  {
+    "name": "Force Failure",
+    "offensive": true,
+    "defensive": true,
+    "stackable": false,
+    "specific_roll": "Opponent Fumbles"
+  },
+  {
+    "name": "Grip",
+    "offensive": true,
+    "defensive": false,
+    "stackable": false,
+    "specific_weapon_type": "Unarmed"
+  },
+  {
+    "name": "Impale",
+    "offensive": true,
+    "defensive": false,
+    "stackable": false,
+    "specific_weapon_type": "Impaling Weapons"
+  },
+  {
+    "name": "Kill Silently",
+    "offensive": true,
+    "defensive": false,
+    "stackable": false,
+    "specific_weapon_type": "Small Weapons",
+    "specific_roll": "See Description"
+  },
+  {
+    "name": "Marksman",
+    "offensive": true,
+    "defensive": false,
+    "stackable": false,
+    "specific_weapon_type": "Ranged Weapons"
+  },
+  {
+    "name": "Maximise Damage",
+    "offensive": true,
+    "defensive": false,
+    "stackable": true,
+    "specific_roll": "Attacker Criticals"
+  },
+  {
+    "name": "Open Range",
+    "offensive": false,
+    "defensive": true,
+    "stackable": false
+  },
+  {
+    "name": "Overextend Opponent",
+    "offensive": false,
+    "defensive": true,
+    "stackable": true
+  },
+  {
+    "name": "Overpenetration",
+    "offensive": true,
+    "defensive": false,
+    "stackable": false,
+    "specific_weapon_type": "Ranged Weapons",
+    "specific_roll": "Critical Only"
+  },
+  {
+    "name": "Pin Down",
+    "offensive": true,
+    "defensive": false,
+    "stackable": false,
+    "specific_weapon_type": "Ranged Weapons"
+  },
+  {
+    "name": "Pin Weapon",
+    "offensive": true,
+    "defensive": true,
+    "stackable": false,
+    "specific_roll": "Critical Only"
+  },
+  {
+    "name": "Prepare Counter",
+    "offensive": false,
+    "defensive": true,
+    "stackable": true
+  },
+  {
+    "name": "Press Advantage",
+    "offensive": true,
+    "defensive": false,
+    "stackable": false
+  },
+  {
+    "name": "Rapid Reload",
+    "offensive": true,
+    "defensive": false,
+    "stackable": true
+  },
+  {
+    "name": "Remise",
+    "offensive": true,
+    "defensive": false,
+    "stackable": false,
+    "specific_weapon_type": "Small Weapon Only"
+  },
+  {
+    "name": "Scar Foe",
+    "offensive": true,
+    "defensive": true,
+    "stackable": false
+  },
+  {
+    "name": "Select Target",
+    "offensive": false,
+    "defensive": true,
+    "stackable": false,
+    "specific_roll": "Attacker Fumbles"
+  },
+  {
+    "name": "Slip Free",
+    "offensive": false,
+    "defensive": true,
+    "stackable": false,
+    "specific_roll": "Defender Criticals"
+  },
+  {
+    "name": "Spoil Spell",
+    "offensive": true,
+    "defensive": false,
+    "stackable": false
+  },
+  {
+    "name": "Stand Fast",
+    "offensive": false,
+    "defensive": true,
+    "stackable": false
+  },
+  {
+    "name": "Stun Location",
+    "offensive": true,
+    "defensive": false,
+    "stackable": false,
+    "specific_weapon_type": "Bludgeoning Weapons"
+  },
+  {
+    "name": "Sunder",
+    "offensive": true,
+    "defensive": false,
+    "stackable": false,
+    "specific_weapon_type": "Axes, Two Handed Weapons"
+  },
+  {
+    "name": "Take Weapon",
+    "offensive": true,
+    "defensive": true,
+    "stackable": false,
+    "specific_weapon_type": "Unarmed"
+  },
+  {
+    "name": "Trip Opponent",
+    "offensive": true,
+    "defensive": true,
+    "stackable": false
+  },
+  {
+    "name": "Weapon Malfunction",
+    "offensive": true,
+    "defensive": false,
+    "stackable": false,
+    "specific_weapon_type": "Ranged Weapons",
+    "specific_roll": "Attacker Fumbles"
+  },
+  {
+    "name": "Withdraw",
+    "offensive": false,
+    "defensive": true,
+    "stackable": false
+  }
+]

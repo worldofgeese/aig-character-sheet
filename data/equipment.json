@@ -1,0 +1,245 @@
+[
+  {
+    "name": "Abacus",
+    "encumbrance": 1
+  },
+  {
+    "name": "Astrolabe",
+    "encumbrance": 1
+  },
+  {
+    "name": "Backpack/Satchel",
+    "encumbrance": 1
+  },
+  {
+    "name": "Bedroll",
+    "encumbrance": 1
+  },
+  {
+    "name": "Bit & Bridle",
+    "encumbrance": 1
+  },
+  {
+    "name": "Block & tackle",
+    "encumbrance": 1
+  },
+  {
+    "name": "Bottle, glass/earthenware"
+  },
+  {
+    "name": "Candle, 6 hour",
+    "encumbrance": 1
+  },
+  {
+    "name": "Chain, 2m",
+    "encumbrance": 2
+  },
+  {
+    "name": "Chest, Large",
+    "encumbrance": 5
+  },
+  {
+    "name": "Chest, Small",
+    "encumbrance": 3
+  },
+  {
+    "name": "Cooking Pot",
+    "encumbrance": 2
+  },
+  {
+    "name": "Craft tools",
+    "encumbrance": 2
+  },
+  {
+    "name": "Crop (riding)"
+  },
+  {
+    "name": "Crowbar",
+    "encumbrance": 1
+  },
+  {
+    "name": "Doorjamb",
+    "encumbrance": 2
+  },
+  {
+    "name": "Driver\u2019s whip"
+  },
+  {
+    "name": "Falconer\u2019s Kit",
+    "encumbrance": 1
+  },
+  {
+    "name": "Feed/mount rations (per day)",
+    "encumbrance": 1
+  },
+  {
+    "name": "Fine wine goblet"
+  },
+  {
+    "name": "First aid kit"
+  },
+  {
+    "name": "Fish hooks (20)"
+  },
+  {
+    "name": "Fishing kit",
+    "encumbrance": 1
+  },
+  {
+    "name": "Fishing Net",
+    "encumbrance": 4
+  },
+  {
+    "name": "Flint & tinder"
+  },
+  {
+    "name": "Game Snares and Traps",
+    "encumbrance": 1
+  },
+  {
+    "name": "Goad",
+    "encumbrance": 1
+  },
+  {
+    "name": "Grappling hook"
+  },
+  {
+    "name": "Hammer/Saw/Mallet/Chisel",
+    "encumbrance": 1
+  },
+  {
+    "name": "Healer\u2019s kit",
+    "encumbrance": 1
+  },
+  {
+    "name": "Hourglass",
+    "encumbrance": 1
+  },
+  {
+    "name": "Knife"
+  },
+  {
+    "name": "Ladder, rope 3m",
+    "encumbrance": 4
+  },
+  {
+    "name": "Lantern, basic",
+    "encumbrance": 1
+  },
+  {
+    "name": "Lock picks"
+  },
+  {
+    "name": "Lockbox",
+    "encumbrance": 1
+  },
+  {
+    "name": "Lodestone"
+  },
+  {
+    "name": "Milling Stone",
+    "encumbrance": 2
+  },
+  {
+    "name": "Mirror (hand glass)",
+    "encumbrance": 1
+  },
+  {
+    "name": "Mug/Beaker/Dish/Plate"
+  },
+  {
+    "name": "Musical instrument",
+    "encumbrance": 2
+  },
+  {
+    "name": "Nails or tacks (50)",
+    "encumbrance": 1
+  },
+  {
+    "name": "Oil flask",
+    "encumbrance": 1
+  },
+  {
+    "name": "Papyrus or paper sheet"
+  },
+  {
+    "name": "Pickaxe",
+    "encumbrance": 1
+  },
+  {
+    "name": "Pole, 3m",
+    "encumbrance": 1
+  },
+  {
+    "name": "Quills and ink",
+    "encumbrance": 1
+  },
+  {
+    "name": "Quiver"
+  },
+  {
+    "name": "Razor, folding"
+  },
+  {
+    "name": "Rope (hemp), 10m",
+    "encumbrance": 2
+  },
+  {
+    "name": "Sack, large",
+    "encumbrance": 1
+  },
+  {
+    "name": "Sack, small"
+  },
+  {
+    "name": "Saddle, riding",
+    "encumbrance": 3
+  },
+  {
+    "name": "Saddle, war",
+    "encumbrance": 4
+  },
+  {
+    "name": "Saddlebag",
+    "encumbrance": 2
+  },
+  {
+    "name": "Saw, hand",
+    "encumbrance": 1
+  },
+  {
+    "name": "Scythe/Sickle",
+    "encumbrance": 2
+  },
+  {
+    "name": "Sextant",
+    "encumbrance": 1
+  },
+  {
+    "name": "Ship\u2019s Compass",
+    "encumbrance": 1
+  },
+  {
+    "name": "Shoes, horse",
+    "encumbrance": 1
+  },
+  {
+    "name": "Spade/Hoe/Pitchfork",
+    "encumbrance": 1
+  },
+  {
+    "name": "Torch, 1 hour"
+  },
+  {
+    "name": "Torch, 6 hour",
+    "encumbrance": 1
+  },
+  {
+    "name": "Waterskin or Canteen",
+    "encumbrance": 1
+  },
+  {
+    "name": "Wax, block",
+    "encumbrance": 1
+  }
+]
