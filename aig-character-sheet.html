@@ -1396,6 +1396,7 @@ const App = {
 // =============================================================================
 
 App.skillWithTooltip = function(name) {
+  if (typeof name !== 'string') return String(name);
   const desc = SKILL_DESCRIPTIONS[name] || SKILL_DESCRIPTIONS[name.split('(')[0].trim()];
   if (desc) {
     return `${name} <span class="skill-tooltip" tabindex="0">ℹ️<span class="tooltip-text">${desc}</span></span>`;
@@ -1453,13 +1454,14 @@ App.generateCharacterSummary = function() {
 
   // Get top 5 non-combat skills
   const allSkills = {...char.culturalSkills, ...char.careerSkills, ...char.bonusSkills};
+  const combatStylesList = Array.isArray(char.combatStyles) ? char.combatStyles : [];
   const skillsList = Object.entries(allSkills)
-    .filter(([name]) => !char.combatStyles.some(cs => cs.name === name))
+    .filter(([name]) => !combatStylesList.some(cs => cs && cs.name === name))
     .sort((a, b) => b[1] - a[1])
     .slice(0, 5);
 
   // Get combat styles
-  const combatStyles = char.combatStyles.map(cs => cs.name).join(', ');
+  const combatStyles = combatStylesList.map(cs => cs && cs.name).filter(Boolean).join(', ');
 
   // Get highest characteristic
   const charEntries = Object.entries(char.characteristics);
@@ -1871,7 +1873,14 @@ App.renderStep5 = function() {
   // Render skills
   const skillsList = div.querySelector('#cultural-skills-list');
   [...culture.standardSkills, ...culture.professionalSkills].forEach((skill, idx) => {
-    const skillName = typeof skill === 'string' ? skill : skill.choice;
+    let skillName;
+    if (typeof skill === 'string') {
+      skillName = skill;
+    } else if (skill.choice) {
+      skillName = Array.isArray(skill.choice) ? skill.choice.join(' or ') : String(skill.choice);
+    } else {
+      skillName = String(skill);
+    }
     const currentValue = CharacterData.culturalSkills[skillName] || 0;
     
     const row = document.createElement('div');
