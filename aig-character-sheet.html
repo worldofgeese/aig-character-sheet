@@ -2373,11 +2373,10 @@ App.renderStep10 = function() {
 };
 
 App.addBonusSkill = function() {
-  // Use autocomplete instead of plain text input
-  const container = document.getElementById('bonus-skills-list');
-  if (!container) return;
+  // Remove any existing autocomplete first
+  const existing = document.querySelector('#bonus-skills-list + .autocomplete-container, #bonus-skills-list .autocomplete-container');
+  if (existing) { existing.remove(); }
   
-  // Build list of available professional skills + combat styles
   const allProfSkills = [
     'Acrobatics', 'Acting', 'Art (any)', 'Binding', 'Bureaucracy', 'Commerce', 'Courtesy',
     'Craft (any)', 'Culture (any)', 'Devotion', 'Disguise', 'Engineering', 'Exhort',
@@ -2388,12 +2387,39 @@ App.addBonusSkill = function() {
     'Combat Style (Cultural Style)', 'Combat Style (Speciality Style)'
   ].map(name => ({ name }));
   
-  this.createAutocomplete('bonus-skills-list', allProfSkills, 'Start typing skill name...', (skill) => {
-    if (!CharacterData.bonusSkills[skill.name]) {
-      CharacterData.bonusSkills[skill.name] = 0;
-      this.saveToLocalStorage();
-      this.renderCurrentStep();
-    }
+  // Create autocomplete inline
+  const autoDiv = document.createElement('div');
+  autoDiv.className = 'autocomplete-container';
+  autoDiv.style.cssText = 'margin: 10px 0;';
+  autoDiv.innerHTML = `
+    <input type="text" placeholder="Start typing skill name..." style="width: 100%; padding: 10px; font-size: 14px; min-height: 44px;">
+    <div class="autocomplete-results" style="display: none;"></div>
+  `;
+  
+  const btn = document.querySelector('[onclick*="addBonusSkill"]');
+  if (btn) btn.parentNode.insertBefore(autoDiv, btn.nextSibling);
+  
+  const input = autoDiv.querySelector('input');
+  const results = autoDiv.querySelector('.autocomplete-results');
+  input.focus();
+  
+  input.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase().trim();
+    if (query.length < 2) { results.style.display = 'none'; return; }
+    const matches = allProfSkills.filter(s => s.name.toLowerCase().includes(query)).slice(0, 15);
+    if (!matches.length) { results.style.display = 'none'; return; }
+    results.innerHTML = matches.map(s => `<div class="autocomplete-item" data-name="${s.name}">${s.name}</div>`).join('');
+    results.style.display = 'block';
+    results.querySelectorAll('.autocomplete-item').forEach(el => {
+      el.addEventListener('click', () => {
+        const name = el.getAttribute('data-name');
+        if (!CharacterData.bonusSkills[name]) {
+          CharacterData.bonusSkills[name] = 0;
+          App.saveToLocalStorage();
+          App.renderCurrentStep();
+        }
+      });
+    });
   });
 };
 
