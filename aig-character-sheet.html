@@ -393,7 +393,7 @@ button.primary:hover { background: #333; }
   <div class="no-print" style="text-align: right; margin-bottom: 10px;">
     <button onclick="App.switchMode('wizard')" id="btn-wizard">Wizard Mode</button>
     <button onclick="App.switchMode('play')" id="btn-play">Play Mode</button>
-    <button onclick="window.print()">Print (A4)</button>
+    <button onclick="App.printSheet()" id="btn-print" disabled title="Complete character creation first">Print (A4)</button>
     <button onclick="App.saveCharacter()">Save (Ctrl+S)</button>
     <button onclick="App.loadCharacter()">Load</button>
   </div>
@@ -733,6 +733,13 @@ const App = {
     document.getElementById('btn-wizard').classList.toggle('primary', mode === 'wizard');
     document.getElementById('btn-play').classList.toggle('primary', mode === 'play');
     
+    // Print only available in Play Mode (finished character)
+    const printBtn = document.getElementById('btn-print');
+    if (printBtn) {
+      printBtn.disabled = mode !== 'play';
+      printBtn.title = mode !== 'play' ? 'Complete character creation first' : 'Print character sheet';
+    }
+    
     if (mode === 'play') {
       this.renderPlayMode();
     }
@@ -853,6 +860,14 @@ const App = {
     
     const step = this[`renderStep${this.currentStep}`]();
     container.appendChild(step);
+  },
+  
+  printSheet() {
+    if (this.mode !== 'play') {
+      this.showToast('Complete character creation first, then switch to Play Mode to print', 'error');
+      return;
+    }
+    window.print();
   },
   
   showToast(message, type = 'success') {
