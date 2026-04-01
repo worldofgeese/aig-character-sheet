@@ -2435,7 +2435,8 @@ App.renderStep11 = function() {
     
     <div class="field" style="margin-top: 15px;">
       <label>Remaining Money</label>
-      <input type="number" value="${CharacterData.startingMoney}" readonly style="background: #f0f0f0;">
+      <input type="number" id="money-remaining-input" value="${CharacterData.startingMoney}" readonly style="background: #f0f0f0;">
+      <span id="money-remaining" style="font-weight: bold;"></span>
     </div>
   `;
 
@@ -2447,7 +2448,7 @@ App.renderStep11 = function() {
     row.innerHTML = `
       <span>${w.name} (${w.damage || 'N/A'}, AP:${w.ap || 0} HP:${w.hp || 0})</span>
       <span>Cost: <input type="number" style="width: 60px; padding: 2px;" value="${w.cost || 0}"
-        oninput="CharacterData.weapons[${i}].cost = parseInt(this.value) || 0; App.saveToLocalStorage(); App.renderCurrentStep()"></span>
+        onchange="CharacterData.weapons[${i}].cost = parseInt(this.value) || 0; App.saveToLocalStorage(); App.updateMoneyDisplay()"></span>
       <button onclick="CharacterData.weapons.splice(${i},1); App.saveToLocalStorage(); App.renderCurrentStep()">Remove</button>
     `;
     weaponsList.appendChild(row);
@@ -2461,7 +2462,7 @@ App.renderStep11 = function() {
     row.innerHTML = `
       <span>${a.name} (AP:${a.ap || 0}${a.hp ? ' HP:' + a.hp : ''})</span>
       <span>Cost: <input type="number" style="width: 60px; padding: 2px;" value="${a.cost || 0}"
-        oninput="CharacterData.armor[${i}].cost = parseInt(this.value) || 0; App.saveToLocalStorage(); App.renderCurrentStep()"></span>
+        onchange="CharacterData.armor[${i}].cost = parseInt(this.value) || 0; App.saveToLocalStorage(); App.updateMoneyDisplay()"></span>
       <button onclick="CharacterData.armor.splice(${i},1); App.saveToLocalStorage(); App.renderCurrentStep()">Remove</button>
     `;
     armorList.appendChild(row);
@@ -2475,7 +2476,7 @@ App.renderStep11 = function() {
     row.innerHTML = `
       <span>${e.name}${e.encumbrance ? ' (ENC:' + e.encumbrance + ')' : ''}</span>
       <span>Cost: <input type="number" style="width: 60px; padding: 2px;" value="${e.cost || 0}"
-        oninput="CharacterData.equipment[${i}].cost = parseInt(this.value) || 0; App.saveToLocalStorage(); App.renderCurrentStep()"></span>
+        onchange="CharacterData.equipment[${i}].cost = parseInt(this.value) || 0; App.saveToLocalStorage(); App.updateMoneyDisplay()"></span>
       <button onclick="CharacterData.equipment.splice(${i},1); App.saveToLocalStorage(); App.renderCurrentStep()">Remove</button>
     `;
     equipmentList.appendChild(row);
@@ -2489,10 +2490,16 @@ App.renderStep11 = function() {
   ].reduce((a, b) => a + b, 0);
 
   // Update current money display
-  const currentMoneyField = div.querySelector('.field input[type="number"]');
+  const moneyInput = div.querySelector('#money-remaining-input');
+  const moneyLabel = div.querySelector('#money-remaining');
   const remainingMoney = CharacterData.startingMoney - totalCost;
-  currentMoneyField.value = remainingMoney;
-  currentMoneyField.previousElementSibling.textContent = `Remaining Money (Started with ${CharacterData.startingMoney}, spent ${totalCost})`;
+  if (moneyInput) moneyInput.value = remainingMoney;
+  if (moneyLabel) {
+    moneyLabel.textContent = remainingMoney + ' Lunars';
+    moneyLabel.style.color = remainingMoney < 0 ? 'red' : '';
+  }
+  const label = div.querySelector('.field label');
+  if (label) label.textContent = `Remaining Money (Started with ${CharacterData.startingMoney}, spent ${totalCost})`;
 
   return div;
 };
@@ -2604,6 +2611,20 @@ App.rollStartingMoney = function() {
   this.saveToLocalStorage();
   this.renderCurrentStep();
   this.showToast(`Rolled ${total} Lunars!`, 'success');
+};
+
+App.updateMoneyDisplay = function() {
+  const el = document.getElementById('money-remaining');
+  if (el) {
+    const totalCosts = [
+      ...CharacterData.weapons.map(w => w.cost || 0),
+      ...CharacterData.armor.map(a => a.cost || 0),
+      ...CharacterData.equipment.map(e => e.cost || 0)
+    ].reduce((a, b) => a + b, 0);
+    const remaining = CharacterData.startingMoney - totalCosts;
+    el.textContent = remaining + ' Lunars';
+    el.style.color = remaining < 0 ? 'red' : '';
+  }
 };
 
 App.addWeapon = function() {
