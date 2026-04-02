@@ -506,9 +506,11 @@ button.primary:hover { background: #333; }
   height: 210mm;
   font-size: 7pt;
   line-height: 1.2;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
+  z-index: 10000;
+  background: white;
 }
 
 #pocketfold-view .panel {
@@ -1333,6 +1335,7 @@ const App = {
 
     // Delay print to let DOM repaint with pocketfold visible
     setTimeout(() => {
+      alert('IMPORTANT: In the print dialog, set orientation to LANDSCAPE and margins to NONE for the pocketfold to work correctly.');
       window.print();
       
       // Restore normal view after print dialog closes
