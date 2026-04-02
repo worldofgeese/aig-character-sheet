@@ -475,10 +475,7 @@ button.primary:hover { background: #333; }
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
   .char-grid { grid-template-columns: repeat(3, 1fr); }
   .play-layout { grid-template-columns: 1fr; }
-  #play-combat .weapon-row { display: block; border: 1px solid #999; padding: 10px; margin: 8px 0; border-radius: 4px; background: #f9f9f9; }
-  #play-combat .weapon-row:first-child { display: none; }
-  #play-combat .weapon-row > div { margin: 4px 0; font-size: 13px; }
-  #play-combat .weapon-row > div:first-child { font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+  .weapon-row { grid-template-columns: 1fr; }
   .skill-row { grid-template-columns: 1fr; }
   .skill-row button { width: 100%; }
   .attributes-grid { grid-template-columns: 1fr; }
@@ -753,7 +750,7 @@ button.primary:hover { background: #333; }
   <!-- TRADEMARK FOOTER -->
   <div id="trademark-footer" style="margin-top: 30px; padding: 15px; border-top: 2px solid #000; font-size: 11px; line-height: 1.6; color: #333;">
     <p style="margin-bottom: 8px;">
-      <strong>Mythras™</strong> and <strong>Mythras Imperative™</strong> are Registered Trademarks of The Design Mechanism Inc.
+      <strong>Mythras™</strong> and <strong>Mythras Imperative™</strong> are Registered Trademarks of The Design Mechanism Inc, and are used with permission.
     </p>
     <p style="margin-bottom: 0;">
       This tool uses trademarks and/or copyrights owned by Chaosium Inc/Moon Design Publications LLC, which are used under Chaosium Inc's Fan Material Policy. We are expressly prohibited from charging you to use or access this content. This tool is not published, endorsed, or specifically approved by Chaosium Inc. For more information about Chaosium Inc's products, please visit <a href="https://www.chaosium.com" target="_blank" rel="noopener">www.chaosium.com</a>.
@@ -1822,11 +1819,8 @@ App.renderStep4 = function() {
     </div>
     
     <div class="field">
-      <label>Homeland</label>
-      <input type="text" id="homeland" list="homeland-list" value="${CharacterData.homeland}" oninput="CharacterData.homeland = this.value; App.saveToLocalStorage()" placeholder="Type or select...">
-      <datalist id="homeland-list">
-        ${this.getHomelandSuggestions(CharacterData.culture).map(h => `<option value="${h}">`).join('')}
-      </datalist>
+      <label>Homeland (free text)</label>
+      <input type="text" id="homeland" value="${CharacterData.homeland}" oninput="CharacterData.homeland = this.value; App.saveToLocalStorage()">
     </div>
     
     ${CharacterData.culture ? this.renderCultureDetails() : ''}
@@ -1848,41 +1842,6 @@ App.selectCulture = function(cultureName) {
     this.saveToLocalStorage();
     this.renderCurrentStep();
   }
-};
-
-App.applyBuild = function(build) {
-  if (!confirm(`Apply "${build.name}" build?\n\nThis will set your:\n- Characteristics (you can adjust after)\n- Career: ${build.career}\n- Combat Style: ${build.style}\n\nContinue?`)) {
-    return;
-  }
-  
-  // Parse stats recommendation (e.g., "High STR, CON")
-  // Set all to 10, then boost recommended ones to 13
-  const allStats = ['STR', 'CON', 'SIZ', 'DEX', 'INT', 'POW', 'CHA'];
-  allStats.forEach(stat => { CharacterData.characteristics[stat] = 10; });
-  
-  const highStats = build.stats.match(/STR|CON|SIZ|DEX|INT|POW|CHA/g) || [];
-  highStats.forEach(stat => { CharacterData.characteristics[stat] = 13; });
-  
-  // Set career
-  CharacterData.career = build.career;
-  
-  this.saveToLocalStorage();
-  this.renderCurrentStep();
-  this.showToast(`Applied ${build.name} build! Characteristics, career, and style set.`, 'success');
-};
-
-App.getHomelandSuggestions = function(culture) {
-  const homelandData = {
-    'Balazaring': ['Balazar', 'Elder Wilds', 'Votankiland'],
-    'Esrolian': ['Nochet', 'Esrolia', 'Ezel'],
-    'God Forgot': ['God Forgot', 'Holy Country'],
-    'Lunar Heartland': ['Glamour', 'Alkoth', 'Raibanth', 'Yuthuppa'],
-    'Praxian': ['Prax', 'The Wastes', 'Pavis County'],
-    'Provincial Lunar/Tarsh': ['Furthest', 'Alda-Chur', 'Dunstop'],
-    'Sartarite/Heortling': ['Boldhome', 'Jonstown', 'Clearwine', 'Apple Lane'],
-    'Telmori Hsunchen': ['Telmori Wilds', 'Sartar borders']
-  };
-  return homelandData[culture] || [];
 };
 
 App.evaluateFormula = function(formula) {
@@ -1927,7 +1886,7 @@ App.renderCultureBuilds = function(cultureName) {
       <h3>💡 Suggested Character Builds for ${cultureName}</h3>
       <p style="margin-bottom: 10px; font-size: 0.9em;">These are suggestions to help new players. Feel free to create your own unique character!</p>
       ${builds.map(build => `
-        <div class="build-card" onclick='App.applyBuild({name: "${build.name}", stats: "${build.stats}", career: "${build.career}", style: "${build.style}"})' style="cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#e8e8e8'" onmouseout="this.style.background='#fff'">
+        <div class="build-card">
           <div class="build-name">${build.name}</div>
           <div class="build-detail">Stats: ${build.stats} | Career: ${build.career} | Style: ${build.style}</div>
           <div class="build-tip">${build.tip}</div>
@@ -2474,34 +2433,16 @@ App.renderStep10 = function() {
   const sortedSkills = Array.from(allSkills.keys()).sort();
   sortedSkills.forEach(skillName => {
     const points = CharacterData.bonusSkills[skillName] || 0;
-    // Calculate total with breakdown
-    const skillDef = SKILLS_DATA.find(s => s.name === skillName);
-    const {STR, CON, SIZ, DEX, INT, POW, CHA} = CharacterData.characteristics;
-    const statMap = {STR, CON, SIZ, DEX, INT, POW, CHA};
-    const baseValue = skillDef ? Calc.skillBaseValue(statMap[skillDef.base_stats[0]], statMap[skillDef.base_stats[1]], skillDef.starting_bonus) : 0;
-    const culturalPoints = CharacterData.culturalSkills[skillName] || 0;
-    const careerPoints = CharacterData.careerSkills[skillName] || 0;
-    const bonusPoints = points;
-    const totalValue = baseValue + culturalPoints + careerPoints + bonusPoints;
     const row = document.createElement('div');
     row.className = 'skill-row';
     row.innerHTML = `
-      <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px; width: 100%;">
-        <div>
-          <div style="display: flex; align-items: center; gap: 4px;">
-            <strong>${skillName}</strong>
-            <span class="skill-tooltip" tabindex="0">ℹ️<span class="tooltip-text">${(SKILL_DESCRIPTIONS[skillName] || SKILL_DESCRIPTIONS[(skillName || '').split('(')[0].trim()] || '')}</span></span>
-          </div>
-          <div style="font-size: 11px; color: #666; margin-top: 2px;">
-            ${baseValue} base + ${culturalPoints} culture + ${careerPoints} career + ${bonusPoints} bonus = <strong>${totalValue}%</strong>
-          </div>
-        </div>
-        <div style="display: flex; gap: 6px; align-items: center;">
-          <input type="number" min="0" max="${ageCategory ? ageCategory.maxPerSkill : 100}" value="${points}"
-            onchange="App.updateSkillPoints('bonus', '${skillName}', parseInt(this.value))" style="width: 60px;">
-          <button onclick="App.removeBonusSkill('${skillName}')">×</button>
-        </div>
+      <div style="display: flex; align-items: center; gap: 4px;">
+        <input type="text" value="${skillName}" readonly style="flex: 1;">
+        <span class="skill-tooltip" tabindex="0">ℹ️<span class="tooltip-text">${(SKILL_DESCRIPTIONS[skillName] || SKILL_DESCRIPTIONS[(skillName || '').split('(')[0].trim()] || '')}</span></span>
       </div>
+      <input type="number" min="0" max="${ageCategory ? ageCategory.maxPerSkill : 100}" value="${points}"
+        onchange="App.updateSkillPoints('bonus', '${skillName}', parseInt(this.value))">
+      <button onclick="App.removeBonusSkill('${skillName}')">Remove</button>
     `;
     skillsList.appendChild(row);
   });
@@ -3018,26 +2959,14 @@ App.compileAllSkills = function() {
   return Array.from(skills.values()).filter(s => s.base > 0 || s.cultural > 0 || s.career > 0 || s.bonus > 0);
 };
 
-App.updateSkillDisplay = function() {
 App.renderSkillRow = function(skill) {
   const total = skill.base + skill.cultural + skill.career + skill.bonus;
   const difficulty = document.getElementById('difficulty-modifier')?.value || 'Standard';
   const modified = Calc.applyDifficultyModifier(total, difficulty);
   
-  // Display actual combat style name if applicable
-  let displayName = skill.name;
-  if (skill.name === 'Combat Style (Cultural Style)' && CharacterData.culture) {
-    const culture = CULTURES_DATA.find(c => c.name === CharacterData.culture);
-    if (culture && culture.combatStyles && culture.combatStyles.length > 0) {
-      const firstStyle = culture.combatStyles[0];
-      const styleName = typeof firstStyle === 'string' ? firstStyle : firstStyle.name;
-      displayName = `Combat Style (${styleName})`;
-    }
-  }
-  
   return `
     <tr>
-      <td>${displayName}</td>
+      <td>${skill.name}</td>
       <td class="base-col">${skill.base}</td>
       <td class="input-col">${skill.cultural}</td>
       <td class="input-col">${skill.career}</td>
@@ -3047,6 +2976,8 @@ App.renderSkillRow = function(skill) {
     </tr>
   `;
 };
+
+App.updateSkillDisplay = function() {
   this.renderPlaySkills();
 };
 
@@ -3066,7 +2997,7 @@ App.renderPlayCombat = function() {
     ${CharacterData.weapons.map((w, i) => `
       <div class="weapon-row">
         <div>${w.name}</div>
-        <div><input type="number" value="${w.skill || 0}" placeholder="%" title="Skill %" style="width: 50px;"></div>
+        <div><input type="number" value="${w.skill || 0}" style="width: 50px;"></div>
         <div>${w.damage}</div>
         <div>${w.size}</div>
         <div>${w.reach}</div>
