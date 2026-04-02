@@ -261,6 +261,37 @@ button.primary:hover { background: #333; }
   padding: 10px 16px;
 }
 
+.equipment-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 6px;
+  margin: 8px 0;
+}
+
+.guide-item {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.85em;
+  font-weight: bold;
+  line-height: 1.3;
+  min-height: 44px;
+}
+
+.guide-item:hover, .guide-item:active {
+  background: #e8f0ff;
+  border-color: var(--accent);
+}
+
+.guide-item span {
+  font-weight: normal;
+  font-size: 0.8em;
+  color: #666;
+}
+
 /* Autocomplete */
 .autocomplete-container {
   position: relative;
@@ -428,6 +459,7 @@ button.primary:hover { background: #333; }
 @media print {
   body { padding: 0; max-width: none; font-size: 10pt; }
   .no-print { display: none !important; }
+  .print-only { display: block !important; }
   button { display: none; }
   input, select, textarea { border: none; padding: 0; }
   .wizard-nav { display: none; }
@@ -606,8 +638,7 @@ button.primary:hover { background: #333; }
   <div class="no-print" style="display: flex; flex-wrap: wrap; gap: 5px; justify-content: flex-end; margin-bottom: 10px;">
     <button onclick="App.switchMode('wizard')" id="btn-wizard">Wizard Mode</button>
     <button onclick="App.switchMode('play')" id="btn-play">Play Mode</button>
-    <button onclick="App.printSheet()" id="btn-print" disabled title="Complete character creation first">Print (A4)</button>
-    <button onclick="App.printPocketfold()" id="btn-print-pocketfold" disabled title="Complete character creation first">Print Pocketfold 📖</button>
+    <button onclick="App.printSheet()" id="btn-print" disabled title="Complete character creation first">Print</button>
     <button onclick="App.saveCharacter()">Save (Ctrl+S)</button>
     <button onclick="App.loadCharacter()">Load</button>
   </div>
@@ -698,6 +729,12 @@ button.primary:hover { background: #333; }
 
         <h2>Notes</h2>
         <textarea data-persist="notes" rows="6"></textarea>
+
+        <!-- Print-only pocketfold reference -->
+        <div class="print-only" style="display: none; margin-top: 20px; padding: 10px; border-top: 1px solid #ccc; font-size: 9pt; color: #666;">
+          📖 Make a pocket-sized version of this sheet at <b>pocketverter.pages.dev</b> — no cutting required, just fold!
+          Learn more: <b>3skulls.itch.io/pocketfold</b>
+        </div>
 
         <!-- Special Effects Reference -->
         <div class="collapsible">
@@ -1044,13 +1081,7 @@ const App = {
       printBtn.title = mode !== 'play' ? 'Complete character creation first' : 'Print character sheet';
     }
 
-    const pocketfoldBtn = document.getElementById('btn-print-pocketfold');
-    if (pocketfoldBtn) {
-      pocketfoldBtn.disabled = mode !== 'play';
-      pocketfoldBtn.title = mode !== 'play' ? 'Complete character creation first' : 'Print pocketfold booklet';
-    }
-    
-    if (mode === 'play') {
+        if (mode === 'play') {
       this.renderPlayMode();
     }
   },
@@ -2460,7 +2491,11 @@ App.renderStep11 = function() {
   div.className = 'wizard-step';
   div.innerHTML = `
     <div class="step-header">Step 11: Equipment & Money <span class="page-ref">(Mythras p.107-128)</span></div>
-    <p>Buy weapons, armor, and gear with your starting money. Your culture determines how much money you start with.</p>
+    <div class="help-box">
+      <p>Buy weapons, armor, and gear with your starting money. Your culture determines how much money you start with.</p>
+      <p>Use the search boxes below to find items, or browse the <b>Common Equipment</b> guide at the bottom of this page.</p>
+      <p><em>Not sure what to buy? Your combat style lists the weapons your character knows how to use — start there!</em></p>
+    </div>
     <p>Starting money formula: <strong>${culture ? culture.startingMoney : '0'}</strong></p>
     <button onclick="App.rollStartingMoney()">🎲 Roll Starting Money</button>
 
@@ -2468,9 +2503,9 @@ App.renderStep11 = function() {
     <div id="weapons-list"></div>
     <button onclick="App.addWeapon()">+ Add Weapon</button>
     
-    <h3>Armor</h3>
+    <h3>Armor & Shields</h3>
     <div id="armor-list"></div>
-    <button onclick="App.addArmor()">+ Add Armor</button>
+    <button onclick="App.addArmor()">+ Add Armor/Shield</button>
     
     <h3>Equipment</h3>
     <div id="equipment-list"></div>
@@ -2543,6 +2578,80 @@ App.renderStep11 = function() {
   }
   const label = div.querySelector('.field label');
   if (label) label.textContent = `Remaining Money (Started with ${CharacterData.startingMoney}, spent ${totalCost})`;
+
+  // Add Common Equipment Guide
+  const guide = document.createElement('div');
+  guide.style.cssText = 'margin-top: 20px; padding: 15px; background: #f8f4e8; border-radius: 6px; border: 1px solid #d4c9a8;';
+  guide.innerHTML = `
+    <h3 style="margin-top: 0;">📋 Common Equipment Guide</h3>
+    <p style="font-size: 0.9em; color: #666;">Click any item to add it to your character. Prices in Lunars (L).</p>
+    
+    <h4>⚔️ Melee Weapons</h4>
+    <div class="equipment-guide-grid">
+      ${[
+        {n:'Broadsword',d:'1d8, 1H sword',p:50},
+        {n:'Shortsword',d:'1d6, 1H fast blade',p:25},
+        {n:'Longsword',d:'1d8/1d10 2H, versatile',p:75},
+        {n:'Dagger',d:'1d4+1, throwable',p:10},
+        {n:'Battleaxe',d:'1d6+1, can sunder',p:20},
+        {n:'Great Axe',d:'2d6+2, 2H devastating',p:30},
+        {n:'Mace',d:'1d8, stun',p:15},
+        {n:'Shortspear',d:'1d8+1, set vs charge',p:15},
+        {n:'Longspear',d:'1d10+1, 2H reach',p:25},
+        {n:'Halberd',d:'1d8+2, 2H polearm',p:50},
+        {n:'Quarterstaff',d:'1d8, 2H defensive',p:5},
+        {n:'Rapier',d:'1d8, impale',p:100},
+        {n:'Scimitar',d:'1d8, curved blade',p:40}
+      ].map(w => `<button class="guide-item" onclick="App.addFromGuide('weapon','${w.n}')">${w.n}<br><span>${w.d} — ${w.p} L</span></button>`).join('')}
+    </div>
+    
+    <h4>🏹 Ranged Weapons</h4>
+    <div class="equipment-guide-grid">
+      ${[
+        {n:'Short Bow',d:'1d6, light bow',p:50},
+        {n:'Long Bow',d:'1d8, heavy draw',p:120},
+        {n:'Composite Bow',d:'1d8, mounted',p:150},
+        {n:'Sling',d:'1d8, cheap & deadly',p:1},
+        {n:'Javelin',d:'1d8+1, thrown spear',p:5},
+        {n:'Light Crossbow',d:'1d8, no STR needed',p:80},
+        {n:'Heavy Crossbow',d:'1d10, armor piercing',p:100},
+        {n:'Dart',d:'1d4, quick throw',p:1}
+      ].map(w => `<button class="guide-item" onclick="App.addFromGuide('weapon','${w.n}')">${w.n}<br><span>${w.d} — ${w.p} L</span></button>`).join('')}
+    </div>
+    
+    <h4>🛡️ Shields</h4>
+    <div class="equipment-guide-grid">
+      ${[
+        {n:'Buckler',d:'Small, AP:6 HP:9',p:15},
+        {n:'Target Shield',d:'Medium, AP:4 HP:9',p:20},
+        {n:'Heater',d:'Large, AP:6 HP:12',p:25},
+        {n:'Kite',d:'Huge, AP:4 HP:15',p:30},
+        {n:'Hoplite',d:'Huge, AP:6 HP:15',p:40}
+      ].map(w => `<button class="guide-item" onclick="App.addFromGuide('armor','${w.n}')">${w.n}<br><span>${w.d} — ${w.p} L</span></button>`).join('')}
+    </div>
+    
+    <h4>🎒 Adventuring Gear</h4>
+    <div class="equipment-guide-grid">
+      ${[
+        {n:'Backpack/Satchel',d:'ENC 1, carry stuff',p:2},
+        {n:'Rope (hemp), 10m',d:'ENC 2, essential',p:1},
+        {n:'Torch, 6 hour',d:'ENC 1, light',p:'0.5'},
+        {n:'Lantern, basic',d:'ENC 1, better light',p:3},
+        {n:'Waterskin or Canteen',d:'ENC 1, water',p:'0.5'},
+        {n:'First aid kit',d:'Bandages & herbs',p:5},
+        {n:'Healer\\'s kit',d:'ENC 1, surgery tools',p:15},
+        {n:'Bedroll',d:'ENC 1, sleep anywhere',p:1},
+        {n:'Flint & tinder',d:'Start fires',p:'0.5'},
+        {n:'Knife',d:'ENC 0, utility blade',p:5}
+      ].map(e => `<button class="guide-item" onclick="App.addFromGuide('equipment','${e.n}')">${e.n}<br><span>${e.d} — ${e.p} L</span></button>`).join('')}
+    </div>
+    
+    <p style="font-size: 0.85em; color: #888; margin-top: 10px;">
+      💡 For the full weapon & armor catalog, see <b>Mythras p.107-128</b> or the <b>RuneQuest: Weapons & Equipment</b> book.
+      Use the search boxes above to find any weapon in the database (350+ weapons).
+    </p>
+  `;
+  div.appendChild(guide);
 
   return div;
 };
@@ -2674,6 +2783,40 @@ App.updateMoneyDisplay = function() {
     el.textContent = remaining + ' Lunars';
     el.style.color = remaining < 0 ? 'red' : '';
   }
+};
+
+App.addFromGuide = function(type, name) {
+  if (type === 'weapon') {
+    const weapon = WEAPONS_DATA.find(w => w.name === name);
+    if (weapon) {
+      const twoH = (typeof WEAPON_2H_STATS !== 'undefined') ? WEAPON_2H_STATS[name] : null;
+      CharacterData.weapons.push({
+        name: weapon.name, damage: weapon.damage || '', damage_2h: twoH ? twoH.damage_2h : null,
+        size: weapon.size || 'M', reach: weapon.reach || 'M',
+        ap: weapon.armour_points || 0, hp: weapon.hit_points || 0,
+        cost: ITEM_PRICES[name] || 0
+      });
+    }
+  } else if (type === 'armor') {
+    const armor = WEAPONS_DATA.find(w => w.name === name);
+    if (armor) {
+      CharacterData.armor.push({
+        name: armor.name, ap: armor.armour_points || 0, locations: [],
+        enc: armor.encumbrance || 0, cost: ITEM_PRICES[name] || 0
+      });
+    }
+  } else if (type === 'equipment') {
+    const equip = EQUIPMENT_DATA.find(e => e.name === name);
+    if (equip) {
+      CharacterData.equipment.push({
+        name: equip.name, enc: equip.encumbrance || 0, quantity: 1,
+        cost: ITEM_PRICES[name] || 0
+      });
+    }
+  }
+  this.saveToLocalStorage();
+  this.renderCurrentStep();
+  this.showToast(`Added ${name}`, 'success');
 };
 
 App.addWeapon = function() {
