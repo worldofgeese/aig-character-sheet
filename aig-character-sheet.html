@@ -475,7 +475,10 @@ button.primary:hover { background: #333; }
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
   .char-grid { grid-template-columns: repeat(3, 1fr); }
   .play-layout { grid-template-columns: 1fr; }
-  .weapon-row { grid-template-columns: 1fr; }
+  #play-combat .weapon-row { display: block; border: 1px solid #999; padding: 10px; margin: 8px 0; border-radius: 4px; background: #f9f9f9; }
+  #play-combat .weapon-row:first-child { display: none; }
+  #play-combat .weapon-row > div { margin: 4px 0; font-size: 13px; }
+  #play-combat .weapon-row > div:first-child { font-weight: 600; font-size: 15px; margin-bottom: 8px; }
   .skill-row { grid-template-columns: 1fr; }
   .skill-row button { width: 100%; }
   .attributes-grid { grid-template-columns: 1fr; }
@@ -650,7 +653,7 @@ button.primary:hover { background: #333; }
     <!-- Step navigation -->
     <div class="wizard-nav">
       <button onclick="App.prevStep()" id="btn-prev">← Previous</button>
-      <div id="step-indicator">Step 1 of 12</div>
+      <div id="step-indicator">Step 1 of 11</div>
       <button onclick="App.nextStep()" id="btn-next" class="primary">Next →</button>
     </div>
 
@@ -745,6 +748,16 @@ button.primary:hover { background: #333; }
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- TRADEMARK FOOTER -->
+  <div id="trademark-footer" style="margin-top: 30px; padding: 15px; border-top: 2px solid #000; font-size: 11px; line-height: 1.6; color: #333;">
+    <p style="margin-bottom: 8px;">
+      <strong>Mythras™</strong> and <strong>Mythras Imperative™</strong> are Registered Trademarks of The Design Mechanism Inc, and are used with permission.
+    </p>
+    <p style="margin-bottom: 0;">
+      This tool uses trademarks and/or copyrights owned by Chaosium Inc/Moon Design Publications LLC, which are used under Chaosium Inc's Fan Material Policy. We are expressly prohibited from charging you to use or access this content. This tool is not published, endorsed, or specifically approved by Chaosium Inc. For more information about Chaosium Inc's products, please visit <a href="https://www.chaosium.com" target="_blank" rel="noopener">www.chaosium.com</a>.
+    </p>
   </div>
 </div>
 
@@ -1091,7 +1104,7 @@ const App = {
       return;
     }
     
-    if (this.currentStep < 12) {
+    if (this.currentStep < 11) {
       this.currentStep++;
       this.renderCurrentStep();
       this.updateStepIndicator();
@@ -1195,9 +1208,9 @@ const App = {
   },
   
   updateStepIndicator() {
-    document.getElementById('step-indicator').textContent = `Step ${this.currentStep} of 12`;
+    document.getElementById('step-indicator').textContent = `Step ${this.currentStep} of 11`;
     document.getElementById('btn-prev').disabled = this.currentStep === 1;
-    document.getElementById('btn-next').textContent = this.currentStep === 12 ? 'Complete →' : 'Next →';
+    document.getElementById('btn-next').textContent = this.currentStep === 11 ? 'Complete →' : 'Next →';
   },
   
   renderCurrentStep() {
@@ -1809,8 +1822,11 @@ App.renderStep4 = function() {
     </div>
     
     <div class="field">
-      <label>Homeland (free text)</label>
-      <input type="text" id="homeland" value="${CharacterData.homeland}" oninput="CharacterData.homeland = this.value; App.saveToLocalStorage()">
+      <label>Homeland</label>
+      <input type="text" id="homeland" list="homeland-list" value="${CharacterData.homeland}" oninput="CharacterData.homeland = this.value; App.saveToLocalStorage()" placeholder="Type or select...">
+      <datalist id="homeland-list">
+        ${this.getHomelandSuggestions(CharacterData.culture).map(h => `<option value="${h}">`).join('')}
+      </datalist>
     </div>
     
     ${CharacterData.culture ? this.renderCultureDetails() : ''}
@@ -1832,6 +1848,41 @@ App.selectCulture = function(cultureName) {
     this.saveToLocalStorage();
     this.renderCurrentStep();
   }
+};
+
+App.applyBuild = function(build) {
+  if (!confirm(`Apply "${build.name}" build?\n\nThis will set your:\n- Characteristics (you can adjust after)\n- Career: ${build.career}\n- Combat Style: ${build.style}\n\nContinue?`)) {
+    return;
+  }
+  
+  // Parse stats recommendation (e.g., "High STR, CON")
+  // Set all to 10, then boost recommended ones to 13
+  const allStats = ['STR', 'CON', 'SIZ', 'DEX', 'INT', 'POW', 'CHA'];
+  allStats.forEach(stat => { CharacterData.characteristics[stat] = 10; });
+  
+  const highStats = build.stats.match(/STR|CON|SIZ|DEX|INT|POW|CHA/g) || [];
+  highStats.forEach(stat => { CharacterData.characteristics[stat] = 13; });
+  
+  // Set career
+  CharacterData.career = build.career;
+  
+  this.saveToLocalStorage();
+  this.renderCurrentStep();
+  this.showToast(`Applied ${build.name} build! Characteristics, career, and style set.`, 'success');
+};
+
+App.getHomelandSuggestions = function(culture) {
+  const homelandData = {
+    'Balazaring': ['Balazar', 'Elder Wilds', 'Votankiland'],
+    'Esrolian': ['Nochet', 'Esrolia', 'Ezel'],
+    'God Forgot': ['God Forgot', 'Holy Country'],
+    'Lunar Heartland': ['Glamour', 'Alkoth', 'Raibanth', 'Yuthuppa'],
+    'Praxian': ['Prax', 'The Wastes', 'Pavis County'],
+    'Provincial Lunar/Tarsh': ['Furthest', 'Alda-Chur', 'Dunstop'],
+    'Sartarite/Heortling': ['Boldhome', 'Jonstown', 'Clearwine', 'Apple Lane'],
+    'Telmori Hsunchen': ['Telmori Wilds', 'Sartar borders']
+  };
+  return homelandData[culture] || [];
 };
 
 App.evaluateFormula = function(formula) {
@@ -1876,7 +1927,7 @@ App.renderCultureBuilds = function(cultureName) {
       <h3>💡 Suggested Character Builds for ${cultureName}</h3>
       <p style="margin-bottom: 10px; font-size: 0.9em;">These are suggestions to help new players. Feel free to create your own unique character!</p>
       ${builds.map(build => `
-        <div class="build-card">
+        <div class="build-card" onclick='App.applyBuild({name: "${build.name}", stats: "${build.stats}", career: "${build.career}", style: "${build.style}"})' style="cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#e8e8e8'" onmouseout="this.style.background='#fff'">
           <div class="build-name">${build.name}</div>
           <div class="build-detail">Stats: ${build.stats} | Career: ${build.career} | Style: ${build.style}</div>
           <div class="build-tip">${build.tip}</div>
@@ -2261,41 +2312,54 @@ App.renderStep9 = function() {
   if (!CharacterData.career) {
     return this.renderStep8();
   }
-  
+
   const culture = CULTURES_DATA.find(c => c.name === CharacterData.culture);
+  const career = CAREERS_DATA.find(c => c.name === CharacterData.career);
   const spent = Object.values(CharacterData.careerSkills).reduce((a, b) => a + b, 0);
   const remaining = 100 - spent;
-  
+
   const div = document.createElement('div');
   div.className = 'wizard-step';
   div.innerHTML = `
     <div class="step-header">Step 9: Career Skills & Magic <span class="page-ref">(Adventures in Glorantha p.24)</span></div>
-    <p>Distribute 100 points among career skills. Select 2 additional Folk Magic spells.</p>
-    
+    <p>Distribute 100 points among your career's listed skills only.</p>
+
     <div class="budget-tracker ${remaining < 0 ? 'overspent' : remaining === 0 ? 'complete' : ''}">
       Points Remaining: ${remaining} / 100
     </div>
-    
-    <h3>Career Skills (any skills from cultural lists)</h3>
+
+    <h3>Career Skills</h3>
     <div id="career-skills-list"></div>
-    <button onclick="App.addCareerSkill()">+ Add Skill</button>
-    
+
     <h3>Additional Folk Magic (select 2 more)</h3>
     <div id="career-folk-magic-list"></div>
   `;
-  
+
+  // Render career skills (only from career's listed skills)
   const skillsList = div.querySelector('#career-skills-list');
-  Object.entries(CharacterData.careerSkills).forEach(([skillName, points]) => {
-    const row = document.createElement('div');
-    row.className = 'skill-row';
-    row.innerHTML = `
-      <input type="text" value="${skillName}" readonly>
-      <input type="number" min="0" max="100" value="${points}"
-        onchange="App.updateSkillPoints('career', '${skillName}', parseInt(this.value))">
-      <button onclick="App.removeCareerSkill('${skillName}')">Remove</button>
-    `;
-    skillsList.appendChild(row);
-  });
+  if (career) {
+    const careerSkills = [...(career.standardSkills || []), ...(career.professionalSkills || []), ...(career.combatStyles || [])];
+    careerSkills.forEach(skill => {
+      let skillName;
+      if (typeof skill === 'string') {
+        skillName = skill;
+      } else if (skill.choice) {
+        skillName = Array.isArray(skill.choice) ? skill.choice.join(' or ') : String(skill.choice);
+      } else {
+        skillName = String(skill);
+      }
+      const currentValue = CharacterData.careerSkills[skillName] || 0;
+
+      const row = document.createElement('div');
+      row.style.cssText = 'display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin: 4px 0;';
+      row.innerHTML = `
+        <label>${this.skillWithTooltip(skillName)}</label>
+        <input type="number" min="0" max="100" value="${currentValue}"
+          onchange="App.updateSkillPoints('career', '${skillName}', parseInt(this.value))">
+      `;
+      skillsList.appendChild(row);
+    });
+  }
   
   // Folk magic
   const folkList = div.querySelector('#career-folk-magic-list');
@@ -2410,16 +2474,34 @@ App.renderStep10 = function() {
   const sortedSkills = Array.from(allSkills.keys()).sort();
   sortedSkills.forEach(skillName => {
     const points = CharacterData.bonusSkills[skillName] || 0;
+    // Calculate total with breakdown
+    const skillDef = SKILLS_DATA.find(s => s.name === skillName);
+    const {STR, CON, SIZ, DEX, INT, POW, CHA} = CharacterData.characteristics;
+    const statMap = {STR, CON, SIZ, DEX, INT, POW, CHA};
+    const baseValue = skillDef ? Calc.skillBaseValue(statMap[skillDef.base_stats[0]], statMap[skillDef.base_stats[1]], skillDef.starting_bonus) : 0;
+    const culturalPoints = CharacterData.culturalSkills[skillName] || 0;
+    const careerPoints = CharacterData.careerSkills[skillName] || 0;
+    const bonusPoints = points;
+    const totalValue = baseValue + culturalPoints + careerPoints + bonusPoints;
     const row = document.createElement('div');
     row.className = 'skill-row';
     row.innerHTML = `
-      <div style="display: flex; align-items: center; gap: 4px;">
-        <input type="text" value="${skillName}" readonly style="flex: 1;">
-        <span class="skill-tooltip" tabindex="0">ℹ️<span class="tooltip-text">${(SKILL_DESCRIPTIONS[skillName] || SKILL_DESCRIPTIONS[(skillName || '').split('(')[0].trim()] || '')}</span></span>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px; width: 100%;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 4px;">
+            <strong>${skillName}</strong>
+            <span class="skill-tooltip" tabindex="0">ℹ️<span class="tooltip-text">${(SKILL_DESCRIPTIONS[skillName] || SKILL_DESCRIPTIONS[(skillName || '').split('(')[0].trim()] || '')}</span></span>
+          </div>
+          <div style="font-size: 11px; color: #666; margin-top: 2px;">
+            ${baseValue} base + ${culturalPoints} culture + ${careerPoints} career + ${bonusPoints} bonus = <strong>${totalValue}%</strong>
+          </div>
+        </div>
+        <div style="display: flex; gap: 6px; align-items: center;">
+          <input type="number" min="0" max="${ageCategory ? ageCategory.maxPerSkill : 100}" value="${points}"
+            onchange="App.updateSkillPoints('bonus', '${skillName}', parseInt(this.value))" style="width: 60px;">
+          <button onclick="App.removeBonusSkill('${skillName}')">×</button>
+        </div>
       </div>
-      <input type="number" min="0" max="${ageCategory ? ageCategory.maxPerSkill : 100}" value="${points}"
-        onchange="App.updateSkillPoints('bonus', '${skillName}', parseInt(this.value))">
-      <button onclick="App.removeBonusSkill('${skillName}')">Remove</button>
     `;
     skillsList.appendChild(row);
   });
@@ -2484,199 +2566,6 @@ App.removeBonusSkill = function(skillName) {
   this.renderCurrentStep();
 };
 
-App.renderStep11 = function() {
-  const culture = CULTURES_DATA.find(c => c.name === CharacterData.culture);
-  
-  const div = document.createElement('div');
-  div.className = 'wizard-step';
-  div.innerHTML = `
-    <div class="step-header">Step 11: Equipment & Money <span class="page-ref">(Mythras p.107-128)</span></div>
-    <div class="help-box">
-      <p>Buy weapons, armor, and gear with your starting money. Your culture determines how much money you start with.</p>
-      <p>Use the search boxes below to find items, or browse the <b>Common Equipment</b> guide at the bottom of this page.</p>
-      <p><em>Not sure what to buy? Your combat style lists the weapons your character knows how to use — start there!</em></p>
-    </div>
-    <p>Starting money formula: <strong>${culture ? culture.startingMoney : '0'}</strong></p>
-    <button onclick="App.rollStartingMoney()">🎲 Roll Starting Money</button>
-
-    <h3>Weapons</h3>
-    <div id="weapons-list"></div>
-    <button onclick="App.addWeapon()">+ Add Weapon</button>
-    
-    <h3>Armor & Shields</h3>
-    <div id="armor-list"></div>
-    <button onclick="App.addArmor()">+ Add Armor/Shield</button>
-    
-    <h3>Equipment</h3>
-    <div id="equipment-list"></div>
-    <button onclick="App.addEquipment()">+ Add Equipment</button>
-    
-    <div class="field" style="margin-top: 15px;">
-      <label>Remaining Money</label>
-      <input type="number" id="money-remaining-input" value="${CharacterData.startingMoney}" readonly style="background: #f0f0f0;">
-      <span id="money-remaining" style="font-weight: bold;"></span>
-    </div>
-  `;
-
-  // Populate weapons list
-  const weaponsList = div.querySelector('#weapons-list');
-  CharacterData.weapons.forEach((w, i) => {
-    const row = document.createElement('div');
-    row.className = 'skill-row';
-    row.innerHTML = `
-      <span>${w.name} (${w.damage || 'N/A'}${w.damage_2h ? ' / 2H: ' + w.damage_2h : ''}, AP:${w.ap || 0} HP:${w.hp || 0})</span>
-      <span>Cost: <input type="number" style="width: 60px; padding: 2px;" value="${w.cost || 0}"
-        onchange="CharacterData.weapons[${i}].cost = parseInt(this.value) || 0; App.saveToLocalStorage(); App.updateMoneyDisplay()"></span>
-      <button onclick="CharacterData.weapons.splice(${i},1); App.saveToLocalStorage(); App.renderCurrentStep()">Remove</button>
-    `;
-    weaponsList.appendChild(row);
-  });
-
-  // Populate armor list
-  const armorList = div.querySelector('#armor-list');
-  CharacterData.armor.forEach((a, i) => {
-    const row = document.createElement('div');
-    row.className = 'skill-row';
-    row.innerHTML = `
-      <span>${a.name} (AP:${a.ap || 0}${a.hp ? ' HP:' + a.hp : ''})</span>
-      <span>Cost: <input type="number" style="width: 60px; padding: 2px;" value="${a.cost || 0}"
-        onchange="CharacterData.armor[${i}].cost = parseInt(this.value) || 0; App.saveToLocalStorage(); App.updateMoneyDisplay()"></span>
-      <button onclick="CharacterData.armor.splice(${i},1); App.saveToLocalStorage(); App.renderCurrentStep()">Remove</button>
-    `;
-    armorList.appendChild(row);
-  });
-
-  // Populate equipment list
-  const equipmentList = div.querySelector('#equipment-list');
-  CharacterData.equipment.forEach((e, i) => {
-    const row = document.createElement('div');
-    row.className = 'skill-row';
-    row.innerHTML = `
-      <span>${e.name}${e.encumbrance ? ' (ENC:' + e.encumbrance + ')' : ''}</span>
-      <span>Cost: <input type="number" style="width: 60px; padding: 2px;" value="${e.cost || 0}"
-        onchange="CharacterData.equipment[${i}].cost = parseInt(this.value) || 0; App.saveToLocalStorage(); App.updateMoneyDisplay()"></span>
-      <button onclick="CharacterData.equipment.splice(${i},1); App.saveToLocalStorage(); App.renderCurrentStep()">Remove</button>
-    `;
-    equipmentList.appendChild(row);
-  });
-
-  // Calculate total spent
-  const totalCost = [
-    ...CharacterData.weapons.map(w => w.cost || 0),
-    ...CharacterData.armor.map(a => a.cost || 0),
-    ...CharacterData.equipment.map(e => e.cost || 0)
-  ].reduce((a, b) => a + b, 0);
-
-  // Update current money display
-  const moneyInput = div.querySelector('#money-remaining-input');
-  const moneyLabel = div.querySelector('#money-remaining');
-  const remainingMoney = CharacterData.startingMoney - totalCost;
-  if (moneyInput) moneyInput.value = remainingMoney;
-  if (moneyLabel) {
-    moneyLabel.textContent = remainingMoney + ' Lunars';
-    moneyLabel.style.color = remainingMoney < 0 ? 'red' : '';
-  }
-  const label = div.querySelector('.field label');
-  if (label) label.textContent = `Remaining Money (Started with ${CharacterData.startingMoney}, spent ${totalCost})`;
-
-  // Add Common Equipment Guide
-  const guide = document.createElement('div');
-  guide.style.cssText = 'margin-top: 20px; padding: 15px; background: #f8f4e8; border-radius: 6px; border: 1px solid #d4c9a8;';
-  guide.innerHTML = `
-    <h3 style="margin-top: 0;">📋 Common Equipment Guide</h3>
-    <p style="font-size: 0.9em; color: #666;">Click any item to add it to your character. Prices in Lunars (L).</p>
-    
-    <h4>⚔️ Melee Weapons</h4>
-    <div class="equipment-guide-grid">
-      ${[
-        {n:'Broadsword',d:'1d8, 1H sword',p:50},
-        {n:'Shortsword',d:'1d6, 1H fast blade',p:25},
-        {n:'Longsword',d:'1d8/1d10 2H, versatile',p:75},
-        {n:'Dagger',d:'1d4+1, throwable',p:10},
-        {n:'Battleaxe',d:'1d6+1, can sunder',p:20},
-        {n:'Great Axe',d:'2d6+2, 2H devastating',p:30},
-        {n:'Mace',d:'1d8, stun',p:15},
-        {n:'Shortspear',d:'1d8+1, set vs charge',p:15},
-        {n:'Longspear',d:'1d10+1, 2H reach',p:25},
-        {n:'Halberd',d:'1d8+2, 2H polearm',p:50},
-        {n:'Quarterstaff',d:'1d8, 2H defensive',p:5},
-        {n:'Rapier',d:'1d8, impale',p:100},
-        {n:'Scimitar',d:'1d8, curved blade',p:40}
-      ].map(w => `<button class="guide-item" onclick="App.addFromGuide('weapon','${w.n}')">${w.n}<br><span>${w.d} — ${w.p} L</span></button>`).join('')}
-    </div>
-    
-    <h4>🏹 Ranged Weapons</h4>
-    <div class="equipment-guide-grid">
-      ${[
-        {n:'Short Bow',d:'1d6, light bow',p:50},
-        {n:'Long Bow',d:'1d8, heavy draw',p:120},
-        {n:'Composite Bow',d:'1d8, mounted',p:150},
-        {n:'Sling',d:'1d8, cheap & deadly',p:1},
-        {n:'Javelin',d:'1d8+1, thrown spear',p:5},
-        {n:'Light Crossbow',d:'1d8, no STR needed',p:80},
-        {n:'Heavy Crossbow',d:'1d10, armor piercing',p:100},
-        {n:'Dart',d:'1d4, quick throw',p:1}
-      ].map(w => `<button class="guide-item" onclick="App.addFromGuide('weapon','${w.n}')">${w.n}<br><span>${w.d} — ${w.p} L</span></button>`).join('')}
-    </div>
-    
-    <h4>🛡️ Shields</h4>
-    <div class="equipment-guide-grid">
-      ${[
-        {n:'Buckler',d:'Small, AP:6 HP:9',p:15},
-        {n:'Target Shield',d:'Medium, AP:4 HP:9',p:20},
-        {n:'Heater',d:'Large, AP:6 HP:12',p:25},
-        {n:'Kite',d:'Huge, AP:4 HP:15',p:30},
-        {n:'Hoplite',d:'Huge, AP:6 HP:15',p:40}
-      ].map(w => `<button class="guide-item" onclick="App.addFromGuide('armor','${w.n}')">${w.n}<br><span>${w.d} — ${w.p} L</span></button>`).join('')}
-    </div>
-    
-    <h4>🦺 Body Armor</h4>
-    <p style="font-size: 0.85em; color: #666; margin: 4px 0;">Armor provides AP (Armor Points) to hit locations it covers. Heavier armor gives more protection but penalizes skills. Ask your GM what's available in your area.</p>
-    <div class="equipment-guide-grid">
-      ${[
-        {n:'Leather Cuirass',d:'Chest, AP 1, light',p:10},
-        {n:'Heavy Leather Cuirass',d:'Chest, AP 2',p:20},
-        {n:'Linen Linothorax',d:'Chest+Abdomen, AP 2',p:20},
-        {n:'Leather Hauberk',d:'Chest+Abdomen, AP 1',p:20},
-        {n:'Bronze Cuirass',d:'Chest, AP 4-5',p:100},
-        {n:'Leather Skirts',d:'Abdomen+Legs, AP 1',p:10},
-        {n:'Heavy Leather Skirts',d:'Abdomen+Legs, AP 3',p:20},
-        {n:'Leather Vambraces',d:'Arms, AP 1',p:10},
-        {n:'Bronze Vambraces',d:'Arms, AP 5',p:60},
-        {n:'Leather Helm',d:'Head, AP 1',p:5},
-        {n:'Bronze Helm (Open)',d:'Head, AP 5',p:20},
-        {n:'Bronze Helm (Closed)',d:'Head, AP 6',p:30},
-        {n:'Leather Greaves',d:'Legs, AP 1',p:10},
-        {n:'Bronze Greaves',d:'Legs, AP 5',p:50}
-      ].map(a => `<button class="guide-item" onclick="App.addArmorFromGuide('${a.n}',${a.p})">${a.n}<br><span>${a.d} — ${a.p} L</span></button>`).join('')}
-    </div>
-    
-    <h4>🎒 Adventuring Gear</h4>
-    <div class="equipment-guide-grid">
-      ${[
-        {n:'Backpack/Satchel',d:'ENC 1, carry stuff',p:2},
-        {n:'Rope (hemp), 10m',d:'ENC 2, essential',p:1},
-        {n:'Torch, 6 hour',d:'ENC 1, light',p:'0.5'},
-        {n:'Lantern, basic',d:'ENC 1, better light',p:3},
-        {n:'Waterskin or Canteen',d:'ENC 1, water',p:'0.5'},
-        {n:'First aid kit',d:'Bandages & herbs',p:5},
-        {n:"Healer's kit",d:'ENC 1, surgery tools',p:15},
-        {n:'Bedroll',d:'ENC 1, sleep anywhere',p:1},
-        {n:'Flint & tinder',d:'Start fires',p:'0.5'},
-        {n:'Knife',d:'ENC 0, utility blade',p:5}
-      ].map(e => `<button class="guide-item" onclick="App.addFromGuide('equipment','${e.n}')">${e.n}<br><span>${e.d} — ${e.p} L</span></button>`).join('')}
-    </div>
-    
-    <p style="font-size: 0.85em; color: #888; margin-top: 10px;">
-      💡 For the full weapon & armor catalog, see <b>Mythras p.107-128</b> or the <b>RuneQuest: Weapons & Equipment</b> book.
-      Use the search boxes above to find any weapon in the database (350+ weapons).<br>
-      ⚠️ <b>If an item shows no cost (0 L), check with your Game Master for the price.</b> Not all items have standardized prices.
-    </p>
-  `;
-  div.appendChild(guide);
-
-  return div;
-};
 
 // Autocomplete helper for weapons/armor/equipment
 App.createAutocomplete = function(containerId, dataSource, placeholder, onSelect) {
@@ -2905,11 +2794,11 @@ App.addEquipment = function() {
   });
 };
 
-App.renderStep12 = function() {
+App.renderStep11 = function() {
   const div = document.createElement('div');
   div.className = 'wizard-step';
   div.innerHTML = `
-    <div class="step-header">Step 12: Review & Play <span class="page-ref">(Adventures in Glorantha p.23-24)</span></div>
+    <div class="step-header">Step 11: Review & Play <span class="page-ref">(Adventures in Glorantha p.23-24)</span></div>
     <h2>Character Complete!</h2>
 
     <div class="character-summary">
@@ -3073,28 +2962,48 @@ App.compileAllSkills = function() {
   const skills = new Map();
   const {STR, CON, SIZ, DEX, INT, POW, CHA} = CharacterData.characteristics;
   const statMap = {STR, CON, SIZ, DEX, INT, POW, CHA};
-  
-  // Add all known skills
+
+  // Standard skills (always available to everyone per Mythras RAW)
+  const standardSkills = [
+    'Athletics', 'Boating', 'Brawn', 'Conceal', 'Customs()', 'Dance', 'Deceit', 'Drive',
+    'Endurance', 'Evade', 'First Aid', 'Influence', 'Insight', 'Locale', 'Native Tongue',
+    'Perception', 'Ride', 'Sing', 'Stealth', 'Swim', 'Unarmed', 'Willpower'
+  ];
+
+  // Add all standard skills (always shown)
   SKILLS_DATA.forEach(skillDef => {
     if (skillDef.name.includes('(any)') || skillDef.name.includes('Rune:')) return;
-    
-    const [stat1Name, stat2Name] = skillDef.base_stats;
-    const stat1 = statMap[stat1Name] || 0;
-    const stat2 = statMap[stat2Name] || 0;
-    const base = Calc.skillBaseValue(stat1, stat2, skillDef.starting_bonus);
-    
-    skills.set(skillDef.name, {
-      name: skillDef.name,
-      base: base,
-      cultural: CharacterData.culturalSkills[skillDef.name] || 0,
-      career: CharacterData.careerSkills[skillDef.name] || 0,
-      bonus: CharacterData.bonusSkills[skillDef.name] || 0
-    });
+    // Skip passion skills (they start with "A " or "An ")
+    if (skillDef.name.startsWith('A ') || skillDef.name.startsWith('An ')) return;
+
+    const isStandardSkill = standardSkills.includes(skillDef.name);
+    const hasPoints = (CharacterData.culturalSkills[skillDef.name] || 0) > 0 ||
+                      (CharacterData.careerSkills[skillDef.name] || 0) > 0 ||
+                      (CharacterData.bonusSkills[skillDef.name] || 0) > 0;
+
+    // Only add if it's a standard skill OR if it has points allocated (selected professional skill)
+    if (isStandardSkill || hasPoints) {
+      const [stat1Name, stat2Name] = skillDef.base_stats;
+      const stat1 = statMap[stat1Name] || 0;
+      const stat2 = statMap[stat2Name] || 0;
+      const base = Calc.skillBaseValue(stat1, stat2, skillDef.starting_bonus);
+
+      skills.set(skillDef.name, {
+        name: skillDef.name,
+        base: base,
+        cultural: CharacterData.culturalSkills[skillDef.name] || 0,
+        career: CharacterData.careerSkills[skillDef.name] || 0,
+        bonus: CharacterData.bonusSkills[skillDef.name] || 0
+      });
+    }
   });
-  
-  // Add custom skills
+
+  // Add custom skills (selected during character creation)
   [...Object.keys(CharacterData.culturalSkills), ...Object.keys(CharacterData.careerSkills), ...Object.keys(CharacterData.bonusSkills)]
     .forEach(skillName => {
+      // Skip passion skills
+      if (skillName.startsWith('A ') || skillName.startsWith('An ')) return;
+
       if (!skills.has(skillName)) {
         skills.set(skillName, {
           name: skillName,
@@ -3105,29 +3014,39 @@ App.compileAllSkills = function() {
         });
       }
     });
-  
+
   return Array.from(skills.values()).filter(s => s.base > 0 || s.cultural > 0 || s.career > 0 || s.bonus > 0);
 };
 
+App.updateSkillDisplay = function() {
 App.renderSkillRow = function(skill) {
   const total = skill.base + skill.cultural + skill.career + skill.bonus;
   const difficulty = document.getElementById('difficulty-modifier')?.value || 'Standard';
   const modified = Calc.applyDifficultyModifier(total, difficulty);
   
-  return `
+  // Display actual combat style name if applicable
+  let displayName = skill.name;
+  if (skill.name === 'Combat Style (Cultural Style)' && CharacterData.culture) {
+    const culture = CULTURES_DATA.find(c => c.name === CharacterData.culture);
+    if (culture && culture.combatStyles && culture.combatStyles.length > 0) {
+      const firstStyle = culture.combatStyles[0];
+      const styleName = typeof firstStyle === 'string' ? firstStyle : firstStyle.name;
+      displayName = `Combat Style (${styleName})`;
+    }
+  }
+  
+  return \`
     <tr>
-      <td>${skill.name}</td>
-      <td class="base-col">${skill.base}</td>
-      <td class="input-col">${skill.cultural}</td>
-      <td class="input-col">${skill.career}</td>
-      <td class="input-col">${skill.bonus}</td>
-      <td class="total-col">${total}%</td>
-      <td class="total-col">${modified}%</td>
+      <td>\${displayName}</td>
+      <td class="base-col">\${skill.base}</td>
+      <td class="input-col">\${skill.cultural}</td>
+      <td class="input-col">\${skill.career}</td>
+      <td class="input-col">\${skill.bonus}</td>
+      <td class="total-col">\${total}%</td>
+      <td class="total-col">\${modified}%</td>
     </tr>
-  `;
+  \`;
 };
-
-App.updateSkillDisplay = function() {
   this.renderPlaySkills();
 };
 
@@ -3147,7 +3066,7 @@ App.renderPlayCombat = function() {
     ${CharacterData.weapons.map((w, i) => `
       <div class="weapon-row">
         <div>${w.name}</div>
-        <div><input type="number" value="${w.skill || 0}" style="width: 50px;"></div>
+        <div><input type="number" value="${w.skill || 0}" placeholder="%" title="Skill %" style="width: 50px;"></div>
         <div>${w.damage}</div>
         <div>${w.size}</div>
         <div>${w.reach}</div>
