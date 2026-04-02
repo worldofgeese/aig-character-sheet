@@ -1318,6 +1318,7 @@ const App = {
     // Show pocketfold view and print
     const pocketfoldView = document.getElementById('pocketfold-view');
     pocketfoldView.classList.add('printing');
+    pocketfoldView.style.display = 'grid';
     document.body.classList.add('printing-pocketfold');
     
     // Inject landscape @page rule (can't be conditional on body class in CSS)
@@ -1330,17 +1331,21 @@ const App = {
     document.getElementById('play-mode').style.display = 'none';
     document.querySelectorAll('.no-print').forEach(el => el.style.display = 'none');
 
-    window.print();
-
-    // Restore normal view after print dialog closes
+    // Delay print to let DOM repaint with pocketfold visible
     setTimeout(() => {
-      pocketfoldView.classList.remove('printing');
-      document.body.classList.remove('printing-pocketfold');
-      document.getElementById('play-mode').style.display = '';
-      document.querySelectorAll('.no-print').forEach(el => el.style.display = '');
-      const ls = document.getElementById('pocketfold-page-style');
-      if (ls) ls.remove();
-    }, 500);
+      window.print();
+      
+      // Restore normal view after print dialog closes
+      setTimeout(() => {
+        pocketfoldView.classList.remove('printing');
+        pocketfoldView.style.display = 'none';
+        document.body.classList.remove('printing-pocketfold');
+        document.getElementById('play-mode').style.display = '';
+        document.querySelectorAll('.no-print').forEach(el => el.style.display = '');
+        const ls = document.getElementById('pocketfold-page-style');
+        if (ls) ls.remove();
+      }, 500);
+    }, 300);
   },
 
   showToast(message, type = 'success') {
