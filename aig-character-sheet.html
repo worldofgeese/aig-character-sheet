@@ -2630,6 +2630,27 @@ App.renderStep11 = function() {
       ].map(w => `<button class="guide-item" onclick="App.addFromGuide('armor','${w.n}')">${w.n}<br><span>${w.d} — ${w.p} L</span></button>`).join('')}
     </div>
     
+    <h4>🦺 Body Armor</h4>
+    <p style="font-size: 0.85em; color: #666; margin: 4px 0;">Armor provides AP (Armor Points) to hit locations it covers. Heavier armor gives more protection but penalizes skills. Ask your GM what's available in your area.</p>
+    <div class="equipment-guide-grid">
+      ${[
+        {n:'Leather Cuirass',d:'Chest, AP 1, light',p:10},
+        {n:'Heavy Leather Cuirass',d:'Chest, AP 2',p:20},
+        {n:'Linen Linothorax',d:'Chest+Abdomen, AP 2',p:20},
+        {n:'Leather Hauberk',d:'Chest+Abdomen, AP 1',p:20},
+        {n:'Bronze Cuirass',d:'Chest, AP 4-5',p:100},
+        {n:'Leather Skirts',d:'Abdomen+Legs, AP 1',p:10},
+        {n:'Heavy Leather Skirts',d:'Abdomen+Legs, AP 3',p:20},
+        {n:'Leather Vambraces',d:'Arms, AP 1',p:10},
+        {n:'Bronze Vambraces',d:'Arms, AP 5',p:60},
+        {n:'Leather Helm',d:'Head, AP 1',p:5},
+        {n:'Bronze Helm (Open)',d:'Head, AP 5',p:20},
+        {n:'Bronze Helm (Closed)',d:'Head, AP 6',p:30},
+        {n:'Leather Greaves',d:'Legs, AP 1',p:10},
+        {n:'Bronze Greaves',d:'Legs, AP 5',p:50}
+      ].map(a => `<button class="guide-item" onclick="App.addArmorFromGuide('${a.n}',${a.p})">${a.n}<br><span>${a.d} — ${a.p} L</span></button>`).join('')}
+    </div>
+    
     <h4>🎒 Adventuring Gear</h4>
     <div class="equipment-guide-grid">
       ${[
@@ -2648,7 +2669,8 @@ App.renderStep11 = function() {
     
     <p style="font-size: 0.85em; color: #888; margin-top: 10px;">
       💡 For the full weapon & armor catalog, see <b>Mythras p.107-128</b> or the <b>RuneQuest: Weapons & Equipment</b> book.
-      Use the search boxes above to find any weapon in the database (350+ weapons).
+      Use the search boxes above to find any weapon in the database (350+ weapons).<br>
+      ⚠️ <b>If an item shows no cost (0 L), check with your Game Master for the price.</b> Not all items have standardized prices.
     </p>
   `;
   div.appendChild(guide);
@@ -2816,7 +2838,21 @@ App.addFromGuide = function(type, name) {
   }
   this.saveToLocalStorage();
   this.renderCurrentStep();
-  this.showToast(`Added ${name}`, 'success');
+  const price = ITEM_PRICES[name] || 0;
+  if (price === 0) {
+    this.showToast(`Added ${name} — ⚠️ no price listed, check with your GM`, 'error');
+  } else {
+    this.showToast(`Added ${name} (${price} L)`, 'success');
+  }
+};
+
+App.addArmorFromGuide = function(name, price) {
+  CharacterData.armor.push({
+    name: name, ap: 0, locations: [], enc: 1, cost: price
+  });
+  this.saveToLocalStorage();
+  this.renderCurrentStep();
+  this.showToast(`Added ${name} (${price} L)`, 'success');
 };
 
 App.addWeapon = function() {
@@ -2834,13 +2870,14 @@ App.addWeapon = function() {
     });
     this.saveToLocalStorage();
     this.renderCurrentStep();
+    if (!ITEM_PRICES[weapon.name]) this.showToast(`${weapon.name} has no listed price — check with your GM`, 'error');
   });
 };
 
 App.addArmor = function() {
   // Filter for shields and armor from WEAPONS_DATA
   const armorData = WEAPONS_DATA.filter(w => w.handedness === 'shield' || w.weapon_type === 'armor');
-  this.createAutocomplete('armor-list', armorData.length > 0 ? armorData : [{name: ''}], 'Start typing armor name...', (armor) => {
+  this.createAutocomplete('armor-list', armorData.length > 0 ? armorData : [{name: ''}], 'Start typing armor/shield name...', (armor) => {
     CharacterData.armor.push({
       name: armor.name,
       ap: armor.armour_points || 0,
@@ -2850,6 +2887,7 @@ App.addArmor = function() {
     });
     this.saveToLocalStorage();
     this.renderCurrentStep();
+    if (!ITEM_PRICES[armor.name]) this.showToast(`${armor.name} has no listed price — check with your GM`, 'error');
   });
 };
 
@@ -2863,6 +2901,7 @@ App.addEquipment = function() {
     });
     this.saveToLocalStorage();
     this.renderCurrentStep();
+    if (!ITEM_PRICES[equip.name]) this.showToast(`${equip.name} has no listed price — check with your GM`, 'error');
   });
 };
 
